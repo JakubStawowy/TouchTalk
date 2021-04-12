@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -37,11 +38,19 @@ public class Message implements Serializable {
     @ManyToMany(mappedBy = "message")
     private Set<Group> groups;
 
+//    public Message(@NotNull String content, @Nullable String file, User sender) {
+//        this.content = content;
+//        this.file = file;
+//        this.sender = sender;
+//    }
+
     public Message(@NotNull String content, @Nullable String file, User sender) {
         this.content = content;
         this.file = file;
         this.sender = sender;
+        this.receivers = new HashSet<>();
     }
+
 
     public Message() {
     }
@@ -86,5 +95,21 @@ public class Message implements Serializable {
 
     public void setSender(User sender) {
         this.sender = sender;
+    }
+
+    public Set<User> getReceivers() {
+        return receivers;
+    }
+
+    public void setReceivers(Set<User> receivers) {
+        this.receivers = receivers;
+    }
+
+    public Set<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
     }
 }
