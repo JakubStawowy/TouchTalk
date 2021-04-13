@@ -118,6 +118,7 @@ label{
     font-size: 15px;
 }
 
+
 section button:hover {
     background-color: rgb(255,255,255);
     color: #009ac9;
@@ -126,6 +127,7 @@ section button:hover {
 
 @media only screen and (max-device-width: 420px)
 {
+
     form{
         width: 90%;
         border-bottom: 1px solid #F0EFEF; 

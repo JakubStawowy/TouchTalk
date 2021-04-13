@@ -5,6 +5,7 @@ import Signup from '../components/Signup';
 
 export const signin = (signinData) => async (dispatch) => {
     try {
+
         const res = await axios.post(`http://localhost:8080/api/login?email=${signinData.email}&password=${signinData.password}`)
         console.log(res.data.httpStatus);
         console.log(res.data.token);
@@ -19,12 +20,14 @@ export const signin = (signinData) => async (dispatch) => {
                 type: SIGNIN_ERROR
             })
         } 
+
     } catch (error) {
     }
 }
 export const signup = (signupData) => async (dispatch) => {
     try {
-        const {data} = await axios.post(`http://localhost:8080/api/register`, signupData)
+        const data = await axios.post(`http://localhost:8080/api/register`, signupData)
+        console.log(data);
         dispatch({
             type: SIGNUP,
             payload: data
