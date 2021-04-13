@@ -16,6 +16,7 @@ const initialState = {
 const auth = (state = initialState, action) => {
     switch (action.type) {
         case SIGNIN:
+            localStorage.setItem("user", JSON.stringify(action.payload));
             return {
                 ...state, auth: action.payload, login: true, login_error: false
             }
@@ -34,6 +35,10 @@ const auth = (state = initialState, action) => {
         case SIGNUP_SUCCESS:
             return {
                 ...state, register_error: false
+            }
+        case 'LOGOUT':
+            return {
+                ...state, login: false
             }
             default:
                 return state;

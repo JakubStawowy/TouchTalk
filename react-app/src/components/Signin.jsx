@@ -15,6 +15,7 @@ const Signin = () => {
     history.push("/signup");
   };
 
+  if(auth.login) history.push('/logout');
   if(auth.login_error) console.log("server error")
 
   const formik = useFormik({
@@ -28,9 +29,7 @@ const Signin = () => {
         email: values.email,
         password: values.password,
       };
-      dispatch(signin(form)).then(() => {
-        history.push("/touchtalk");
-      });
+      dispatch(signin(form))
       resetForm();
     },
   });
