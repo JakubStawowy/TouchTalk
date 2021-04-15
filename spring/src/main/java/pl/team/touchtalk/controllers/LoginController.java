@@ -3,11 +3,10 @@ package pl.team.touchtalk.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
+import pl.team.touchtalk.entities.LoginResponseBody;
 import pl.team.touchtalk.entities.User;
-import pl.team.touchtalk.responses.LoginResponseEntity;
 import pl.team.touchtalk.services.JsonWebTokenProvider;
 import pl.team.touchtalk.services.UserService;
 
@@ -47,7 +46,7 @@ public class LoginController {
     * @Returns loginResponseEntity (if no user found, method returns null values with 404 HttpStatus)
     * */
     @PostMapping(value = "/login")
-    public LoginResponseEntity loginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
+    public ResponseEntity<?> loginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
 
         Optional<String> salt = userService.getUserRepository().getSaltByEmail(email);
         if(salt.isPresent()) {
@@ -58,18 +57,20 @@ public class LoginController {
             );
 
             if(loggedUser==null)
-                return new LoginResponseEntity(null, null, HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
             loggedUser.setLogged(true);
             userService.getUserRepository().save(loggedUser);
 
-            return new LoginResponseEntity(
-                    webTokenProvider.generateToken(loggedUser),
-                    loggedUser.getUserDetails().getName()+" "+loggedUser.getUserDetails().getSurname(),
+            return new ResponseEntity<>(
+                    new LoginResponseBody(
+                            webTokenProvider.generateToken(loggedUser),
+                            loggedUser.getUserDetails().getName()+" "+loggedUser.getUserDetails().getSurname()
+                    ),
                     HttpStatus.OK
             );
         }
-        return new LoginResponseEntity(null, null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /*
@@ -88,6 +89,6 @@ public class LoginController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
