@@ -26,3 +26,13 @@ a {
 li {
     list-style-type: none;
 }
+
+.content{
+    display: flex;
+    flex-direction: row;
+}
+
+.page-content{
+    width: 80vw;
+    align-self: right;
+}
