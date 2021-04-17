@@ -9,6 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Route, NavLink, HashRouter} from "react-router-dom";
+//import {isMobile} from 'react-device-detect';
 import Notifications from "./Notifications";
 import Messages from "./Messages";
 import Tasks from "./Tasks";
@@ -17,7 +18,31 @@ import Teams from "./Teams";
 import {  } from "module";
 import "./Home.css";
 
+function detectMob() {
+  return ( ( window.innerWidth <= 800 ) && ( window.innerHeight <= 600 ) );
+}
+
 const Home = () => {
+  let menu = {};
+  let  menuWidth = 2;
+  let  content = {};
+  let  contentWidth = 10;
+  console.log("przed zmiana");
+  if (detectMob()){
+    console.log("powinna byc zmiana");
+    menu ={
+      display: 'flex',
+      flexDirection: 'row',
+      padding: 0,
+    };
+    menuWidth = 12;
+    content = {
+      display: 'flex',
+      flexDirection: 'column-reverse',
+      padding: 0,
+    };
+    contentWidth = 12;
+  }
   return (
     <HashRouter>
       <section>
@@ -29,9 +54,9 @@ const Home = () => {
               </Typography>
             </Toolbar>
         </AppBar>
-        <Grid container fullWidth fullHeight>
-          <Grid item xs={2}>
-            <List>
+        <Grid container fullWidth fullHeight style={content}>
+          <Grid item xs={menuWidth}>
+            <List style={menu}>
               <ListItem key="notifications">
                 <ListItemIcon>
 
@@ -64,7 +89,7 @@ const Home = () => {
               </ListItem>
             </List>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={contentWidth}>
             <Route path="/notifications" component={Notifications}/>
             <Route path="/messages" component={Messages}/>
             <Route path="/tasks" component={Tasks}/>
