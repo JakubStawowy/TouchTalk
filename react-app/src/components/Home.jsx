@@ -27,9 +27,7 @@ const Home = () => {
   let  menuWidth = 2;
   let  content = {};
   let  contentWidth = 10;
-  console.log("przed zmiana");
   if (detectMob()){
-    console.log("powinna byc zmiana");
     menu ={
       display: 'flex',
       flexDirection: 'row',

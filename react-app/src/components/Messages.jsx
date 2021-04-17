@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState }  from "react";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -16,12 +16,23 @@ import InputBase from '@material-ui/core/InputBase';
 import SendIcon from '@material-ui/icons/Send';
 import SearchIcon from '@material-ui/icons/Search';
 
+function detectMob() {
+    return ( ( window.innerWidth <= 800 ) && ( window.innerHeight <= 600 ) );
+  }
 
 const Messages = () => {
+    let usersWidth = 3;
+    let conversationWidth = 8;
+    const [conversation, setConversation] = useState({'is' : false});
+
+    if (detectMob()){
+        usersWidth = 12;
+        conversationWidth = 12;
+    }
     return (
         <div>
             <Grid container component={Paper} fullHeight>
-                <Grid item xs={3} >
+                {detectMob() && conversation.is ? null : (<Grid item xs={usersWidth} >
                     <AppBar position="static">
                         <Toolbar>
                             <Typography variant="h6" >
@@ -38,21 +49,21 @@ const Messages = () => {
                         </Toolbar>
                     </AppBar>
                     <List>
-                        <ListItem button key="User1">
+                        <ListItem button key="User1" onClick={()=>setConversation({'is': true})}>
                             <ListItemIcon>
                                 <Avatar alt="User1" src="https://material-ui.com/static/images/avatar/1.jpg" />
                             </ListItemIcon>
                             <ListItemText primary="User1">User1</ListItemText>
                             <ListItemText secondary="online" align="right"></ListItemText>
                         </ListItem>
-                        <ListItem button key="User2">
+                        <ListItem button key="User2" onClick={()=>setConversation({'is': true})}>
                             <ListItemIcon>
                                 <Avatar alt="User2" src="https://material-ui.com/static/images/avatar/1.jpg" />
                             </ListItemIcon>
                             <ListItemText primary="User2">User2</ListItemText>
                             <ListItemText secondary="online" align="right"></ListItemText>
                         </ListItem>
-                        <ListItem button key="User3">
+                        <ListItem button key="User3" onClick={()=>setConversation({'is': true})}>
                             <ListItemIcon>
                                 <Avatar alt="User3" src="https://material-ui.com/static/images/avatar/1.jpg" />
                             </ListItemIcon>
@@ -60,11 +71,11 @@ const Messages = () => {
                             <ListItemText secondary="online" align="right"></ListItemText>
                         </ListItem>
                     </List>  
-                </Grid>
-                <Grid item xs={1} >
+                </Grid>)}
+                {detectMob() ? null : (<Grid item xs={1} >
                     <Divider orientation="vertical"/>
-                </Grid>
-                <Grid item xs={8} >
+                </Grid>)}
+                {detectMob() && !conversation.is ? null : (<Grid item xs={conversationWidth} >
                     <List>
                         <ListItem key="1">
                             <Grid container>
@@ -96,7 +107,7 @@ const Messages = () => {
                             <Fab color="primary" aria-label="add"><SendIcon /></Fab>
                         </Grid>
                     </Grid>
-                </Grid>
+                </Grid>)}
             </Grid>
         </div>
     );
