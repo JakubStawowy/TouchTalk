@@ -20,7 +20,7 @@ import SearchIcon from '@material-ui/icons/Search';
 const Messages = () => {
     return (
         <div>
-            <Grid container component={Paper} >
+            <Grid container component={Paper} fullHeight>
                 <Grid item xs={3} >
                     <AppBar position="static">
                         <Toolbar>
