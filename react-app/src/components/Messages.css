@@ -1,0 +1,99 @@
+.size{
+    margin-left: -6em;
+}
+
+.search{
+    color:white;
+    margin-top: 0em;
+    margin-left: 13em;
+}
+.sea{
+    margin-left: -12em;
+    margin-top: -0.2em;
+}
+
+h6.MuiTypography-root.MuiTypography-h6 {
+    margin-top: -0.3em;
+}
+
+.photo{
+    margin-left: 0em;
+}
+
+.message{
+   border:2px solid white;
+   border-color: white;
+   border-top-right-radius: 0.7em;
+   border-bottom-left-radius: 0.7em;
+   width: 5em;
+   background-color: white;
+   margin-left: 2em;
+   margin-top: -2.5em;
+   height: 1.7em;
+}
+
+.date{
+    margin-top: -0.7em;
+    margin-left: 2.2em;
+}
+
+.messages{
+    border:2px solid blue;
+    margin-left: 39em;
+    border-color: rgb(29, 204, 216);
+    border-top-right-radius: 0.7em;
+    border-bottom-left-radius: 0.7em;
+    width: 9em;
+    background-color:rgb(29, 204, 216);
+    margin-left: 40em;
+
+ }
+
+ .dat {
+    margin-right: 6.5em;
+}
+
+ .MuiPaper-root.MuiGrid-root.MuiGrid-container.MuiPaper-elevation1.MuiPaper-rounded {
+    height: 45.2em;
+    background-color: rgb(184, 225, 233);
+}
+
+.type{
+    width: 50em;
+    border:1px solid white;
+    background-color: white;
+    padding-bottom: 0.7em;
+    margin-left: -1em;
+    padding-left: 1.5em;
+    border-radius: 0.5em;
+}
+
+k{
+    margin-left: -52em;
+    margin-top: 1em;
+}
+
+.add{
+    margin-top: -3.2em;
+    margin-left: 45.5em;
+}
+
+.mess{
+    margin-top: 31em;;
+}
+
+p{
+    margin-left: -10.5em;
+    margin-top: 1em;
+}
+
+.right{
+    margin-top: 1em;
+    margin-left: 2em;
+}
+l{
+    margin-left: 50em;
+    margin-top: 0.2em;
+}
+
+
