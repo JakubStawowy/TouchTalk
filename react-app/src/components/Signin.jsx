@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import {Redirect, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import "./Signin.css"
 import logo from './logo.svg'
@@ -14,10 +14,6 @@ const Signin = () => {
   const togglePanel = () => {
     history.push("/signup");
   };
-
-  if(auth.login) history.push('/logout');
-  if(auth.login_error) console.log("server error")
-
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -29,10 +25,15 @@ const Signin = () => {
         email: values.email,
         password: values.password,
       };
-      dispatch(signin(form))
+      dispatch(signin(form)).then(() => {
+        history.push("/home");
+      });
       resetForm();
     },
   });
+  if (auth.login) {
+    return <Redirect to='/home' />;
+  }
   return (
     
     <section>
@@ -60,9 +61,6 @@ const Signin = () => {
           onChange={formik.handleChange}
           value={formik.values.password}
         />
-        {formik.touched.password && formik.errors.password ? (
-          <div className='form-error'>{formik.errors.password}</div>
-        ) : null}
         <button className='login-button-signin' type='submit'>Zaloguj</button>
         </div>
       </form>

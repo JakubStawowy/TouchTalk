@@ -3,15 +3,21 @@ import {
     SIGNUP, 
     SIGNIN_ERROR, 
     SIGNUP_ERROR, 
-    SIGNUP_SUCCESS
+    SIGNUP_RESET,
+    SIGNIN_RESET,
+    LOGOUT
 } from './../actions/types';
 
-const initialState = {
+const user = JSON.parse(localStorage.getItem('user'));
+const initialState = user ? {
+    login: true,
+    user: user.result // todo - sprawdzić co zwraca backend
+} : {
     login: false,
-    login_error: false,
-    register_error: false, 
-    register_success: false
-}
+    user: null,
+    register_error: false
+};
+
 
 const auth = (state = initialState, action) => {
     switch (action.type) {
@@ -24,19 +30,24 @@ const auth = (state = initialState, action) => {
             return {
                 ...state, login_error: true,
             }
+        case SIGNIN_RESET:
+            return {
+                ...state, login_error: true,
+            }
         case SIGNUP:
             return {
-                ...state
+                ...state, register_error: false, register_success: true
             }
         case SIGNUP_ERROR:
             return {
-                ...state, register_error: true
+                ...state, register_error: true, register_success: false
             }
-        case SIGNUP_SUCCESS:
+        case SIGNUP_RESET:
             return {
                 ...state, register_error: false
             }
-        case 'LOGOUT':
+        case LOGOUT:
+            localStorage.removeItem('user');
             return {
                 ...state, login: false
             }

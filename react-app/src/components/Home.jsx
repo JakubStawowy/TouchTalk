@@ -1,21 +1,28 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom'
-import auth from '../reducers/auth';
 import { useSelector } from 'react-redux'
 
-const Logout = () =>  {
+const Home = () =>  {
     const auth = useSelector(state=>state.auth)
     const history = useHistory()
     const dispatch = useDispatch()
+    
+    if (!auth.login) {
+        return <Redirect to='/' />;
+      }
+    
     const logout = () => {
         dispatch({type: 'LOGOUT'})
-        console.log('debug')
-        //return <Redirect to= '/dsa'/>
+        history.push("/");
     }
-    if(!auth.login) history.push('/');
-    return (<button onClick={logout}>Logout</button>) 
+    return (
+        <main>
+            <p>STRONA GŁÓWNA</p>
+            <button onClick={logout}>Logout</button>  
+        </main>
+    )  
 }
 
-    export default Logout;
+export default Home;
 
