@@ -1,18 +1,15 @@
 import React from "react";
 import Grid from '@material-ui/core/Grid';
-import Avatar from '@material-ui/core/Avatar';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import { Route, NavLink, HashRouter} from "react-router-dom";
-import PersonAddSharpIcon from '@material-ui/icons/PersonAddSharp';
-import VideocamSharpIcon from '@material-ui/icons/VideocamSharp';
 import PhoneSharpIcon from '@material-ui/icons/PhoneSharp';
 //import {isMobile} from 'react-device-detect';
+import MessageIcon from '@material-ui/icons/Message';
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import Notifications from "./Notifications";
 import Messages from "./Messages";
 import Tasks from "./Tasks";
@@ -47,58 +44,41 @@ const Home = () => {
   return (
     <HashRouter>
       <section>
-        <AppBar position="static">
-            <Toolbar >
-            <div class='photo1'>
-              <Avatar alt="User1" src="https://material-ui.com/static/images/avatar/3.jpg" />
-            </div>
-              <Typography variant="h6" >
-                Alicja Kowalczyk
-              </Typography>
-              <div class='dane'>
-                <button>Czat</button> 
-                <button>Pliki</button> 
-                <button>Zdjęcia</button> 
-                <button>Filmy</button> 
-              </div>
-              <div class='talk'>
-              <button><PersonAddSharpIcon/></button> 
-              <button><VideocamSharpIcon/></button> 
-              <button><PhoneSharpIcon/></button> 
-              </div>
-            </Toolbar>
-        </AppBar>
         <Grid container fullWidth fullHeight style={content}>
           <Grid item xs={menuWidth}>
           <div class='navbar-left'>
             <List style={menu}>
               <ListItem key="notifications">
                 <ListItemIcon>
-
+                  <NotificationsActiveIcon/>
                 </ListItemIcon>
                 <NavLink to='/notifications'>Notifications</NavLink>
               </ListItem>
+    
               <ListItem key="messages">
                 <ListItemIcon>
-                  
+                   <MessageIcon/>
                 </ListItemIcon>
                 <NavLink to='/messages'>Messages</NavLink>
               </ListItem>
+    
               <ListItem key="tasks">
                 <ListItemIcon>
-                  
+                  <FormatListBulletedIcon/>
                 </ListItemIcon>
                 <NavLink to='/tasks'>Tasks</NavLink>
               </ListItem>
+    
               <ListItem key="calls">
                 <ListItemIcon>
-                  
+                  <PhoneSharpIcon/>
                 </ListItemIcon>
                 <NavLink to='/calls'>Calls</NavLink>
               </ListItem>
+    
               <ListItem key="teams">
                 <ListItemIcon>
-                  
+                  <GroupAddIcon/>
                 </ListItemIcon>
                 <NavLink to='/teams'>Teams</NavLink>
               </ListItem>
