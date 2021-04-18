@@ -40,41 +40,4 @@ li {
 .navbar-left{
     margin-left: -1.5em;
     margin-top: 1em;
-
-}
-
-.photo1{
-    margin-left: 31em;
-    padding-right: 1em;
-}
-
-.dane{
-    margin-left: 4em;
-    margin-top: -0.5em;
-}
-
-button {
-    background-color: transparent;
-    height: 2em;
-    width: 5em;
-    border-color: transparent;
-}
-
-svg.MuiSvgIcon-root {
-    color: black;
-    padding-right: 0.5em;
-    padding-left: 0.5em;
-}
-
-.talk{
-    margin-left: 23em;
-
-}
-
-.dane :hover {
-    background-color: white;
-}
-
-.talk :hover {
-    background-color: white;
 }
