@@ -41,6 +41,16 @@ const Signup = () => {
   });
   return (
     <section className='container'>
+       {auth.register_error ? (
+          <div>
+            Ten użytkownik już istnieje!
+          </div>
+        ) : null}
+        {auth.register_success ? (
+          <div>
+            Rejestracja się powiodła. Możesz się zalogować. 
+          </div>
+        ) : null}
       <div className='login-container'>
       <img src={logo} className="logo"/>
       <aside className='register-aside'>

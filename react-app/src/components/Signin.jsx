@@ -35,9 +35,13 @@ const Signin = () => {
     return <Redirect to='/home' />;
   }
   return (
-    
     <section>
       <div className='container'>
+        {auth.login_error ? (
+          <div>
+            Użytkownik nie istnieje
+          </div>
+        ) : null}
       <form onSubmit={formik.handleSubmit}>
         <img src={logo} className="logo"/>
         <div className='input-container'>
