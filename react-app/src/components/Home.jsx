@@ -9,6 +9,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Route, NavLink, HashRouter} from "react-router-dom";
+import PersonAddSharpIcon from '@material-ui/icons/PersonAddSharp';
+import VideocamSharpIcon from '@material-ui/icons/VideocamSharp';
+import PhoneSharpIcon from '@material-ui/icons/PhoneSharp';
 //import {isMobile} from 'react-device-detect';
 import Notifications from "./Notifications";
 import Messages from "./Messages";
@@ -46,14 +49,28 @@ const Home = () => {
       <section>
         <AppBar position="static">
             <Toolbar >
-              <Avatar alt="User1" src="https://material-ui.com/static/images/avatar/1.jpg" />
+            <div class='photo1'>
+              <Avatar alt="User1" src="https://material-ui.com/static/images/avatar/3.jpg" />
+            </div>
               <Typography variant="h6" >
-                User
+                Alicja Kowalczyk
               </Typography>
+              <div class='dane'>
+                <button>Czat</button> 
+                <button>Pliki</button> 
+                <button>Zdjęcia</button> 
+                <button>Filmy</button> 
+              </div>
+              <div class='talk'>
+              <button><PersonAddSharpIcon/></button> 
+              <button><VideocamSharpIcon/></button> 
+              <button><PhoneSharpIcon/></button> 
+              </div>
             </Toolbar>
         </AppBar>
         <Grid container fullWidth fullHeight style={content}>
           <Grid item xs={menuWidth}>
+          <div class='navbar-left'>
             <List style={menu}>
               <ListItem key="notifications">
                 <ListItemIcon>
@@ -86,6 +103,7 @@ const Home = () => {
                 <NavLink to='/teams'>Teams</NavLink>
               </ListItem>
             </List>
+           </div>
           </Grid>
           <Grid item xs={contentWidth}>
             <Route path="/notifications" component={Notifications}/>
