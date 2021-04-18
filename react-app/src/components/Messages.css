@@ -22,7 +22,7 @@ h6.MuiTypography-root.MuiTypography-h6 {
 
 .message{
    border:2px solid white;
-   border-color: white;
+   border-color: grey;
    border-top-right-radius: 0.7em;
    border-bottom-left-radius: 0.7em;
    width: 5em;
@@ -54,13 +54,13 @@ h6.MuiTypography-root.MuiTypography-h6 {
 }
 
  .MuiPaper-root.MuiGrid-root.MuiGrid-container.MuiPaper-elevation1.MuiPaper-rounded {
-    height: 45.2em;
-    background-color: rgb(184, 225, 233);
+    height: 48.4em;
+    background-color: white;
 }
 
 .type{
     width: 50em;
-    border:1px solid white;
+    border:1px solid grey;
     background-color: white;
     padding-bottom: 0.7em;
     margin-left: -1em;
@@ -96,4 +96,49 @@ l{
     margin-top: 0.2em;
 }
 
+
+.right-navbar{
+    margin-left: -7.1em;
+}
+
+.photo1{
+    padding-right: 1em;
+}
+
+.dane{
+    margin-left: 4em;
+    margin-top: -0.5em;
+}
+
+.dane :hover {
+    background-color: white;
+}
+
+.talk :hover {
+    background-color: white;
+}
+
+button {
+    background-color: transparent;
+    height: 2em;
+    width: 5em;
+    border-color: transparent;
+}
+
+svg.MuiSvgIcon-root {
+    color: black;
+    padding-right: 0.5em;
+    padding-left: 0.5em;
+}
+
+.talk{
+    margin-left: 23em;
+
+}
+
+c1{
+    border: 3px solid green;
+    border-radius: 2em;
+    margin-left: 8em;
+}
 
