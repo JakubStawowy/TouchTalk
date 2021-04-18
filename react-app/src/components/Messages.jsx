@@ -18,6 +18,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import EmailIcon from '@material-ui/icons/Email';
 import MoodIcon from '@material-ui/icons/Mood';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
+import PersonAddSharpIcon from '@material-ui/icons/PersonAddSharp';
+import VideocamSharpIcon from '@material-ui/icons/VideocamSharp';
+import PhoneSharpIcon from '@material-ui/icons/PhoneSharp';
 import "./Messages.css"
 
 function detectMob() {
@@ -40,7 +43,7 @@ const Messages = () => {
                     <AppBar position="static">
                         <Toolbar>
                             <Typography variant="h6" >
-                            Users
+                            Czat
                             </Typography>
                             <div class='search'>
                                 <SearchIcon />
@@ -61,21 +64,24 @@ const Messages = () => {
                             <ListItemIcon>
                                 <Avatar alt="User1" src="https://material-ui.com/static/images/avatar/1.jpg" />
                             </ListItemIcon>
-                            <ListItemText primary="User1">User1</ListItemText>
+                            <ListItemText primary="Kamil Tomasiak">User1</ListItemText>
+                            <c1>  </c1>
                             <ListItemText secondary="online" align="right"></ListItemText>
                         </ListItem>
                         <ListItem button key="User2" onClick={()=>setConversation({'is': true})}>
                             <ListItemIcon>
                                 <Avatar alt="User2" src="https://material-ui.com/static/images/avatar/2.jpg" />
                             </ListItemIcon>
-                            <ListItemText primary="User2">User2</ListItemText>
+                            <ListItemText primary="Kacper Ogórek">User2</ListItemText>
+                            <c1>  </c1>
                             <ListItemText secondary="online" align="right"></ListItemText>
                         </ListItem>
                         <ListItem button key="User3" onClick={()=>setConversation({'is': true})}>
                             <ListItemIcon>
                                 <Avatar alt="User3" src="https://material-ui.com/static/images/avatar/7.jpg" />
                             </ListItemIcon>
-                            <ListItemText primary="User3">User2</ListItemText>
+                            <ListItemText primary="Kornelia Wastag">User2</ListItemText>
+                            <c1>  </c1>
                             <ListItemText secondary="online" align="right"></ListItemText>
                         </ListItem>
                     </List>  
@@ -84,6 +90,29 @@ const Messages = () => {
                     <Divider orientation="vertical"/>
                 </Grid>)}
                 {detectMob() && !conversation.is ? null : (<Grid item xs={conversationWidth} >
+                <div class='right-navbar'>
+                <AppBar position="static">
+                <Toolbar>
+                <div class='photo1'>
+                   <Avatar alt="User1" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                </div>
+                <Typography variant="h6" >
+                   Alicja Kowalczyk
+                </Typography>
+                <div class='dane'>
+                  <button>Czat</button> 
+                  <button>Pliki</button> 
+                  <button>Zdjęcia</button> 
+                  <button>Filmy</button> 
+                </div>
+                <div class='talk'>
+                  <button><PersonAddSharpIcon/></button> 
+                  <button><VideocamSharpIcon/></button> 
+                  <button><PhoneSharpIcon/></button>
+                </div>
+                </Toolbar>
+                </AppBar>
+                </div>
                 <div class='mess'>
                     <List>
                       <div class='photo'>
@@ -91,6 +120,7 @@ const Messages = () => {
                       </div>
                         <ListItem key="1">
                             <Grid container>
+                                <div class='message'>
                                 <Grid item xs={12}>
                                     <ListItemText align="left" primary="Hej co tam?"></ListItemText>
                                 </Grid>
