@@ -15,6 +15,10 @@ import Fab from '@material-ui/core/Fab';
 import InputBase from '@material-ui/core/InputBase';
 import SendIcon from '@material-ui/icons/Send';
 import SearchIcon from '@material-ui/icons/Search';
+import EmailIcon from '@material-ui/icons/Email';
+import MoodIcon from '@material-ui/icons/Mood';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import "./Messages.css"
 
 function detectMob() {
     return ( ( window.innerWidth <= 800 ) && ( window.innerHeight <= 600 ) );
@@ -30,7 +34,7 @@ const Messages = () => {
         conversationWidth = 12;
     }
     return (
-        <div>
+        <div class='size'>
             <Grid container component={Paper} fullHeight>
                 {detectMob() && conversation.is ? null : (<Grid item xs={usersWidth} >
                     <AppBar position="static">
@@ -38,13 +42,17 @@ const Messages = () => {
                             <Typography variant="h6" >
                             Users
                             </Typography>
-                            <div >
+                            <div class='search'>
                                 <SearchIcon />
+                            </div>
                                 <InputBase
-                                    placeholder="Search…"
-
                                     inputProps={{ 'aria-label': 'search' }}
                                 />
+                            <p>
+                                <EmailIcon />
+                            </p>
+                            <div class="sea">
+                                <InputBase placeholder="Search…"></InputBase>
                             </div>
                         </Toolbar>
                     </AppBar>
@@ -58,14 +66,14 @@ const Messages = () => {
                         </ListItem>
                         <ListItem button key="User2" onClick={()=>setConversation({'is': true})}>
                             <ListItemIcon>
-                                <Avatar alt="User2" src="https://material-ui.com/static/images/avatar/1.jpg" />
+                                <Avatar alt="User2" src="https://material-ui.com/static/images/avatar/2.jpg" />
                             </ListItemIcon>
                             <ListItemText primary="User2">User2</ListItemText>
                             <ListItemText secondary="online" align="right"></ListItemText>
                         </ListItem>
                         <ListItem button key="User3" onClick={()=>setConversation({'is': true})}>
                             <ListItemIcon>
-                                <Avatar alt="User3" src="https://material-ui.com/static/images/avatar/1.jpg" />
+                                <Avatar alt="User3" src="https://material-ui.com/static/images/avatar/7.jpg" />
                             </ListItemIcon>
                             <ListItemText primary="User3">User2</ListItemText>
                             <ListItemText secondary="online" align="right"></ListItemText>
@@ -76,36 +84,59 @@ const Messages = () => {
                     <Divider orientation="vertical"/>
                 </Grid>)}
                 {detectMob() && !conversation.is ? null : (<Grid item xs={conversationWidth} >
+                <div class='mess'>
                     <List>
+                      <div class='photo'>
+                        <Avatar alt="User" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                      </div>
                         <ListItem key="1">
                             <Grid container>
                                 <Grid item xs={12}>
                                     <ListItemText align="left" primary="Hej co tam?"></ListItemText>
                                 </Grid>
+                                </div>
                                 <Grid item xs={12}>
+                                <div class='date'>
                                     <ListItemText align="left" secondary="09:30"></ListItemText>
+                                </div>
                                 </Grid>
                             </Grid>
                         </ListItem>
                         <ListItem key="2">
                             <Grid container>
+                            <div class='messages'>
                                 <Grid item xs={12}>
                                     <ListItemText align="right" primary="A nic, oglądam Bojack'a"></ListItemText>
                                 </Grid>
+                                </div>
                                 <Grid item xs={12}>
+                                <div class='dat'>
                                     <ListItemText align="right" secondary="09:33"></ListItemText>
+                                </div>
                                 </Grid>
                             </Grid>
                         </ListItem>
                     </List>
-                    <Divider/>
+                    </div>
                     <Grid container >
+                        <div class='type'>
                         <Grid item xs={11}>
-                            <TextField id="Message" label="Type" fullWidth />
+                            <TextField id="Message" label="Start typing for reply..." fullWidth />
                         </Grid>
+                        </div>
+                        <k>
+                            <MoodIcon/>
+                        </k>
+                        <l>
+                            <Fab color="transparent" aria-label="add"><AttachFileIcon/></Fab>
+                        </l>
+                        <div class='add'>
                         <Grid xs={1} align="right">
-                            <Fab color="primary" aria-label="add"><SendIcon /></Fab>
+                        <div class='right'>
+                           <SendIcon />
+                        </div>
                         </Grid>
+                       </div>
                     </Grid>
                 </Grid>)}
             </Grid>
