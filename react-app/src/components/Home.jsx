@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import { Route, NavLink, HashRouter} from "react-router-dom";
+import { Route, NavLink} from "react-router-dom";
 import PhoneSharpIcon from '@material-ui/icons/PhoneSharp';
 //import {isMobile} from 'react-device-detect';
 import MessageIcon from '@material-ui/icons/Message';
@@ -42,7 +42,6 @@ const Home = () => {
     contentWidth = 12;
   }
   return (
-    <HashRouter>
       <section>
         <Grid container fullWidth fullHeight style={content}>
           <Grid item xs={menuWidth}>
@@ -94,7 +93,6 @@ const Home = () => {
           </Grid>
         </Grid>
       </section>
-    </HashRouter>
   );
 };
 
