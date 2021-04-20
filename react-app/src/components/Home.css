@@ -108,3 +108,8 @@ li.MuiListItem-root.MuiListItem-gutters:hover {
     margin-left: 0.5em;
     font-weight: bold;
 }
+
+button:hover {
+    background-color: white;
+    border-radius: 2em;
+}
