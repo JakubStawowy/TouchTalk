@@ -14,6 +14,8 @@ body{
 
 .search:hover{
     background-color: white;
+    border-radius: 2em;
+
 }
 
 .sea{
@@ -102,11 +104,12 @@ p{
 
 p:hover{
     background-color: white;
+    border-radius: 2em;
 }
 
 .right{
-    margin-top: 6em;
-    margin-left: 2em;
+    margin-top: 0em;
+    margin-left: 8em;
 }
 
 l{
