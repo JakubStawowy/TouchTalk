@@ -37,11 +37,7 @@ const Signin = () => {
   return (
     <section>
       <div className='container'>
-        {auth.login_error ? (
-          <div>
-            Użytkownik nie istnieje
-          </div>
-        ) : null}
+        
       <form onSubmit={formik.handleSubmit}>
         <img src={logo} className="logo"/>
         <div className='input-container'>
@@ -56,6 +52,11 @@ const Signin = () => {
         {formik.touched.email && formik.errors.email ? (
           <div className='form-error'>{formik.errors.email}</div>
         ) : null}
+        {auth.login_error ? (
+          <div className='database-validation-login'>
+            Nie znaleziono konta o takim adresie e-mail. 
+          </div>
+        ) : null}
 
         <label htmlFor='password'>Hasło</label>
         <input
@@ -68,10 +69,10 @@ const Signin = () => {
         <button className='login-button-signin' type='submit'>Zaloguj</button>
         </div>
       </form>
-      <aside>
+      <div className='aside-div'>
         <p>Nie masz jeszcze konta TouchTalk?</p>
         <button className='register-button-signin' onClick={togglePanel}>Utwórz nowe konto</button>
-      </aside>
+      </div>
       </div>
     </section>
     
