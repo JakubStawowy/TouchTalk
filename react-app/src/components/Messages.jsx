@@ -145,7 +145,7 @@ const Messages = () => {
                         <div class='add'>
                         <Grid xs={1} align="right">
                         <div class='right'>
-                            <SendIcon />
+                             <button><SendIcon /></button>
                         </div>
                         </Grid>
                         </div>
