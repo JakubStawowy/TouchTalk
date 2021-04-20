@@ -7,9 +7,13 @@ body{
     background: rgb(48,129,238);
     background: linear-gradient( rgba(48,129,238,1) 0%, rgba(28,162,240,1) 32%, rgba(32,108,174,1) 40%, rgba(24,74,143,1) 50%, rgba(16,59,132,1) 70%);
     font-size: 20px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Montserrat', sens-serif;
     color: white;
     font-weight: bold;
+}
+
+.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-2 {
+    background-color: #3081EE;
 }
 
 .menu{
@@ -21,6 +25,8 @@ body{
 a {
     text-decoration: none;
     color: black;
+    padding-bottom: 1em;
+
 }
 
 li {
@@ -38,6 +44,60 @@ li {
 }
 
 .navbar-left{
-    margin-left: -1.5em;
-    margin-top: 1em;
+    margin-left: -0.5em;
+    margin-top: 0.5em;
+    font-family: 'Montserrat', sens-serif;
+    font-size: 20px;
+}
+
+.MuiListItemIcon-root {
+    margin-top: -1em;
+}
+
+h6.MuiTypography-root.MuiTypography-h6 {
+    font-weight: bold;
+    font-family: 'Montserrat', sens-serif;
+}
+
+.right-navbar{
+    margin-left: 0em;
+    background-color: #3081EE;
+}
+
+.photo1{
+    padding-right: 1em;
+}
+
+.talk :hover {
+    background-color: white;
+}
+button {
+    background-color: transparent;
+    height: 2em;
+    width: 5em;
+    border-color: transparent;
+}
+
+svg.MuiSvgIcon-root {
+    color: black;
+    padding-right: 0.5em;
+    padding-left: 0.5em;
+}
+
+.talk{
+    margin-left: 72em;
+
+}
+
+c1{
+    border: 3px solid green;
+    border-radius: 2em;
+    margin-left: 8em;
+}
+
+h6.MuiTypography-root.MuiTypography-h6 {
+    color: black;
+    font-size: 20px;
+    font-family: 'Montserrat', sens-serif;
+    font-weight: bold;
 }
