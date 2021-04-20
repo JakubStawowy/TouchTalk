@@ -9,7 +9,6 @@ body{
     font-size: 20px;
     font-family: 'Montserrat', sens-serif;
     color: white;
-    font-weight: bold;
 }
 
 .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-2 {
@@ -99,5 +98,13 @@ h6.MuiTypography-root.MuiTypography-h6 {
     color: black;
     font-size: 20px;
     font-family: 'Montserrat', sens-serif;
+    font-weight: bold;
+}
+
+li.MuiListItem-root.MuiListItem-gutters:hover {
+    background-color: white;
+    border-radius: 2em;
+    width: 10em;
+    margin-left: 0.5em;
     font-weight: bold;
 }
