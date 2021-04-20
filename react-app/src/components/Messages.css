@@ -1,3 +1,7 @@
+body{
+    font-family: 'Montserrat', sens-serif;
+}
+
 .size{
     margin-left: -6em;
 }
@@ -5,8 +9,13 @@
 .search{
     color:white;
     margin-top: 0em;
-    margin-left: 13em;
+    margin-left: 10em;
 }
+
+.search:hover{
+    background-color: white;
+}
+
 .sea{
     margin-left: -12em;
     margin-top: -0.2em;
@@ -16,61 +25,65 @@ h6.MuiTypography-root.MuiTypography-h6 {
     margin-top: -0.3em;
 }
 
+header.MuiPaper-root.MuiAppBar-root.MuiAppBar-positionStatic.MuiAppBar-colorPrimary.MuiPaper-elevation4 {
+    background-color: #3081EE;
+}
+
 .photo{
-    margin-left: 0em;
+    margin-left: -6.5em;
 }
 
 .message{
    border:2px solid white;
-   border-color: grey;
-   border-top-right-radius: 0.7em;
-   border-bottom-left-radius: 0.7em;
+   border-color: #8ab5ee;
+   border-radius: 0.5em;
    width: 5em;
-   background-color: white;
-   margin-left: 2em;
+   background-color: #8ab5ee;
+   margin-left: -4.5em;
    margin-top: -2.5em;
    height: 1.7em;
+   font-family: 'Montserrat', sens-serif;
 }
 
 .date{
     margin-top: -0.7em;
-    margin-left: 2.2em;
+    margin-left: -4.4em;
 }
 
 .messages{
     border:2px solid blue;
     margin-left: 39em;
-    border-color: rgb(29, 204, 216);
-    border-top-right-radius: 0.7em;
-    border-bottom-left-radius: 0.7em;
+    border-color: #8ab5ee;
+    border-radius: 0.5em;
     width: 9em;
-    background-color:rgb(29, 204, 216);
-    margin-left: 40em;
-
+    background-color:#8ab5ee;
+    margin-left: 46em;
+    font-family: 'Montserrat', sens-serif;
  }
 
  .dat {
-    margin-right: 6.5em;
+    margin-right: 0.6em;
 }
 
  .MuiPaper-root.MuiGrid-root.MuiGrid-container.MuiPaper-elevation1.MuiPaper-rounded {
-    height: 48.4em;
+    height: 45.2em;
     background-color: white;
 }
 
 .type{
-    width: 50em;
+    width: 62.8em;
     border:1px solid grey;
     background-color: white;
     padding-bottom: 0.7em;
-    margin-left: -1em;
+    margin-left: -7.1em;
     padding-left: 1.5em;
-    border-radius: 0.5em;
+    margin-top: 1em;
+    height: 4.05em;
 }
 
 k{
-    margin-left: -52em;
-    margin-top: 1em;
+    margin-left: -64em;
+    margin-top: 4em;
 }
 
 .add{
@@ -83,62 +96,25 @@ k{
 }
 
 p{
-    margin-left: -10.5em;
+    margin-left: -1em;
     margin-top: 1em;
 }
 
+p:hover{
+    background-color: white;
+}
+
 .right{
-    margin-top: 1em;
+    margin-top: 6em;
     margin-left: 2em;
 }
+
 l{
     margin-left: 50em;
     margin-top: 0.2em;
 }
 
-
-.right-navbar{
-    margin-left: -7.1em;
+ae{
+    margin-top: 0em;
+    margin-left: -1em;
 }
-
-.photo1{
-    padding-right: 1em;
-}
-
-.dane{
-    margin-left: 4em;
-    margin-top: -0.5em;
-}
-
-.dane :hover {
-    background-color: white;
-}
-
-.talk :hover {
-    background-color: white;
-}
-
-button {
-    background-color: transparent;
-    height: 2em;
-    width: 5em;
-    border-color: transparent;
-}
-
-svg.MuiSvgIcon-root {
-    color: black;
-    padding-right: 0.5em;
-    padding-left: 0.5em;
-}
-
-.talk{
-    margin-left: 23em;
-
-}
-
-c1{
-    border: 3px solid green;
-    border-radius: 2em;
-    margin-left: 8em;
-}
-
