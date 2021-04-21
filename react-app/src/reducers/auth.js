@@ -32,7 +32,7 @@ const auth = (state = initialState, action) => {
             }
         case SIGNIN_RESET:
             return {
-                ...state, login_error: true,
+                ...state, login_error: false,
             }
         case SIGNUP:
             return {

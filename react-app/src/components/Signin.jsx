@@ -6,6 +6,7 @@ import logo from './logo.svg'
 import { SigninSchema } from "../validation/formValidation.js";
 import { useDispatch, useSelector} from "react-redux";
 import { signin } from "../actions/auth.js";
+import  {SIGNUP_RESET, SIGNIN_RESET} from '../actions/types.js'
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,8 @@ const Signin = () => {
   const auth = useSelector(state => state.auth)
   const togglePanel = () => {
     history.push("/signup");
+    dispatch({type: SIGNUP_RESET,})
+    dispatch({type: SIGNIN_RESET,})
   };
   const formik = useFormik({
     initialValues: {
@@ -37,11 +40,6 @@ const Signin = () => {
   return (
     <section>
       <div className='container'>
-        {auth.login_error ? (
-          <div>
-            Użytkownik nie istnieje
-          </div>
-        ) : null}
       <form onSubmit={formik.handleSubmit}>
         <img src={logo} className="logo"/>
         <div className='input-container'>
@@ -72,6 +70,11 @@ const Signin = () => {
         <p>Nie masz jeszcze konta TouchTalk?</p>
         <button className='register-button-signin' onClick={togglePanel}>Utwórz nowe konto</button>
       </aside>
+      {auth.login_error ? (
+          <div>
+            Użytkownik nie istnieje
+          </div>
+        ) : null}
       </div>
     </section>
     
