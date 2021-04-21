@@ -1,11 +1,12 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import {Redirect, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import "./Signin.css"
 import logo from './logo.svg'
 import { SigninSchema } from "../validation/formValidation.js";
 import { useDispatch, useSelector} from "react-redux";
 import { signin } from "../actions/auth.js";
+import  {SIGNUP_RESET, SIGNIN_RESET} from '../actions/types.js'
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -13,11 +14,9 @@ const Signin = () => {
   const auth = useSelector(state => state.auth)
   const togglePanel = () => {
     history.push("/signup");
+    dispatch({type: SIGNUP_RESET,})
+    dispatch({type: SIGNIN_RESET,})
   };
-
-  if(auth.login) history.push('/logout');
-  if(auth.login_error) console.log("server error")
-
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -29,12 +28,16 @@ const Signin = () => {
         email: values.email,
         password: values.password,
       };
-      dispatch(signin(form))
+      dispatch(signin(form)).then(() => {
+        history.push("/home");
+      });
       resetForm();
     },
   });
+  if (auth.login) {
+    return <Redirect to='/home' />;
+  }
   return (
-    
     <section>
       <div className='container'>
       <form onSubmit={formik.handleSubmit}>
@@ -51,6 +54,11 @@ const Signin = () => {
         {formik.touched.email && formik.errors.email ? (
           <div className='form-error'>{formik.errors.email}</div>
         ) : null}
+        {auth.login_error ? (
+          <div className='database-validation-login'>
+            Nie znaleziono konta o takim adresie e-mail. 
+          </div>
+        ) : null}
 
         <label htmlFor='password'>Hasło</label>
         <input
@@ -60,16 +68,18 @@ const Signin = () => {
           onChange={formik.handleChange}
           value={formik.values.password}
         />
-        {formik.touched.password && formik.errors.password ? (
-          <div className='form-error'>{formik.errors.password}</div>
-        ) : null}
+          {auth.login_error ? (
+          <div className='database-validation-login'>
+          Nie znaleziono konta o takim adresie e-mail. 
+        </div>
+      ) : null}
         <button className='login-button-signin' type='submit'>Zaloguj</button>
         </div>
       </form>
-      <aside>
+      <div className='aside-div'>
         <p>Nie masz jeszcze konta TouchTalk?</p>
         <button className='register-button-signin' onClick={togglePanel}>Utwórz nowe konto</button>
-      </aside>
+      </div>
       </div>
     </section>
     

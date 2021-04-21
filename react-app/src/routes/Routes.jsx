@@ -10,12 +10,16 @@ const Routes = () => {
     <Switch>
       <Route path='/' exact component={Signin} />
       <Route path='/signup' component={Signup} />
+
       <Route path='/messages' component={Home} />
       <Route path='/notifications' component={Home} />
       <Route path='/tasks' component={Home} />
       <Route path='/calls' component={Home} />
       <Route path='/teams' component={Home} />
       <Route path='/logout' component={Logout} />
+
+      <Route path='/home' component={Home} />
+
     </Switch>
   );
 };
