@@ -42,25 +42,25 @@ const Signup = () => {
   return (
     <section className='container'>
         {auth.register_success ? (
-          <div>
+          <div className= 'database-validation-register'>
             Rejestracja się powiodła. Możesz się zalogować. 
           </div>
         ) : null}
       <div className='login-container'>
       <img src={logo} className="logo"/>
       <div className='register-aside'>
-        <p>Masz już konto TouchTalk?</p>
+        <p className='your-data-p'>Masz już konto TouchTalk?</p>
         <button onClick={togglePanel}>Zaloguj się</button>
       </div>
       </div>
       <div className='register-container'>
-      <h1>Załóż konto w TouchTalk</h1>
-      <h3>Aby założyć konto, wypełnij poniższe pola</h3>
-      <p>Twoje dane</p>
+      <h1 className='create-account-h'>Załóż konto w TouchTalk</h1>
+      <h3 className='register-h'>Aby założyć konto, wypełnij poniższe pola</h3>
+      <p className='your-data-p'>Twoje dane</p>
       <form className='register-form' onSubmit={formik.handleSubmit}>
         <div className='name-surname'>
           <div className='name'>
-          <label htmlFor='firstname'>Imię</label>
+          <label className='login-label' htmlFor='firstname'>Imię</label>
           <input
             id='name'
             name='name'
@@ -73,7 +73,7 @@ const Signup = () => {
         ) : null}
         </div>
         <div className='surname'>
-        <label htmlFor='lastname'>Nazwisko</label>
+        <label className='login-label' htmlFor='lastname'>Nazwisko</label>
         <input
           id='surname'
           name='surname'
@@ -88,7 +88,7 @@ const Signup = () => {
         </div>
 
         <p>Dane konta</p>
-        <label htmlFor='email'>Email</label>
+        <label className='login-label' htmlFor='email'>Email</label>
         <input
           id='email'
           name='email'
@@ -96,16 +96,11 @@ const Signup = () => {
           onChange={formik.handleChange}
           value={formik.values.email}
         />
-        {auth.register_error ? (
-          <div className= 'database-validation-register'>
-            Konto o podanym adresie e-mail już istnieje.
-          </div>
-        ) : null}
         {formik.touched.email && formik.errors.email ? (
           <div className='form-error'>{formik.errors.email}</div>
         ) : null}
 
-        <label htmlFor='password'>Hasło</label>
+        <label className='login-label' htmlFor='password'>Hasło</label>
         <input
           id='password'
           name='password'
@@ -115,6 +110,11 @@ const Signup = () => {
         />
         {formik.touched.password && formik.errors.password ? (
           <div className='form-error'>{formik.errors.password}</div>
+        ) : null}
+        {auth.register_error ? (
+          <div className= 'database-validation-register'>
+            Konto o podanym adresie e-mail już istnieje.
+          </div>
         ) : null}
         <button className='register-button-signup' type='submit'>Zarejestruj</button>
       </form>

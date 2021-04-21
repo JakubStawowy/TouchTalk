@@ -38,12 +38,12 @@ const Signin = () => {
     return <Redirect to='/home' />;
   }
   return (
-    <section>
-      <div className='container'>
-      <form onSubmit={formik.handleSubmit}>
-        <img src={logo} className="logo"/>
+    <section className='login-section'>
+      <div className='container-login'>
+      <form className='login-form' onSubmit={formik.handleSubmit}>
+        <img src={logo} className="logo-login"/>
         <div className='input-container'>
-        <label htmlFor='email'>Email</label>
+        <label className='login-form-label' htmlFor='email'>Email</label>
         <input
           id='email'
           name='email'
@@ -68,11 +68,6 @@ const Signin = () => {
           onChange={formik.handleChange}
           value={formik.values.password}
         />
-          {auth.login_error ? (
-          <div className='database-validation-login'>
-          Nie znaleziono konta o takim adresie e-mail. 
-        </div>
-      ) : null}
         <button className='login-button-signin' type='submit'>Zaloguj</button>
         </div>
       </form>
