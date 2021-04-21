@@ -116,7 +116,7 @@ form{
 }
 
 #email{
-    margin-bottom: 1em;
+    
 }
 
 section button:hover {
@@ -124,6 +124,21 @@ section button:hover {
     color: #009ac9;
     box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.75);
   }
+
+.database-validation-register{
+    color: white;
+    opacity: 70%;
+    font-size: 15px;
+    /*
+    background: rgba( 255, 255, 255, 55%);
+    color: rgb(0, 0, 0);
+    text-align: center;
+    width: 20em;
+    margin-left: inherit;
+    border-radius: 5px;
+    padding: 0.5em;
+    */
+}
 
 @media only screen and (max-device-width: 420px)
 {

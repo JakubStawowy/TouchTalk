@@ -54,6 +54,11 @@ const Signin = () => {
         {formik.touched.email && formik.errors.email ? (
           <div className='form-error'>{formik.errors.email}</div>
         ) : null}
+        {auth.login_error ? (
+          <div className='database-validation-login'>
+            Nie znaleziono konta o takim adresie e-mail. 
+          </div>
+        ) : null}
 
         <label htmlFor='password'>Hasło</label>
         <input
@@ -63,18 +68,18 @@ const Signin = () => {
           onChange={formik.handleChange}
           value={formik.values.password}
         />
+          {auth.login_error ? (
+          <div className='database-validation-login'>
+          Nie znaleziono konta o takim adresie e-mail. 
+        </div>
+      ) : null}
         <button className='login-button-signin' type='submit'>Zaloguj</button>
         </div>
       </form>
-      <aside>
+      <div className='aside-div'>
         <p>Nie masz jeszcze konta TouchTalk?</p>
         <button className='register-button-signin' onClick={togglePanel}>Utwórz nowe konto</button>
-      </aside>
-      {auth.login_error ? (
-          <div>
-            Użytkownik nie istnieje
-          </div>
-        ) : null}
+      </div>
       </div>
     </section>
     
