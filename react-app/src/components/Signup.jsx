@@ -41,12 +41,17 @@ const Signup = () => {
   });
   return (
     <section className='container'>
+        {auth.register_success ? (
+          <div>
+            Rejestracja się powiodła. Możesz się zalogować. 
+          </div>
+        ) : null}
       <div className='login-container'>
       <img src={logo} className="logo"/>
-      <aside className='register-aside'>
+      <div className='register-aside'>
         <p>Masz już konto TouchTalk?</p>
         <button onClick={togglePanel}>Zaloguj się</button>
-      </aside>
+      </div>
       </div>
       <div className='register-container'>
       <h1>Załóż konto w TouchTalk</h1>
@@ -91,6 +96,11 @@ const Signup = () => {
           onChange={formik.handleChange}
           value={formik.values.email}
         />
+        {auth.register_error ? (
+          <div className= 'database-validation-register'>
+            Konto o podanym adresie e-mail już istnieje.
+          </div>
+        ) : null}
         {formik.touched.email && formik.errors.email ? (
           <div className='form-error'>{formik.errors.email}</div>
         ) : null}
