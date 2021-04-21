@@ -9,11 +9,11 @@ export const SigninSchema = Yup.object().shape({
 });
 
 export const SignupSchema = Yup.object().shape({
-    firstname: Yup.string()
+    name: Yup.string()
         .min(2, 'Imię jest za krótkie')
         .max(15, 'Imię jest zbyt długie')
         .required('Pole wymagane'),
-    lastname: Yup.string()
+    surname: Yup.string()
         .min(2, 'Nazwisko jest za krótkie')
         .max(15, 'Nazwisko jest zbyt długie')
         .required('Pole wymagane'),

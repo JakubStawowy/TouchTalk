@@ -5,6 +5,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import pl.team.touchtalk.entities.User;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
     User getUserByEmailAndPassword(String email, String password);
@@ -16,5 +18,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
     * @Returns salt as String
     * */
     @Query(value = "SELECT u.salt FROM users u WHERE u.email=?1", nativeQuery = true)
-    String getSaltByEmail(String email);
+    Optional<String> getSaltByEmail(String email);
+
+
+    Optional<User> getUserByEmail(String email);
 }

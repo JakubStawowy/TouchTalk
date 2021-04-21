@@ -1,6 +1,7 @@
 package pl.team.touchtalk.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import pl.team.touchtalk.enums.UserRoles;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -31,14 +32,15 @@ public class User implements Serializable {
     @NotEmpty
     private String password;
 
-    @Transient
-    private String confirmedPassword;
-
     @NotEmpty
     private String salt;
 
     @NotNull
     private Boolean logged;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private UserRoles role;
 
     @NotNull
     @Column(name = "created_at")
@@ -89,6 +91,15 @@ public class User implements Serializable {
     public void setUser() {
         this.createdAt = new Date(System.currentTimeMillis());
         this.logged = false;
+        this.role = UserRoles.ROLE_USER;
+    }
+
+    public UserRoles getRole() {
+        return role;
+    }
+
+    public void setRole(UserRoles role) {
+        this.role = role;
     }
 
     public String getSalt() {
@@ -177,13 +188,5 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getConfirmedPassword() {
-        return confirmedPassword;
-    }
-
-    public void setConfirmedPassword(String confirmedPassword) {
-        this.confirmedPassword = confirmedPassword;
     }
 }

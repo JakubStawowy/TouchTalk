@@ -2,6 +2,8 @@ package pl.team.touchtalk.controllers;
 
 import com.sun.istack.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.team.touchtalk.entities.User;
 import pl.team.touchtalk.entities.UserDetails;
@@ -42,7 +44,7 @@ public class UserController {
     * @RequestMethod GET
     * @Returns users List - all users from database
     * */
-    @GetMapping("/")
+    @GetMapping({"/", ""})
     public List<User> getUsers(){
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(users::add);
@@ -58,11 +60,10 @@ public class UserController {
     * @Returns user User
     * */
     @GetMapping("/{id}")
-    @Nullable
-    public User getUser(@PathVariable("id") Long id){
-        Optional<User> optionalUser = userRepository.findById(id);
-
-        return optionalUser.orElse(null);
+    public ResponseEntity<User> getUser(@PathVariable("id") Long id){
+        return userRepository.findById(id).map(
+                user -> new ResponseEntity<>(user, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)
+        );
     }
 
     /*
@@ -81,13 +82,14 @@ public class UserController {
     * @Returns user?null if no user found
     * */
     @PutMapping(path = "/{id}/edit", consumes = "application/json")
-    @Nullable
-    public User editUser(@RequestBody UserDetails details, @PathVariable("id") Long id) {
+    public ResponseEntity<String> editUser(@RequestBody UserDetails details, @PathVariable("id") Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
-        optionalUser.ifPresent(value->{
-            value.setUserDetails(details);
-            userRepository.save(value);
-        });
-        return optionalUser.orElse(null);
+        if(optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setUserDetails(details);
+            userRepository.save(user);
+            return new ResponseEntity<>("User edited successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
