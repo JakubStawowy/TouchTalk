@@ -65,7 +65,7 @@ public class LoginController {
             return new ResponseEntity<>(
                     new LoginResponseBody(
                             webTokenProvider.generateToken(loggedUser),
-                            loggedUser.getUserDetails().getName()+" "+loggedUser.getUserDetails().getSurname()
+                            loggedUser
                     ),
                     HttpStatus.OK
             );

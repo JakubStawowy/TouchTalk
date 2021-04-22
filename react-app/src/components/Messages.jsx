@@ -1,55 +1,149 @@
-import React, { useState }  from "react";
+import React, {useEffect, useState} from "react";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
+
 import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
-import InputBase from '@material-ui/core/InputBase';
+
 import SendIcon from '@material-ui/icons/Send';
 import SearchIcon from '@material-ui/icons/Search';
 import EmailIcon from '@material-ui/icons/Email';
 import MoodIcon from '@material-ui/icons/Mood';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
-import PhoneSharpIcon from '@material-ui/icons/PhoneSharp';
+
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import WallpaperIcon from '@material-ui/icons/Wallpaper';
 import GifIcon from '@material-ui/icons/Gif';
-import Fab from '@material-ui/core/Fab';
+
 import "./Messages.css"
 
-function detectMob() {
-    return ( ( window.innerWidth <= 800 ) && ( window.innerHeight <= 800 ) );
-  }
 
+
+import axios from "axios";
+import SockJS from "sockjs-client"
+import Stomp from "stompjs"
+import {useSelector} from "react-redux";
+import {useHistory} from "react-router-dom";
+
+
+const api = axios.create({
+    baseURL: `http://localhost:8080`
+})
+
+
+
+let stompClient = null;
+let receiverId=0;
 const Messages = () => {
+    const auth = useSelector(state=>state.auth)
+    const history = useHistory()
+    if(!auth.login)
+        history.push('/');
+
+    let idActualUser = auth.user.user.id;
     let usersWidth = 3;
     let conversationWidth = 8;
-    const [conversation, setConversation] = useState({'is' : false});
+    const [conversation, setConversation] = useState({'is': false});
 
-    if (detectMob()){
-        usersWidth = 12;
-        conversationWidth = 12;
+
+
+    const [users, setUsers] = useState([]);
+    const [message, setMessage] = useState({
+        type: "",
+        content: "",
+        sender: 0,
+        receiver: 0
+    })
+
+
+    const [actualMessage, setActualMessage] = useState([]);
+
+    useEffect(() => {
+        api.get('/api/users').then(response => response.data)
+            .then(data => setUsers(data))
+
+    }, []);
+
+
+
+    const connect = () => {
+        const socket = new SockJS('http://localhost:8080/ws');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, onConnected, onError);
+
+    }
+
+    const onConnected = () => {
+
+        stompClient.subscribe('/user/' + idActualUser + "/reply", onMessageReceived);
+
+    }
+
+    const onMessageReceived = (payload) => {
+
+        getMessage(receiverId);
+    }
+
+
+    const sendMessage = () => {
+
+        if (stompClient) {
+            stompClient.send("/app/sendPrivateMessage", {}, JSON.stringify(message));
+           setMessage({...message, content: ""});
+
+            setTimeout(()=>{getMessage(receiverId);
+                let a;
+                console.log(a);
+            }, 500);
+        }
+        }
+
+
+    const handleClick = id => {
+        receiverId=id;
+       console.log(receiverId);
+        setConversation({'is': true});
+        setMessage({...message, sender: idActualUser, receiver: receiverId})
+        getMessage(receiverId);
+        connect();
+    };
+
+    const onError = (error) => {
+        console.log("error");
+    }
+
+
+    const getMessage = receiverId => {
+        api.get('/messagelist/'+idActualUser+"/"+receiverId).then(response => response.data)
+            .then(data => {
+
+                    setActualMessage(data)
+                }
+            )
+        console.log("receiver" + receiverId);
     }
     return (
-        <div class='size'>
-            <Grid container component={Paper} fullHeight>
-                {detectMob() && conversation.is ? null : (<Grid item xs={usersWidth} >
+        <div className='size'>
+            <Grid container component={Paper} >
+                {conversation.is ? null : (
+                    <Grid item xs={usersWidth}>
                     <AppBar position="static">
                         <Toolbar>
-                            <Typography variant="h6" >
-                            Czat
+                            <Typography variant="h6">
+                                Chat
                             </Typography>
-                                <ae><button><ExpandMoreIcon/></button></ae>
-                            <div class='search'>
-                                <button><SearchIcon /></button>
+                            <ae>
+                                <button><ExpandMoreIcon/></button>
+                            </ae>
+                            <div className='search'>
+                                <button><SearchIcon/></button>
                             </div>
                             {/* <InputBase
                                     inputProps={{ 'aria-label': 'search' }}
@@ -59,98 +153,142 @@ const Messages = () => {
                                 <InputBase placeholder="Search…"></InputBase>
                             </div> */}
                             <p>
-                                <button><EmailIcon /></button>
+                                <button><EmailIcon/></button>
                             </p>
                         </Toolbar>
                     </AppBar>
                     <List>
-                        <ListItem button key="User1" onClick={()=>setConversation({'is': true})}>
-                            <ListItemIcon>
-                                <Avatar alt="User1" src="https://material-ui.com/static/images/avatar/1.jpg" />
-                            </ListItemIcon>
-                            <ListItemText primary="Kamil Tomasiak">User1</ListItemText>
-                                <c1>  </c1>
-                            <ListItemText secondary="online" align="right"></ListItemText>
-                        </ListItem>
-                        <ListItem button key="User2" onClick={()=>setConversation({'is': true})}>
-                            <ListItemIcon>
-                                <Avatar alt="User2" src="https://material-ui.com/static/images/avatar/2.jpg" />
-                            </ListItemIcon>
-                            <ListItemText primary="Kacper Ogórek">User2</ListItemText>
-                            <c1>  </c1>
-                            <ListItemText secondary="online" align="right"></ListItemText>
-                        </ListItem>
-                        <ListItem button key="User3" onClick={()=>setConversation({'is': true})}>
-                            <ListItemIcon>
-                                <Avatar alt="User3" src="https://material-ui.com/static/images/avatar/7.jpg" />
-                            </ListItemIcon>
-                            <ListItemText primary="Kornelia Wastag">User2</ListItemText>
-                            <c1>  </c1>
-                            <ListItemText secondary="online" align="right"></ListItemText>
-                        </ListItem>
-                    </List> 
-                    
-                </Grid>)}
-                {detectMob() ? null : (<Grid item xs={1} >
-                    <Divider orientation="vertical"/>
-                </Grid>)}
-                {detectMob() && !conversation.is ? null : (<Grid item xs={conversationWidth} >
-                    <div class='mess'>
-                    <List>
-                    <div class='photo'>
-                        <Avatar alt="User" src="https://material-ui.com/static/images/avatar/3.jpg" />
-                    </div>
-                        <ListItem key="1">
-                            <Grid container>
-                                <div class='message'>
-                                <Grid item xs={12}>
-                                    <ListItemText align="left" primary="Hej co tam?"></ListItemText>
-                                </Grid>
-                                </div>
-                                <Grid item xs={12}>
-                                <div class='date'>
-                                    <ListItemText align="left" secondary="09:30"></ListItemText>
-                                </div>
-                                </Grid>
-                            </Grid>
-                        </ListItem>
-                        <ListItem key="2">
-                            <Grid container>
-                            <div class='messages'>
-                                <Grid item xs={12}>
-                                    <ListItemText align="right" primary="A nic, oglądam Bojack'a"></ListItemText>
-                                </Grid>
-                                </div>
-                                <Grid item xs={12}>
-                                <div class='dat'>
-                                    <ListItemText align="right" secondary="09:33"></ListItemText>
-                                </div>
-                                </Grid>
-                            </Grid>
-                        </ListItem>
+
+                        {users.map(user => (
+                            <ListItem button onClick={() =>handleClick(user.id)} key={user.id}>
+
+                                <ListItemIcon>
+                                        <Avatar alt={user.userDetails.name}
+                                                src="https://material-ui.com/static/images/avatar/1.jpg"/>
+                                </ListItemIcon>
+                                <ListItemText primary={user.userDetails.name}/>
+                                <c1/>
+                                <ListItemText secondary="online" align="right"/>
+
+                            </ListItem>
+
+                        ))}
+
                     </List>
-                    </div>
-                    <Grid container >
-                        <div class='type'>
-                        <Grid item xs={11}>
-                            <TextField id="Message" label="Napisz nową wiadomość..." fullWidth />
+                </Grid>)}
+
+
+
+                {conversation.is ? (
+
+                    <Grid className=" messageList" item xs={conversationWidth}>
+                        <List className='mess'>
+
+                            {actualMessage.map((messR) => (
+                                (messR.sender===idActualUser)?(
+                                    <ListItem id={messR.id} alignItems="center" className="right"  >
+                                        <div className='photo'>
+                                            <Avatar alt="User"
+                                                    src="https://material-ui.com/static/images/avatar/3.jpg"/>
+                                        </div>
+                                        <div>
+                                            <Grid container>
+                                                <div className='message'>
+                                                    <Grid item xs={12}>
+                                                        <ListItemText align="right" primary={messR.content} />
+                                                    </Grid>
+                                                </div>
+                                                <Grid item xs={12}>
+                                                    <div className='date'>
+                                                        <ListItemText align="left" secondary={messR.dateTime}/>
+                                                    </div>
+                                                </Grid>
+                                            </Grid>
+                                        </div>
+                                    </ListItem>
+
+                                ):(
+                                    <ListItem id={messR.id} alignItems="flex-start" className="left">
+
+                                        <div>
+                                            <Grid container>
+                                                <div className='message'>
+                                                    <Grid item xs={12}>
+                                                        <ListItemText align="left" primary={messR.content}/>
+                                                    </Grid>
+                                                </div>
+                                                <Grid item xs={12}>
+                                                    <div className='date'>
+                                                        <ListItemText align="left" secondary={messR.dateTime}/>
+                                                    </div>
+                                                </Grid>
+                                            </Grid>
+                                        </div>
+
+
+                                        <div className='photo'>
+                                            <Avatar alt="User"
+                                                    src="https://material-ui.com/static/images/avatar/3.jpg"/>
+                                        </div>
+                                    </ListItem>
+
+
+                                    )
+
+                            ))}
+
+                        </List>
+                        <Grid container>
+                            <div className='type'>
+                                <Grid item xs={11}>
+                                    <TextField id="Message" label="Napisz nową wiadomość..."
+                                               onChange={e => setMessage({
+                                                   ...message,
+                                                   content: e.target.value,
+                                                   type: "CHAT"
+                                               })}
+                                               value={message.content}
+                                               onKeyPress={event => {
+                                                   if (event.key === 'Enter') {
+                                                       sendMessage();
+                                                   }
+                                               }}
+
+
+                                    />
+                                </Grid>
+                            </div>
+                            <k>
+                                <button><TextFieldsIcon/></button>
+                                <button><WallpaperIcon/></button>
+                                <button><MoodIcon/></button>
+                                <button><GifIcon/></button>
+                            </k>
+                            <div className='add'>
+                                <Grid xs={1} align="right">
+                                    <div className='right'>
+                                        <button onClick={sendMessage}><SendIcon/></button>
+                                    </div>
+                                </Grid>
+                            </div>
                         </Grid>
-                        </div>
-                        <k>
-                            <button><TextFieldsIcon/></button>
-                            <button><WallpaperIcon/></button>
-                            <button><MoodIcon/></button>
-                            <button><GifIcon/></button>
-                        </k>
-                        <div class='add'>
-                        <Grid xs={1} align="right">
-                        <div class='right'>
-                             <button><SendIcon /></button>
-                        </div>
-                        </Grid>
+                    </Grid>
+                ) : (
+
+
+                    <Grid item xs={conversationWidth}>
+                        <div className='mess'>
+
+                            <p>wybierz uzytkownika</p>
+                            <p>wybierz uzytkownika</p>
+                            <p>wybierz uzytkownika</p>
+                            <p>wybierz uzytkownika</p>
+                            <p>wybierz uzytkownika</p>
                         </div>
                     </Grid>
-                </Grid>)}
+
+
+                )}
             </Grid>
         </div>
     );

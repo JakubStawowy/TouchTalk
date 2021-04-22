@@ -47,7 +47,7 @@ const Signup = () => {
           </div>
         ) : null}
       <div className='login-container'>
-      <img src={logo} className="logo"/>
+      <img src={logo} alt= "login" className="logo"/>
       <div className='register-aside'>
         <p>Masz już konto TouchTalk?</p>
         <button onClick={togglePanel}>Zaloguj się</button>

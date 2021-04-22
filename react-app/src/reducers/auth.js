@@ -11,7 +11,7 @@ import {
 const user = JSON.parse(localStorage.getItem('user'));
 const initialState = user ? {
     login: true,
-    user: user.result // todo - sprawdzić co zwraca backend
+    user: user // todo - sprawdzić co zwraca backend
 } : {
     login: false,
     user: null,

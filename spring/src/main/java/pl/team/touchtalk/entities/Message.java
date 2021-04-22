@@ -2,6 +2,7 @@ package pl.team.touchtalk.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.lang.Nullable;
+import pl.team.touchtalk.enums.MessageType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,8 +13,8 @@ import java.util.Set;
 /*
  * Message POJO
  *
- * @Author Jakub Stawowy
- * @Version 1.0
+ * @Author Jakub Stawowy, Paweł Szydło, Grzegorz Szydło, Bartosz Szlęzak, Łukasz Stolarz
+ * @Version 2.0
  * @Since 2021-04-06
  * */
 @Entity
@@ -37,12 +38,17 @@ public class Message implements Serializable {
     @JoinColumn(name = "sender_id")
     private User sender;
 
+    private MessageType type;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "messagesReceived")
     private Set<User> receivers;
-    
+
+
     @ManyToMany(mappedBy = "message")
     private Set<Group> groups;
+
+
 
     /*
     * constructor

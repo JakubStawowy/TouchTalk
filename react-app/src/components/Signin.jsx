@@ -41,7 +41,7 @@ const Signin = () => {
     <section>
       <div className='container'>
       <form onSubmit={formik.handleSubmit}>
-        <img src={logo} className="logo"/>
+        <img src={logo} alt= "login" className="logo"/>
         <div className='input-container'>
         <label htmlFor='email'>Email</label>
         <input

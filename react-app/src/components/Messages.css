@@ -2,10 +2,6 @@ body{
     font-family: 'Montserrat', sens-serif;
 }
 
-.size{
-    margin-left: -6em;
-}
-
 .search{
     color:white;
     margin-top: 0em;
@@ -15,77 +11,62 @@ body{
 .search:hover{
     background-color: white;
     border-radius: 2em;
-
 }
 
-.sea{
-    margin-left: -12em;
-    margin-top: -0.2em;
-}
-
-h6.MuiTypography-root.MuiTypography-h6 {
-    margin-top: -0.3em;
-}
 
 header.MuiPaper-root.MuiAppBar-root.MuiAppBar-positionStatic.MuiAppBar-colorPrimary.MuiPaper-elevation4 {
     background-color: #3081EE;
 }
 
-.photo{
-    margin-left: -6.5em;
-}
-
 .message{
-   border:2px solid white;
-   border-color: #8ab5ee;
-   border-radius: 0.5em;
-   width: 5em;
-   background-color: #8ab5ee;
-   margin-left: -4.5em;
-   margin-top: -2.5em;
-   height: 1.7em;
-   font-family: 'Montserrat', sens-serif;
-}
-
-.date{
-    margin-top: -0.7em;
-    margin-left: -4.4em;
+    border:2px solid white;
+    border-color: #8ab5ee;
+    border-radius: 0.5em;
+    width: 5em;
+    background-color: #8ab5ee;
+    height: 1.7em;
+    font-family: 'Montserrat', sens-serif;
 }
 
 .messages{
     border:2px solid blue;
-    margin-left: 39em;
     border-color: #8ab5ee;
     border-radius: 0.5em;
     width: 9em;
     background-color:#8ab5ee;
-    margin-left: 46em;
     font-family: 'Montserrat', sens-serif;
- }
-
- .dat {
-    margin-right: 0.6em;
 }
 
- .MuiPaper-root.MuiGrid-root.MuiGrid-container.MuiPaper-elevation1.MuiPaper-rounded {
-    height: 45.2em;
+.dat {
+    margin-right: inherit;
+}
+
+.MuiPaper-root.MuiGrid-root.MuiGrid-container.MuiPaper-elevation1.MuiPaper-rounded {
+    height: 43.2em;
     background-color: white;
 }
 
 .type{
-    width: 62.8em;
+    width: 100%;
     border:1px solid grey;
     background-color: white;
     padding-bottom: 0.7em;
-    margin-left: -7.1em;
     padding-left: 1.5em;
-    margin-top: 1em;
-    height: 4.05em;
+    height: 3.5em;
+    margin-top: -1em;
 }
 
-k{
-    margin-left: -64em;
-    margin-top: 4em;
+.bottom-bar{
+    margin-top: -1.5em;
+}
+
+
+
+
+.navList1{
+    display: flex;
+    justify-content: left;
+    grid-template-rows: auto;
 }
 
 .add{
@@ -97,67 +78,93 @@ k{
     margin-top: 31em;;
 }
 
-p{
+.email_icon{
     margin-left: -1em;
-    margin-top: 1em;
 }
 
-p:hover{
+.email_icon:hover{
     background-color: white;
     border-radius: 2em;
 }
 
-.right{
-    margin-top: 0em;
-    margin-left: 8em;
+.mess1{
+    padding-right: 1em;
+    display: flex;
 }
-
-l{
-    margin-left: 50em;
-    margin-top: 0.2em;
-}
-
-ae{
-    margin-top: 0em;
-    margin-left: -1em;
-}
-
-
-@media screen and (min-width: 992px) and (max-width: 1900px){
 
 .photo{
-    margin-left: -3em;
+    padding-right: 1em;
 }
 
-.message{
-    margin-left: -0.8em;
+.new_size{
+    background-color: white;
+    width: 100%;
+    display: flex;
 }
 
-.date{
-    margin-left: -0.5em;
+.mess{
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    align-content: center;
+    justify-content: center;
+    overflow: auto;
 }
 
-.messages{
-    margin-left: 16.5em;
+.messageList{
+    height: 90vh;
+    padding-top: 3em;
+}
+span.MuiTypography-root.MuiListItemText-primary.MuiTypography-body1.MuiTypography-displayBlock {
+    color: black;
 }
 
-.type{
-    width: 33.8em;
-    margin-left: -3.4em;
+.bottom{
+    align-content: center;
+    width:100%;
+    margin-top: 4em;
 }
 
-
-k{
-    margin-top: -2em;
-    margin-left: -3em;
+.right{
+    margin-top: 0.5em;
+    margin-right: inherit;
 }
 
-.search{
-    margin-left: -0.5em;
+svg.MuiSvgIcon-root:hover {
+    background-color: white;
+    border-radius: 2em;
 }
 
-.size{
-    margin-left: 0em;
-}
+@media screen and (min-width: 680) and (max-width: 1300px){
+
+
+    .message{
+        margin-left: -0.8em;
+    }
+
+    .date{
+        margin-left: -0.5em;
+    }
+
+    .messages{
+        margin-left: 16.5em;
+    }
+
+    .type{
+        width: 33.8em;
+        margin-left: -3.4em;
+    }
+
+    .search{
+        margin-left: -0.5em;
+    }
+
+    .size{
+        margin-left: 0em;
+    }
+
+    .bottom-bar{
+        margin-left: -3em;
+    }
 }
 
