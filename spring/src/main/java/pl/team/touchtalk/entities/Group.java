@@ -1,14 +1,20 @@
 package pl.team.touchtalk.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+/*
+* Group POJO
+*
+* @Author Sebastian Pokrywka
+* @Version 1.0
+* @Since 2021-04-06
+* */
 
 @Entity
 @Table(name = "groups")
@@ -40,13 +46,23 @@ public class Group implements Serializable {
     )
     private Set<Message> message = new HashSet<>();
 
-     public Group(@NotEmpty String name, @NotNull String code) {
+    /*
+    * constructor
+    *
+    * @Param name - group name
+    * @Param code - group code used to find join group
+    * */
+    public Group(@NotEmpty String name, @NotNull String code) {
         this.name = name;
         this.code = code;
         
     }
 
-     public Long getId() {
+    public Group() {
+
+    }
+
+    public Long getId() {
         return id;
     }
 

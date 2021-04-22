@@ -6,6 +6,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
+/*
+ * UserDetails POJO
+ *
+ * @Author Jakub Stawowy
+ * @Version 1.0
+ * @Since 2021-04-06
+ * */
 @Entity
 @Table(name = "user_details")
 public class UserDetails implements Serializable {
@@ -26,6 +33,14 @@ public class UserDetails implements Serializable {
     @OneToOne(mappedBy = "userDetails")
     private User user;
 
+    /*
+    * constructor
+    *
+    * @Param username
+    * @Param surname
+    * @Param phone
+    * @Param image
+    * */
     public UserDetails(@NotEmpty String username, @NotEmpty String surname, String phone, String image) {
         this.username = username;
         this.surname = surname;

@@ -5,6 +5,13 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/*
+ * Log POJO
+ *
+ * @Author Jakub Stawowy
+ * @Version 1.0
+ * @Since 2021-04-06
+ * */
 @Entity
 @Table(name = "user_logs")
 public class Log implements Serializable {
@@ -29,6 +36,12 @@ public class Log implements Serializable {
         logTime = new Timestamp(System.currentTimeMillis());
     }
 
+    /*
+    * constructor
+    *
+    * @Param sessionId
+    * @Param user - user that is logging on current session
+    * */
     public Log(@NotNull String sessionId, User user) {
         this.sessionId = sessionId;
         this.user = user;

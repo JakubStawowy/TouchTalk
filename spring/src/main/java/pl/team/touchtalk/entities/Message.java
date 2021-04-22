@@ -9,6 +9,13 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
 
+/*
+ * Message POJO
+ *
+ * @Author Jakub Stawowy
+ * @Version 1.0
+ * @Since 2021-04-06
+ * */
 @Entity
 @Table(name = "messages")
 public class Message implements Serializable {
@@ -37,6 +44,13 @@ public class Message implements Serializable {
     @ManyToMany(mappedBy = "message")
     private Set<Group> groups;
 
+    /*
+    * constructor
+    *
+    * @Param content
+    * @Param file - when no file is attached to message then value is null
+    * @Param sender
+    * */
     public Message(@NotNull String content, @Nullable String file, User sender) {
         this.content = content;
         this.file = file;
