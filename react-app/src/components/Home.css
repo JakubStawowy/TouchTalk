@@ -1,0 +1,155 @@
+html, body {
+    height: 100%;
+    overflow: auto;
+}
+
+body{
+    background: rgb(48,129,238);
+    background: linear-gradient( rgba(48,129,238,1) 0%, rgba(28,162,240,1) 32%, rgba(32,108,174,1) 40%, rgba(24,74,143,1) 50%, rgba(16,59,132,1) 70%);
+    font-size: 20px;
+    font-family: 'Montserrat', sens-serif;
+    color: white;}
+
+.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-2 {
+    background-color: #3081EE;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    padding-bottom: 1em;
+    padding-left: 1em;
+}
+
+li {
+    list-style-type: none;
+}
+
+.page-content{
+    align-self: right;
+}
+
+
+.navbar-left{
+    font-family: 'Montserrat', sens-serif;
+    font-size: 24px;
+}
+
+.MuiListItemIcon-root {
+    margin-top: -1em;
+    margin-left: 0.5em;
+}
+
+
+
+h6.MuiTypography-root.MuiTypography-h6 {
+    font-weight: bold;
+    font-family: 'Montserrat', sens-serif;
+}
+
+.right-navbar{
+    background-color: #3081EE;
+}
+
+.photo1{
+    padding-right: 1em;
+    padding-left: 1em;
+}
+
+.talk :hover {
+    background-color: white;
+    
+}
+
+button {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+svg.MuiSvgIcon-root {
+    color: black;
+}
+
+c1{
+    border: 3px solid green;
+    border-radius: 2em;
+    margin-left: 8em;
+}
+
+h6.MuiTypography-root.MuiTypography-h6 {
+    color: black;
+    font-size: 30px;
+    font-family: 'Montserrat', sens-serif;
+    font-weight: bold;
+}
+
+li.MuiListItem-root.MuiListItem-gutters:hover {
+    background-color: white;
+    border-radius: 2em;
+    margin-left: inherit;
+    font-weight: bold;
+}
+.navList2{
+    display: flex;
+    justify-content: flex-start;
+}
+.navList{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1em;
+    padding-bottom: 1em;
+
+}
+
+.talk button:hover{
+    background-color: white;
+    border-radius: 2em;
+}
+
+/* @media only screen (max-width: 1400px) {
+    .navbar-left{
+        font-size: 22px;
+    }
+
+    a {
+        padding-left: 0em;
+    }
+
+} */
+
+@media only screen and (max-width: 1400px) {
+    .navbar-left{
+        font-size: 22px;
+    }
+
+    a {
+        padding-left: 0em;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .navbar-left{
+        font-size: 18px;
+    }
+    a {
+        padding-left: 0em;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .navbar-left{
+        font-size: 15px;
+    }
+    a {
+        padding-left: 0em;
+    }
+}
+
+@media only screen and (max-width: 950px) {
+    .navbar-left{
+        font-size: 12px;
+    }
+    a {
+        padding-left: 0em;
+    }
+}
