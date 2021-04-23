@@ -7,9 +7,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 @Entity
 public class ChatMessage {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a");
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,7 +23,7 @@ public class ChatMessage {
     private String content;
     private Long sender;
     private Long receiver;
-	private LocalDateTime dateTime=LocalDateTime.now();; 
+	private LocalDateTime dateTime=  LocalDateTime.parse(LocalDateTime.now(),);
 
 
     public MessageType getType() {

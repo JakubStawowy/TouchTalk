@@ -13,49 +13,34 @@ body{
 .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-2 {
     background-color: #3081EE;
 }
-.homeContainer{
-    height: 90vh;
-    /*margin-left: 0;*/
-    /*margin-right: auto;*/
-}
-
-.MuiAppBar-root{
-height: 8vh;
-    z-index: 0;
-}
-.menu{
-    text-align: left;
-}
 
 a {
     text-decoration: none;
     color: black;
     padding-bottom: 1em;
+    padding-left: 1em;
 }
 
 li {
     list-style-type: none;
 }
 
-.content{
-    display: flex;
-    flex-direction: row;
+.page-content{
+    align-self: right;
 }
 
-.page-content{
-    /*width: 80vw;*/
-}
 
 .navbar-left{
-
-    align-items: inherit;
     font-family: 'Montserrat', sens-serif;
-    font-size: 20px;
+    font-size: 24px;
 }
 
 .MuiListItemIcon-root {
     margin-top: -1em;
+    margin-left: 0.5em;
 }
+
+
 
 h6.MuiTypography-root.MuiTypography-h6 {
     font-weight: bold;
@@ -68,23 +53,21 @@ h6.MuiTypography-root.MuiTypography-h6 {
 
 .photo1{
     padding-right: 1em;
+    padding-left: 1em;
 }
 
 .talk :hover {
     background-color: white;
+
 }
 
 button {
     background-color: transparent;
-    height: 2em;
-    width: 5em;
     border-color: transparent;
 }
 
 svg.MuiSvgIcon-root {
     color: black;
-    padding-right: 0.5em;
-    padding-left: 0.5em;
 }
 
 c1{
@@ -95,7 +78,7 @@ c1{
 
 h6.MuiTypography-root.MuiTypography-h6 {
     color: black;
-    font-size: 20px;
+    font-size: 30px;
     font-family: 'Montserrat', sens-serif;
     font-weight: bold;
 }
@@ -103,20 +86,19 @@ h6.MuiTypography-root.MuiTypography-h6 {
 li.MuiListItem-root.MuiListItem-gutters:hover {
     background-color: white;
     border-radius: 2em;
-    width: 10em;
     margin-left: inherit;
     font-weight: bold;
 }
 .navList2{
     display: flex;
     justify-content: flex-start;
-
 }
-
 .navList{
     display: flex;
     justify-content: space-between;
-    padding: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+
 }
 
 .talk button:hover{
@@ -124,9 +106,48 @@ li.MuiListItem-root.MuiListItem-gutters:hover {
     border-radius: 2em;
 }
 
-@media screen and (min-width: 992px) and (max-width: 1900px){
+/* @media only screen (max-width: 1400px) {
     .navbar-left{
-        margin-left:-1em
+        font-size: 22px;
+    }
+    a {
+        padding-left: 0em;
+    }
+} */
+
+@media only screen and (max-width: 1400px) {
+    .navbar-left{
+        font-size: 22px;
+    }
+
+    a {
+        padding-left: 0;
     }
 }
 
+@media only screen and (max-width: 1200px) {
+    .navbar-left{
+        font-size: 18px;
+    }
+    a {
+        padding-left: 0;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .navbar-left{
+        font-size: 15px;
+    }
+    a {
+        padding-left: 0;
+    }
+}
+
+@media only screen and (max-width: 950px) {
+    .navbar-left{
+        font-size: 12px;
+    }
+    a {
+        padding-left: 0;
+    }
+}
