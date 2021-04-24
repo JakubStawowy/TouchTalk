@@ -51,22 +51,12 @@ public class User implements Serializable {
     private UserDetails userDetails;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Log> logs = new HashSet<>();
-
-    @JsonIgnore
     @OneToMany(mappedBy = "sender")
-    private Set<Message> messages;
+    private Set<Message> messagesSent;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "messages_to_users",
-            joinColumns = {@JoinColumn(name = "receiver_id")},
-            inverseJoinColumns = {@JoinColumn(name = "message_id")}
-    )
+    @OneToMany(mappedBy = "receiver")
     private Set<Message> messagesReceived;
-
 
     @ManyToMany(mappedBy = "users")
     private Set<Group> groups;
@@ -78,10 +68,13 @@ public class User implements Serializable {
     * @Param password
     * @Param userDetails
     * */
-    public User(@NotEmpty String email, @NotEmpty String password, UserDetails userDetails) {
+    public User(@NotEmpty String email, @NotEmpty String password, UserDetails userDetails, String salt) {
         this.email = email;
         this.password = password;
         this.userDetails = userDetails;
+        this.salt = salt;
+        messagesReceived = new HashSet<>();
+        messagesSent = new HashSet<>();
     }
 
     public User() {
@@ -142,22 +135,6 @@ public class User implements Serializable {
         return createdAt;
     }
 
-    public Set<Log> getLogs() {
-        return logs;
-    }
-
-    public void setLogs(Set<Log> logs) {
-        this.logs = logs;
-    }
-
-    public Set<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(Set<Message> messages) {
-        this.messages = messages;
-    }
-
     public UserDetails getUserDetails() {
         return userDetails;
     }
@@ -188,5 +165,13 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Message> getMessagesSent() {
+        return messagesSent;
+    }
+
+    public void setMessagesSent(Set<Message> messagesSent) {
+        this.messagesSent = messagesSent;
     }
 }

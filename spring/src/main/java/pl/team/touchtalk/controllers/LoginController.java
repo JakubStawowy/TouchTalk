@@ -7,8 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 import pl.team.touchtalk.entities.LoginResponseBody;
 import pl.team.touchtalk.entities.User;
+import pl.team.touchtalk.repositories.UserRepository;
 import pl.team.touchtalk.services.JsonWebTokenProvider;
-import pl.team.touchtalk.services.UserService;
 
 import java.util.Optional;
 
@@ -24,7 +24,7 @@ import java.util.Optional;
 @RequestMapping(value = "/api")
 public class LoginController {
 
-    private final UserService userService;
+    private final UserRepository repository;
     private final JsonWebTokenProvider webTokenProvider;
 
     /*
@@ -32,8 +32,8 @@ public class LoginController {
     * @Param userService this service provides UserRepository and LogRepository
     * */
     @Autowired
-    public LoginController(UserService userService, JsonWebTokenProvider webTokenProvider) {
-        this.userService = userService;
+    public LoginController(UserRepository repository, JsonWebTokenProvider webTokenProvider) {
+        this.repository = repository;
         this.webTokenProvider = webTokenProvider;
     }
 
@@ -48,10 +48,10 @@ public class LoginController {
     @PostMapping(value = "/login")
     public ResponseEntity<?> loginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
 
-        Optional<String> salt = userService.getUserRepository().getSaltByEmail(email);
+        Optional<String> salt = repository.getSaltByEmail(email);
         if(salt.isPresent()) {
 
-            User loggedUser = userService.getUserRepository().getUserByEmailAndPassword(
+            User loggedUser = repository.getUserByEmailAndPassword(
                     email,
                     BCrypt.hashpw(password, salt.get())
             );
@@ -60,7 +60,7 @@ public class LoginController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
             loggedUser.setLogged(true);
-            userService.getUserRepository().save(loggedUser);
+            repository.save(loggedUser);
 
             return new ResponseEntity<>(
                     new LoginResponseBody(
@@ -70,25 +70,6 @@ public class LoginController {
                     HttpStatus.OK
             );
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    /*
-    * logoutUser method
-    *
-    * @RequestParam id
-    * @Returns responseEntity (method returns HttpStatus 200 code if user is present. Otherwise, it returns HttpStatus 400 code)
-    * */
-    @PutMapping(value = "/logout")
-    public ResponseEntity<?> logoutUser(@RequestParam("userId")Long id) {
-        Optional<User> loggedUser = userService.getUserRepository().findById(id);
-
-        if(loggedUser.isPresent()) {
-            loggedUser.get().setLogged(false);
-            userService.getUserRepository().save(loggedUser.get());
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

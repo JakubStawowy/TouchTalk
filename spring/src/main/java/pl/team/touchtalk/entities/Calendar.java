@@ -50,7 +50,7 @@ public class Calendar implements Serializable {
 
     }
 
-    public Long getid() {
+    public Long getId() {
         return id;
     }
 
@@ -58,20 +58,27 @@ public class Calendar implements Serializable {
         this.id = id;
     }
 
-    public User getidUser() {
+    public User getId_user() {
         return id_user;
     }
 
-    public void setidUser(User id_user) { this.id_user=id_user; }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setId_user(User id_user) {
+        this.id_user = id_user;
     }
 
     public Date getCreatedAt() {
         return createdAt;
     }
 
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 
+    public Set<Task> getTaskMany() {
+        return TaskMany;
+    }
 
+    public void setTaskMany(Set<Task> taskMany) {
+        TaskMany = taskMany;
+    }
 }

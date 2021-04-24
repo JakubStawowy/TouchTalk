@@ -12,7 +12,7 @@ import PhoneSharpIcon from '@material-ui/icons/PhoneSharp';
 import VideocamSharpIcon from '@material-ui/icons/VideocamSharp';
 import PersonAddSharpIcon from '@material-ui/icons/PersonAddSharp';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-//import {isMobile} from 'react-device-detect';
+
 import MessageIcon from '@material-ui/icons/Message';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
