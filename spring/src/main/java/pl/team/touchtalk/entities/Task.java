@@ -34,7 +34,7 @@ public class Task implements Serializable {
     private Date createdAt;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "TaskMany")
+    @ManyToMany(mappedBy = "tasks")
     private Set<Calendar> cal;
 
     public Task() {

@@ -50,11 +50,9 @@ public class User implements Serializable {
     @JoinColumn(name = "user_details_id", referencedColumnName = "id")
     private UserDetails userDetails;
 
-//    @JsonIgnore
     @OneToMany(mappedBy = "sender")
     private Set<Message> messagesSent;
 
-//    @JsonIgnore
     @OneToMany(mappedBy = "receiver")
     private Set<Message> messagesReceived;
 
