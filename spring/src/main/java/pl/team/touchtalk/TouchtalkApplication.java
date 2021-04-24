@@ -24,35 +24,35 @@ public class TouchtalkApplication {
 		SpringApplication.run(TouchtalkApplication.class, args);
 	}
 
-	@Bean
-	CommandLineRunner commandLineRunner() {
-		return args -> {
-			User user = new User(
-				"email1@email.com",
-				"passswd",
-				new UserDetails(
-						"Bartosz",
-						"Szlezak",
-						"To jebany",
-						"frajer"
-				), "salt1"
-			);
-			User receiver = new User(
-					"email2@email.com",
-					"passswd",
-					new UserDetails(
-							"Bartosz",
-							"Szlezak",
-							"To jebany",
-							"frajer"
-					),
-					"salt2"
-			);
-			userRepository.save(user);
-			Message message = new Message("xdd", "file", user);
-			receiver.getMessagesReceived().add(message);
-			userRepository.save(receiver);
-			repository.save(message);
-		};
-	}
+//	@Bean
+//	CommandLineRunner commandLineRunner() {
+//		return args -> {
+//			User user = new User(
+//				"email1@email.com",
+//				"passswd",
+//				new UserDetails(
+//						"Bartosz",
+//						"Szlezak",
+//						"jest",
+//						"spoko"
+//				), "salt1"
+//			);
+//			User receiver = new User(
+//					"email2@email.com",
+//					"passswd",
+//					new UserDetails(
+//							"Bartosz",
+//							"Szlezak",
+//							"To",
+//							"spoko gosc"
+//					),
+//					"salt2"
+//			);
+//			userRepository.save(user);
+//			Message message = new Message("xdd", "file", user);
+//			receiver.getMessagesReceived().add(message);
+//			userRepository.save(receiver);
+//			repository.save(message);
+//		};
+//	}
 }

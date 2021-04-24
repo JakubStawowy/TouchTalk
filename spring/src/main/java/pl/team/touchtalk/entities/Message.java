@@ -2,63 +2,65 @@ package pl.team.touchtalk.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.lang.Nullable;
+import pl.team.touchtalk.enums.MessageType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
-
+/*
+ * Message POJO
+ *
+ * @Author Jakub Stawowy,
+ * @Author Paweł Szydło
+ * @Author Grzegorz Szydło
+ * @Author Bartosz Szlęzak
+ * @Author Łukasz Stolarz
+ * @Version 2.0
+ * @Since 2021-04-06
+ * */
 @Entity
 @Table(name = "messages")
 public class Message implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @NotNull
     private String content;
-
     @Nullable
     private String file;
-
     @NotNull
     @Column(name = "sent_at")
     private Timestamp sentAt;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "sender_id")
+    @JsonIgnore
     private User sender;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "receiver_id")
     @JsonIgnore
-    @ManyToMany(mappedBy = "messagesReceived")
-    private Set<User> receivers;
-    
-    @ManyToMany(mappedBy = "message")
-    private Set<Group> groups;
+    private User receiver;
 
-//    public Message(@NotNull String content, @Nullable String file, User sender) {
-//        this.content = content;
-//        this.file = file;
-//        this.sender = sender;
-//    }
+    @Enumerated(EnumType.STRING)
+    private MessageType type;
 
+    /*
+    * constructor
+    *
+    * @Param content
+    * @Param file - when no file is attached to message then value is null
+    * @Param sender
+    * */
     public Message(@NotNull String content, @Nullable String file, User sender) {
         this.content = content;
         this.file = file;
         this.sender = sender;
-        this.receivers = new HashSet<>();
     }
-
 
     public Message() {
     }
-
-    public Timestamp getSentAt() {
-        return sentAt;
-    }
-
     @PrePersist
     public void setSentAt() {
         this.sentAt = new Timestamp(System.currentTimeMillis());
@@ -89,6 +91,14 @@ public class Message implements Serializable {
         this.file = file;
     }
 
+    public Timestamp getSentAt() {
+        return sentAt;
+    }
+
+    public void setSentAt(Timestamp sentAt) {
+        this.sentAt = sentAt;
+    }
+
     public User getSender() {
         return sender;
     }
@@ -97,19 +107,24 @@ public class Message implements Serializable {
         this.sender = sender;
     }
 
-    public Set<User> getReceivers() {
-        return receivers;
+    public User getReceiver() {
+        return receiver;
     }
 
-    public void setReceivers(Set<User> receivers) {
-        this.receivers = receivers;
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
     }
 
-    public Set<Group> getGroups() {
-        return groups;
+    public MessageType getType() {
+        return type;
     }
 
-    public void setGroups(Set<Group> groups) {
-        this.groups = groups;
+    public void setType(MessageType type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: "+id+" sender: "+sender.getId()+" receiver "+receiver.getId();
     }
 }

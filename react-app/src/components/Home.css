@@ -1,0 +1,132 @@
+html, body {
+    height: 100%;
+    overflow: auto;
+}
+
+body{
+    background: rgb(48,129,238);
+    background: linear-gradient( rgba(48,129,238,1) 0%, rgba(28,162,240,1) 32%, rgba(32,108,174,1) 40%, rgba(24,74,143,1) 50%, rgba(16,59,132,1) 70%);
+    font-size: 20px;
+    font-family: 'Montserrat', sens-serif;
+    color: white;}
+
+.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-2 {
+    background-color: #3081EE;
+}
+.homeContainer{
+    height: 90vh;
+    /*margin-left: 0;*/
+    /*margin-right: auto;*/
+}
+
+.MuiAppBar-root{
+height: 8vh;
+    z-index: 0;
+}
+.menu{
+    text-align: left;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    padding-bottom: 1em;
+}
+
+li {
+    list-style-type: none;
+}
+
+.content{
+    display: flex;
+    flex-direction: row;
+}
+
+.page-content{
+    /*width: 80vw;*/
+}
+
+.navbar-left{
+
+    align-items: inherit;
+    font-family: 'Montserrat', sens-serif;
+    font-size: 20px;
+}
+
+.MuiListItemIcon-root {
+    margin-top: -1em;
+}
+
+h6.MuiTypography-root.MuiTypography-h6 {
+    font-weight: bold;
+    font-family: 'Montserrat', sens-serif;
+}
+
+.right-navbar{
+    background-color: #3081EE;
+}
+
+.photo1{
+    padding-right: 1em;
+}
+
+.talk :hover {
+    background-color: white;
+}
+
+button {
+    background-color: transparent;
+    height: 2em;
+    width: 5em;
+    border-color: transparent;
+}
+
+svg.MuiSvgIcon-root {
+    color: black;
+    padding-right: 0.5em;
+    padding-left: 0.5em;
+}
+
+c1{
+    border: 3px solid green;
+    border-radius: 2em;
+    margin-left: 8em;
+}
+
+h6.MuiTypography-root.MuiTypography-h6 {
+    color: black;
+    font-size: 20px;
+    font-family: 'Montserrat', sens-serif;
+    font-weight: bold;
+}
+
+li.MuiListItem-root.MuiListItem-gutters:hover {
+    background-color: white;
+    border-radius: 2em;
+    width: 10em;
+    margin-left: inherit;
+    font-weight: bold;
+}
+.navList2{
+    display: flex;
+    justify-content: flex-start;
+
+}
+
+.navList{
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+}
+
+.talk button:hover{
+    background-color: white;
+    border-radius: 2em;
+}
+
+@media screen and (min-width: 992px) and (max-width: 1900px){
+    .navbar-left{
+        margin-left:-1em
+    }
+}
+
