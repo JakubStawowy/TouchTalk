@@ -19,7 +19,7 @@ public class Calendar implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_user", referencedColumnName = "id")
-    private User id_user;
+    private User idUser;
 
     @NotNull
     @Column(name = "created_at")
@@ -58,12 +58,14 @@ public class Calendar implements Serializable {
         this.id = id;
     }
 
-    public User getId_user() {
+    public User getidUser() {
         return id_user;
     }
 
-    public void setId_user(User id_user) {
-        this.id_user = id_user;
+    public void setidUser(User id_user) { this.id_user=id_user; }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Date getCreatedAt() {
