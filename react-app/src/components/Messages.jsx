@@ -53,7 +53,7 @@ const useStyles = makeStyles({
     },
 
     listScroll: {
-        overflow: "scroll",
+        overflow: "auto",
     }
 });
 
@@ -158,7 +158,6 @@ const Messages = () => {
     const getMessage = receiverId => {
         api.get('/messagelist/' + idActualUser + "/" + receiverId).then(response => response.data)
             .then(data => {
-
                     setActualMessage(data)
                 }
             )
@@ -211,10 +210,8 @@ const Messages = () => {
                 {conversation.is ? (
                     <Grid item xs={9}>
                         <List className={classes.messageArea}>
-
                             {actualMessage.map((messR) => (
                                 (messR.sender !== idActualUser) ? (
-
                                     <ListItem key={messR.id}>
                                         <div class="photo">
                                             <Avatar alt="User"
@@ -225,7 +222,7 @@ const Messages = () => {
                                                 <ListItemText align="left" primary={messR.content}/>
                                             </Grid>
                                             <Grid item xs={12}>
-                                                <ListItemText align="left" secondary={messR.sentAt.split("T")[0] + " " + messR.sentAt.split("T")[1].split(".")[0]}/>
+                                                <ListItemText align="left" secondary={messR.date.split("T")[0] + " " + messR.date.split("T")[1].split(".")[0]}/>
                                             </Grid>
                                         </Grid>
                                     </ListItem>
@@ -237,7 +234,7 @@ const Messages = () => {
                                                 <ListItemText align="right" primary={messR.content}/>
                                             </Grid>
                                             <Grid item xs={12}>
-                                                <ListItemText align="right" secondary={messR.dateTime}/>
+                                                <ListItemText align="right" secondary={messR.date.split("T")[0] + " " + messR.date.split("T")[1].split(".")[0]}/>
                                             </Grid>
                                         </Grid>
                                     </ListItem>

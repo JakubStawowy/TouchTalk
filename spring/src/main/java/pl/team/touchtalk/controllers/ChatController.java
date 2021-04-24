@@ -52,7 +52,17 @@ public class ChatController {
 	}
 
 	@GetMapping("/messagelist/{sender}/{receiver}")
-	public List<Message> getAllChatMessageBySenderAndReceiver(@PathVariable("sender") Long sender, @PathVariable("receiver") Long receiver){
-		return messageRepository.findAllBySenderAndReceiverOrReceiverAndSender(sender,receiver,sender,receiver);
+	public List<MessagePayload> getAllChatMessageBySenderAndReceiver(@PathVariable("sender") Long sender, @PathVariable("receiver") Long receiver){
+		List<MessagePayload> messagesResponse = new ArrayList<>();
+		for(Message message: messageRepository.findAllBySenderAndReceiverOrReceiverAndSender(sender,receiver,sender,receiver)) {
+			messagesResponse.add(new MessagePayload(
+					message.getContent(),
+					message.getType(),
+					message.getSender().getId(),
+					message.getReceiver().getId(),
+					message.getSentAt()
+			));
+		}
+		return messagesResponse;
 	}
 }
