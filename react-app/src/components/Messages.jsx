@@ -48,7 +48,7 @@ const useStyles = makeStyles({
         borderRight: '1px solid #e0e0e0'
     },
     messageArea: {
-        height: '76.5vh',
+        height: '70vh',
         overflowY: 'auto'
     },
 
@@ -87,6 +87,7 @@ const Messages = () => {
     })
 
     const [actualMessage, setActualMessage] = useState([]);
+    const [localMessage, setLocalMessage] = useState([]);
 
     useEffect(() => {
         api.get('/api/users').then(response => response.data)
@@ -107,7 +108,19 @@ const Messages = () => {
 
     }
     const onMessageReceived = (payload) => {
+        let mess = {id: '',type: '', content:'', sender: '', receiver: '', data: ''}
 
+        //let message = JSON.stringify(payload.body); JSON.parse(payload.body)
+        // console.log("parse")
+        // let message =  JSON.parse(payload.body);
+        // //localMessage.push(message);
+        // localMessage.push(message)
+        // console.log(payload.body)
+        // console.log(" ")
+        // console.log(message)
+        // console.log(" ")
+        // console.log(localMessage)
+        //actualMessage.push(message)
         getMessage(receiverId);
     }
 
@@ -115,6 +128,8 @@ const Messages = () => {
 
         if (stompClient) {
             stompClient.send("/app/sendPrivateMessage", {}, JSON.stringify(message));
+            // localMessage.push(message);
+            // console.log(localMessage)
             setMessage({...message, content: ""});
 
             setTimeout(() => {
@@ -243,6 +258,7 @@ const Messages = () => {
                                                        sendMessage();
                                                    }
                                                }}
+                                               required
                                                fullWidth/>
                                     <button><TextFieldsIcon/></button>
                                     <button><WallpaperIcon/></button>
