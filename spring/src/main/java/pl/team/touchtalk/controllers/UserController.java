@@ -1,6 +1,5 @@
 package pl.team.touchtalk.controllers;
 
-import com.sun.istack.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

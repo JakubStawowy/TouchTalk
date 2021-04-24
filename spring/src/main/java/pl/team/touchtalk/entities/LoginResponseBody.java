@@ -2,18 +2,18 @@ package pl.team.touchtalk.entities;
 
 public class LoginResponseBody {
     private final String token;
-    private final String user;
+    private final User user;
 
-    public LoginResponseBody(String token, String message) {
+    public LoginResponseBody(String token, User user) {
         this.token = token;
-        this.user = message;
+        this.user = user;
     }
 
     public String getToken() {
         return token;
     }
 
-    public String getUser() {
+    public User getUser() {
         return user;
     }
 }
