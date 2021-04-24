@@ -40,6 +40,7 @@ public class MessageController {
     * */
     @GetMapping("/{id}")
     public List<Message> getUserMessages(@PathVariable("id") Long id, @RequestParam("receiver_id") Long receiverId) {
+        return repository.getAllBySenderAndReceiver(id, receiverId);
     }
 
     /*
@@ -50,5 +51,6 @@ public class MessageController {
     * */
     @GetMapping("/all/{id}")
     public List<Message> getAllUserMessages(@PathVariable("id") Long id) {
+        return repository.getAllBySenderAndReceiver(id, id);
     }
 }
