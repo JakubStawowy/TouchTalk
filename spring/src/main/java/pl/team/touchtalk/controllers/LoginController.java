@@ -13,12 +13,12 @@ import pl.team.touchtalk.services.JsonWebTokenProvider;
 import java.util.Optional;
 
 /*
-* LoginController class
-*
-* @Author Jakub Stawowy
-* @Version 1.1
-* @Since 2021-04-06
-* */
+ * LoginController class
+ *
+ * @Author Jakub Stawowy
+ * @Version 1.1
+ * @Since 2021-04-06
+ * */
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "/api")
@@ -28,9 +28,9 @@ public class LoginController {
     private final JsonWebTokenProvider webTokenProvider;
 
     /*
-    * Constructor
-    * @Param userService this service provides UserRepository and LogRepository
-    * */
+     * Constructor
+     * @Param userService this service provides UserRepository and LogRepository
+     * */
     @Autowired
     public LoginController(UserRepository repository, JsonWebTokenProvider webTokenProvider) {
         this.repository = repository;
@@ -38,13 +38,13 @@ public class LoginController {
     }
 
     /*
-    * loginUser method
-    *
-    * @Param session HttpSession is used to get sessionId
-    * @RequestParam email
-    * @RequestParam password
-    * @Returns loginResponseEntity (if no user found, method returns null values with 404 HttpStatus)
-    * */
+     * loginUser method
+     *
+     * @Param session HttpSession is used to get sessionId
+     * @RequestParam email
+     * @RequestParam password
+     * @Returns loginResponseEntity (if no user found, method returns null values with 404 HttpStatus)
+     * */
     @PostMapping(value = "/login")
     public ResponseEntity<?> loginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
 

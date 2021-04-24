@@ -122,6 +122,7 @@ const Messages = () => {
         // console.log(localMessage)
         //actualMessage.push(message)
         getMessage(receiverId);
+        console.log(actualMessage)
     }
 
     const sendMessage = () => {
@@ -136,6 +137,7 @@ const Messages = () => {
                 getMessage(receiverId);
                 let a;
                 console.log(a);
+                console.log(actualMessage)
             }, 500);
         }
     }
@@ -160,7 +162,8 @@ const Messages = () => {
                     setActualMessage(data)
                 }
             )
-        console.log("receiver" + receiverId);
+
+        console.log("receiver " + receiverId);
     }
 
 
@@ -177,7 +180,7 @@ const Messages = () => {
                                 </Typography>
                                 <button><ExpandMoreIcon/></button>
                             </div>
-                            <div algin="flex-end">
+                            <div align="flex-end">
                                 <button><SearchIcon/></button>
                                 {/* <InputBase
                                     inputProps={{ 'aria-label': 'search' }}
@@ -222,7 +225,7 @@ const Messages = () => {
                                                 <ListItemText align="left" primary={messR.content}/>
                                             </Grid>
                                             <Grid item xs={12}>
-                                                <ListItemText align="left" secondary={messR.dateTime.split("T")[0] + " " + messR.dateTime.split("T")[1].split(".")[0]}/>
+                                                <ListItemText align="left" secondary={messR.sentAt.split("T")[0] + " " + messR.sentAt.split("T")[1].split(".")[0]}/>
                                             </Grid>
                                         </Grid>
                                     </ListItem>
@@ -234,7 +237,7 @@ const Messages = () => {
                                                 <ListItemText align="right" primary={messR.content}/>
                                             </Grid>
                                             <Grid item xs={12}>
-                                                <ListItemText align="right" secondary={messR.dateTime.split("T")[0] + " " + messR.dateTime.split("T")[1].split(".")[0]}/>
+                                                <ListItemText align="right" secondary={messR.dateTime}/>
                                             </Grid>
                                         </Grid>
                                     </ListItem>

@@ -9,10 +9,7 @@
 //import org.springframework.stereotype.Component;
 //import org.springframework.web.socket.messaging.SessionConnectedEvent;
 //import org.springframework.web.socket.messaging.SessionDisconnectEvent;
-//import pl.team.touchtalk.entities.Message;
 //import pl.team.touchtalk.enums.MessageType;
-//
-//import java.util.Objects;
 //
 //
 //@Component
@@ -20,12 +17,8 @@
 //
 //    private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
 //
-//    private final SimpMessageSendingOperations messagingTemplate;
-//
 //    @Autowired
-//    public WebSocketEventListener(SimpMessageSendingOperations messagingTemplate) {
-//        this.messagingTemplate = messagingTemplate;
-//    }
+//    private SimpMessageSendingOperations messagingTemplate;
 //
 //    @EventListener
 //    public void handleWebSocketConnectListener(SessionConnectedEvent event) {
@@ -36,12 +29,12 @@
 //    public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
 //        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 //
-//        Long username = (Long) Objects.requireNonNull(headerAccessor.getSessionAttributes()).get("username");
+//        Long username = (Long) headerAccessor.getSessionAttributes().get("username");
 //        Long privateUsername = (Long) headerAccessor.getSessionAttributes().get("private-username");
 //        if(username != null) {
 //            logger.info("User Disconnected : " + username);
 //
-//            Message chatMessage = new Message();
+//            ChatMessage chatMessage = new ChatMessage();
 //            chatMessage.setType(MessageType.LEAVE);
 //            chatMessage.setSender(username);
 //

@@ -39,7 +39,6 @@ public class ChatController {
 		message.setContent(messagePayload.getContent());
 		message.setType(messagePayload.getType());
 
-
 		message.setSender(userRepository.findById(messagePayload.getSender()).orElse(null));
 		message.setReceiver(userRepository.findById(messagePayload.getReceiver()).orElse(null));
 
