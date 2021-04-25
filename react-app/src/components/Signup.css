@@ -1,0 +1,239 @@
+.create-account-h{
+    font-size: 55px;
+    margin: 0;
+}
+
+.register-form{
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    align-items: center;
+    padding: 1em;
+}
+
+.register-h{
+    font-weight: normal;
+}
+
+.name-surname{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.name-surname>label{
+    display: flex;
+    flex-direction: row;
+}
+
+.name>input{
+    height: 2em;
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 2em;
+    border: 1px solid #707070;
+    border-radius: 5px;
+    outline: 0;
+    padding: 1em;
+}
+
+.surname>input{
+    height: 2em;
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 2em;
+    border: 1px solid #707070;
+    border-radius: 5px;
+    outline: 0;
+    padding: 1em;
+}
+
+.register-form>input{
+    height: 2em;
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 2em;
+    border: 1px solid #707070;
+    border-radius: 5px;
+    outline: 0;
+    padding: 1em;
+
+}
+
+.register-button-signup{
+    background: rgba( 255, 255, 255, 18%);
+    color: white;
+    border-radius: 10px;
+    width: 10vw;
+    height: 7vh;
+    margin: 1em;
+    margin-left: auto;
+    margin-right: 0;
+    font-weight: bold;
+    outline: 0;
+    border: 1px solid #707070;
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-label{
+    margin: 0;
+}
+
+#name{
+    height: 2em;
+    width: 22vw;
+}
+
+#surname{
+    height: 2em;
+    width: 22vw;
+}
+
+.name-surname>div{
+    display: flex;
+    flex-direction: column;
+}
+
+.name-surname>div>label{
+    margin: 0;
+}
+
+.register-aside {
+    width: auto;
+    text-align: center;
+    align-items: center;
+    margin-top: 50vh;
+    margin-top: 0;
+    margin-left: 0;
+    border-left: 0;
+    padding-left: 0;
+}
+
+.register-container{
+    overflow: auto;
+    width: 60%;
+}
+
+.login-container{
+    width: 40%;
+}
+
+.register-aside>button{
+    background: rgba( 255, 255, 255, 55%);
+    color: #664F4F;
+    border: 1px solid #707070;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20vw;
+    height: 7vh;
+    font-weight: bold;
+    border-radius: 10px;
+    outline: 0;
+}
+
+.register-form{
+    align-items: unset;
+    padding: 0;
+}
+
+.logo{
+    width: 40vw;
+    height: 30vh;
+}
+
+.container button:hover {
+    background-color: rgb(255,255,255);
+    color: #009ac9;
+    box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.75);
+}
+
+.database-validation-register{
+    color: white;
+    opacity: 70%;
+    font-size: 15px;
+    /*
+    background: rgba( 255, 255, 255, 55%);
+    color: rgb(0, 0, 0);
+    text-align: center;
+    width: 20em;
+    margin-left: inherit;
+    border-radius: 5px;
+    padding: 0.5em;
+    */
+}
+
+@media only screen and (max-device-width: 420px)
+{
+    .container{
+        display: flex;
+        flex-direction: column;
+        justify-content: unset;
+    }
+
+    .register-container{
+        overflow: unset;
+        width: 90%;
+    }
+
+    .login-container{
+        width: 90vw;
+        padding: 1em;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .register-form{
+        width: 100%;
+    }
+
+    .logo{
+        width: 90vw;
+        height: 35wh;
+    }
+
+    #name{
+        width: 35vw;
+        height: 1em;
+    }
+
+    #surname{
+        width: 35vw;
+        height: 1em;
+    }
+
+
+    .register-button-signup{
+        width: 30vw;
+    }
+
+    .your-data-p{
+        margin-top: 1em;
+    }
+
+    .register-aside>button{
+        width: 70vw;
+    }
+
+    .register-aside{
+        padding: 0;
+    }
+
+    .register-form>input{
+        width: 90%;
+        height: 1em;
+    }
+
+    .create-account-h{
+        font-size: 30px;
+    }
+}

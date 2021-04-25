@@ -1,61 +1,75 @@
 package pl.team.touchtalk.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
-import pl.team.touchtalk.entities.Log;
+import pl.team.touchtalk.entities.LoginResponseBody;
 import pl.team.touchtalk.entities.User;
-import pl.team.touchtalk.services.UserService;
+import pl.team.touchtalk.repositories.UserRepository;
+import pl.team.touchtalk.services.JsonWebTokenProvider;
 
-import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+/*
+ * LoginController class
+ *
+ * @Author Jakub Stawowy
+ * @Version 1.1
+ * @Since 2021-04-06
+ * */
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "/api")
 public class LoginController {
 
-    private final UserService userService;
+    private final UserRepository repository;
+    private final JsonWebTokenProvider webTokenProvider;
 
+    /*
+     * Constructor
+     * @Param userService this service provides UserRepository and LogRepository
+     * */
     @Autowired
-    public LoginController(UserService userService) {
-        this.userService = userService;
+    public LoginController(UserRepository repository, JsonWebTokenProvider webTokenProvider) {
+        this.repository = repository;
+        this.webTokenProvider = webTokenProvider;
     }
 
+    /*
+     * loginUser method
+     *
+     * @Param session HttpSession is used to get sessionId
+     * @RequestParam email
+     * @RequestParam password
+     * @Returns loginResponseEntity (if no user found, method returns null values with 404 HttpStatus)
+     * */
     @PostMapping(value = "/login")
-    @Nullable
-    public User loginUser(HttpSession session, @RequestParam("email") String email, @RequestParam("password") String password) {
+    public ResponseEntity<?> loginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
 
-        String salt = userService.getUserRepository().getSaltByEmail(email);
-        User loggedUser = userService.getUserRepository().getUserByEmailAndPassword(
-                email,
-                BCrypt.hashpw(
-                        password,
-                        salt
-                )
-        );
+        Optional<String> salt = repository.getSaltByEmail(email);
+        if(salt.isPresent()) {
 
-        if(loggedUser==null)
-            return null;
+            User loggedUser = repository.getUserByEmailAndPassword(
+                    email,
+                    BCrypt.hashpw(password, salt.get())
+            );
 
-        loggedUser.setLogged(true);
-        userService.getUserRepository().save(loggedUser);
-        userService.getLogRepository().save(new Log(
-                session.getId(),
-                loggedUser
-        ));
-        return loggedUser;
-    }
+            if(loggedUser==null)
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-    @PutMapping(value = "/logout")
-    @Nullable
-    public User logoutUser(@RequestParam("userId")Long id) {
-        Optional<User> loggedUser = userService.getUserRepository().findById(id);
-        loggedUser.ifPresent(user->{
-            user.setLogged(false);
-            userService.getUserRepository().save(user);
-        });
-        return loggedUser.orElse(null);
+            loggedUser.setLogged(true);
+            repository.save(loggedUser);
+
+            return new ResponseEntity<>(
+                    new LoginResponseBody(
+                            webTokenProvider.generateToken(loggedUser),
+                            loggedUser
+                    ),
+                    HttpStatus.OK
+            );
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

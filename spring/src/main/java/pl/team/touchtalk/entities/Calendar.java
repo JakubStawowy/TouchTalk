@@ -18,8 +18,8 @@ public class Calendar implements Serializable {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_user", referencedColumnName = "id")
-    private User id_user;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     @NotNull
     @Column(name = "created_at")
@@ -30,16 +30,14 @@ public class Calendar implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "calendar_task",
-            joinColumns = {@JoinColumn(name = "id_calendar")},
-            inverseJoinColumns = {@JoinColumn(name = "id_task")}
+            joinColumns = {@JoinColumn(name = "calendar_id")},
+            inverseJoinColumns = {@JoinColumn(name = "task_id")}
     )
-    private Set<Task> TaskMany;
+    private Set<Task> tasks;
 
-    public Calendar(@NotEmpty User id_user) {
-        this.id_user = id_user;
-
+    public Calendar(@NotEmpty User user) {
+        this.user = user;
     }
-
 
     public Calendar() {
     }
@@ -50,7 +48,7 @@ public class Calendar implements Serializable {
 
     }
 
-    public Long getid() {
+    public Long getId() {
         return id;
     }
 
@@ -58,20 +56,27 @@ public class Calendar implements Serializable {
         this.id = id;
     }
 
-    public User getidUser() {
-        return id_user;
+    public User getUser() {
+        return user;
     }
 
-    public void setidUser(User id_user) { this.id_user=id_user; }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Date getCreatedAt() {
         return createdAt;
     }
 
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 
+    public Set<Task> getTasks() {
+        return tasks;
+    }
 
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
+    }
 }

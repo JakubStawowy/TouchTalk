@@ -1,6 +1,7 @@
 package pl.team.touchtalk.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import pl.team.touchtalk.enums.UserRoles;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -10,6 +11,13 @@ import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+/*
+ * User POJO
+ *
+ * @Author Jakub Stawowy
+ * @Version 1.0
+ * @Since 2021-04-06
+ * */
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
@@ -24,14 +32,15 @@ public class User implements Serializable {
     @NotEmpty
     private String password;
 
-    @Transient
-    private String confirmedPassword;
-
     @NotEmpty
     private String salt;
 
     @NotNull
     private Boolean logged;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private UserRoles role;
 
     @NotNull
     @Column(name = "created_at")
@@ -41,31 +50,30 @@ public class User implements Serializable {
     @JoinColumn(name = "user_details_id", referencedColumnName = "id")
     private UserDetails userDetails;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Log> logs = new HashSet<>();
-
-    @JsonIgnore
     @OneToMany(mappedBy = "sender")
-    private Set<Message> messages;
+    private Set<Message> messagesSent;
 
-    @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "messages_to_users",
-            joinColumns = {@JoinColumn(name = "receiver_id")},
-            inverseJoinColumns = {@JoinColumn(name = "message_id")}
-    )
+    @OneToMany(mappedBy = "receiver")
     private Set<Message> messagesReceived;
 
-
+    @JsonIgnore
     @ManyToMany(mappedBy = "users")
     private Set<Group> groups;
 
-    public User(@NotEmpty String email, @NotEmpty String password, UserDetails userDetails) {
+    /*
+    * constructor
+    *
+    * @Param email
+    * @Param password
+    * @Param userDetails
+    * */
+    public User(@NotEmpty String email, @NotEmpty String password, UserDetails userDetails, String salt) {
         this.email = email;
         this.password = password;
         this.userDetails = userDetails;
+        this.salt = salt;
+        messagesReceived = new HashSet<>();
+        messagesSent = new HashSet<>();
     }
 
     public User() {
@@ -75,6 +83,15 @@ public class User implements Serializable {
     public void setUser() {
         this.createdAt = new Date(System.currentTimeMillis());
         this.logged = false;
+        this.role = UserRoles.ROLE_USER;
+    }
+
+    public UserRoles getRole() {
+        return role;
+    }
+
+    public void setRole(UserRoles role) {
+        this.role = role;
     }
 
     public String getSalt() {
@@ -117,22 +134,6 @@ public class User implements Serializable {
         return createdAt;
     }
 
-    public Set<Log> getLogs() {
-        return logs;
-    }
-
-    public void setLogs(Set<Log> logs) {
-        this.logs = logs;
-    }
-
-    public Set<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(Set<Message> messages) {
-        this.messages = messages;
-    }
-
     public UserDetails getUserDetails() {
         return userDetails;
     }
@@ -165,11 +166,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getConfirmedPassword() {
-        return confirmedPassword;
+    public Set<Message> getMessagesSent() {
+        return messagesSent;
     }
 
-    public void setConfirmedPassword(String confirmedPassword) {
-        this.confirmedPassword = confirmedPassword;
+    public void setMessagesSent(Set<Message> messagesSent) {
+        this.messagesSent = messagesSent;
     }
 }
