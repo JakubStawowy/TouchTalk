@@ -37,13 +37,11 @@ public class LogoutController {
     @PutMapping(value = "/logout")
     public ResponseEntity<?> logoutUser(@RequestParam("userId")Long id) {
         Optional<User> loggedUser = repository.findById(id);
-
         if(loggedUser.isPresent()) {
             loggedUser.get().setLogged(false);
             repository.save(loggedUser.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
-
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
