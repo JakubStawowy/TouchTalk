@@ -53,10 +53,12 @@ public class Message implements Serializable {
     * @Param file - when no file is attached to message then value is null
     * @Param sender
     * */
-    public Message(@NotNull String content, @Nullable String file, User sender) {
+    public Message(@NotNull String content, @Nullable String file, MessageType type, User sender, User receiver) {
         this.content = content;
         this.file = file;
         this.sender = sender;
+        this.receiver = receiver;
+        this.type = type;
     }
 
     public Message() {
@@ -121,10 +123,5 @@ public class Message implements Serializable {
 
     public void setType(MessageType type) {
         this.type = type;
-    }
-
-    @Override
-    public String toString() {
-        return "ID: "+id+" sender: "+sender.getId()+" receiver "+receiver.getId();
     }
 }
