@@ -12,6 +12,7 @@ body{
 
 .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-2 {
     background-color: #3081EE;
+    height: 87vh;
 }
 
 a {

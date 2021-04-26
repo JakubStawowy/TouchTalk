@@ -48,12 +48,13 @@ const useStyles = makeStyles({
         borderRight: '1px solid #e0e0e0'
     },
     messageArea: {
-        height: '76.5vh',
+        height: '67vh',
         overflowY: 'auto'
     },
 
     listScroll: {
-        overflow: "auto",
+        height: '71vh',
+        overflow: "auto"
     }
 });
 
@@ -170,7 +171,7 @@ const Messages = () => {
         <div>
             <Grid container component={Paper} className={classes.chatSection}>
 
-                <Grid item xs={3} className={classes.borderRight500}>
+                <Grid item xs={4} className={classes.borderRight500}>
                     <AppBar position="static">
                         <div className="navList3">
                             <div className="navList2">
@@ -208,7 +209,7 @@ const Messages = () => {
 
 
                 {conversation.is ? (
-                    <Grid item xs={9}>
+                    <Grid item xs={8}>
                         <List className={classes.messageArea}>
                             {actualMessage.map((messR) => (
                                 (messR.sender !== idActualUser) ? (

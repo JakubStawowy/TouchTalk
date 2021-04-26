@@ -84,7 +84,7 @@ const Home = () => {
                 </div>
             </AppBar>
             <Grid container style={content}>
-                <Grid item xs={2}>
+                <Grid item xs={menuWidth}>
                     <Divider orientation='horizontal'></Divider>
                     <div class='navbar-left'>
                         <List style={menu}>
@@ -133,7 +133,7 @@ const Home = () => {
                         </List>
                     </div>
                 </Grid>
-                <Grid item xs={10}>
+                <Grid item xs={contentWidth}>
                     <Route path="/notifications" component={Notifications}/>
                     <Route path="/messages" component={Messages}/>
                     <Route path="/tasks" component={Tasks}/>
