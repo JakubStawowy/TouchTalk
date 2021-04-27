@@ -28,3 +28,11 @@ export const signup = (signupData) => async (dispatch) => {
         })
     }
 };
+
+export const signout = () => async (dispatch) => {
+    const url = "http://localhost:8080/api/logout?userId="+localStorage.getItem("id");
+    await axios.put(url);
+    dispatch({
+        type: 'SIGNOUT'
+    })
+}

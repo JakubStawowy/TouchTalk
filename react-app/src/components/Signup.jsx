@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import logo from './logo.svg'
-import "./Signup.css"
+import "../style/Signup.css"
 import { SignupSchema } from "../validation/formValidation.js";
 import { useDispatch, useSelector} from "react-redux";
 import { signup } from "../actions/auth.js";
@@ -41,11 +41,6 @@ const Signup = () => {
   });
   return (
       <section className='container'>
-        {auth.register_success ? (
-            <div className= 'database-validation-register'>
-              Rejestracja się powiodła. Możesz się zalogować.
-            </div>
-        ) : null}
         <div className='login-container'>
           <img src={logo} className="logo"/>
           <div className='register-aside'>
@@ -114,6 +109,11 @@ const Signup = () => {
             {auth.register_error ? (
                 <div className= 'database-validation-register'>
                   Konto o podanym adresie e-mail już istnieje.
+                </div>
+            ) : null}
+            {auth.register_success ? (
+                <div className= 'database-validation-register'>
+                  Rejestracja się powiodła. Możesz się zalogować.
                 </div>
             ) : null}
             <button className='register-button-signup' type='submit'>Zarejestruj</button>

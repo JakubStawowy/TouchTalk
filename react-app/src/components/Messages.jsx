@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
@@ -11,11 +9,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
-import Fab from '@material-ui/core/Fab';
 import SendIcon from '@material-ui/icons/Send';
 import MoodIcon from '@material-ui/icons/Mood';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
-import PhoneSharpIcon from '@material-ui/icons/PhoneSharp';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import WallpaperIcon from '@material-ui/icons/Wallpaper';
@@ -23,7 +18,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AppBar from '@material-ui/core/AppBar';
 import EmailIcon from '@material-ui/icons/Email';
 import GifIcon from '@material-ui/icons/Gif';
-import "./Messages.css"
+import "../style/Messages.css"
 
 
 import axios from "axios";
@@ -73,9 +68,8 @@ const Messages = () => {
 
     const classes = useStyles();
 
-    let idActualUser = auth.user.user.id;
-    let usersWidth = 3;
-    let conversationWidth = 8;
+    let idActualUser = parseInt(localStorage.getItem("id"));
+    console.log("ID UZYTKOWNIKA "+idActualUser);
     const [conversation, setConversation] = useState({'is': false});
 
     const [users, setUsers] = useState([]);
@@ -87,7 +81,6 @@ const Messages = () => {
     })
 
     const [actualMessage, setActualMessage] = useState([]);
-    const [localMessage, setLocalMessage] = useState([]);
 
     useEffect(() => {
         api.get('/api/users').then(response => response.data)
@@ -109,18 +102,6 @@ const Messages = () => {
     }
     const onMessageReceived = (payload) => {
         let mess = {id: '',type: '', content:'', sender: '', receiver: '', data: ''}
-
-        //let message = JSON.stringify(payload.body); JSON.parse(payload.body)
-        // console.log("parse")
-        // let message =  JSON.parse(payload.body);
-        // //localMessage.push(message);
-        // localMessage.push(message)
-        // console.log(payload.body)
-        // console.log(" ")
-        // console.log(message)
-        // console.log(" ")
-        // console.log(localMessage)
-        //actualMessage.push(message)
         getMessage(receiverId);
         console.log(actualMessage)
     }
@@ -144,7 +125,6 @@ const Messages = () => {
 
     const handleClick = id => {
         receiverId = id;
-        console.log(receiverId);
         setConversation({'is': true});
         setMessage({...message, sender: idActualUser, receiver: receiverId})
         getMessage(receiverId);
@@ -165,9 +145,8 @@ const Messages = () => {
         console.log("receiver " + receiverId);
     }
 
-
     return (
-        <div>
+        <div className={"new-messages"}>
             <Grid container component={Paper} className={classes.chatSection}>
 
                 <Grid item xs={3} className={classes.borderRight500}>
@@ -181,13 +160,6 @@ const Messages = () => {
                             </div>
                             <div align="flex-end">
                                 <button><SearchIcon/></button>
-                                {/* <InputBase
-                                    inputProps={{ 'aria-label': 'search' }}
-                                /> */}
-
-                                {/* <div class="sea">
-                                <InputBase placeholder="Search…"></InputBase>
-                            </div> */}
                                 <button><EmailIcon/></button>
                             </div>
                         </div>
@@ -227,7 +199,6 @@ const Messages = () => {
                                         </Grid>
                                     </ListItem>
                                 ) : (
-
                                     <ListItem key={messR.id}>
                                         <Grid container>
                                             <Grid item xs={12}>
