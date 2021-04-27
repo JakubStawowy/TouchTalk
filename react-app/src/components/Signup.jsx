@@ -40,13 +40,7 @@ const Signup = () => {
     },
   });
   return (
-      <section className='container'>
-        {auth.register_success ? (
-            <div className= 'database-validation-register'>
-              Rejestracja się powiodła. Możesz się zalogować.
-            </div>
-        ) : null}
-        
+      <section className='container'>        
         <div className='login-container'>
           <img src={logo} className="logo"/>
           <div className='register-aside'>
@@ -117,6 +111,11 @@ const Signup = () => {
                   Konto o podanym adresie e-mail już istnieje.
                 </div>
             ) : null}
+            {auth.register_success ? (
+            <div className= 'database-validation-register'>
+              Rejestracja się powiodła. Możesz się zalogować.
+            </div>
+        ) : null}
             <button className='register-button-signup' type='submit'>Zarejestruj</button>
           </form>
         </div>
