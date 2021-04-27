@@ -12,7 +12,11 @@ body{
 
 .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-2 {
     background-color: #3081EE;
-    height: 87vh;
+    height: 85vh;
+}
+
+.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-10 {
+    height: 85vh;
 }
 
 a {
@@ -50,6 +54,7 @@ h6.MuiTypography-root.MuiTypography-h6 {
 
 .right-navbar{
     background-color: #3081EE;
+    height: 15vh;
 }
 
 .photo1{
