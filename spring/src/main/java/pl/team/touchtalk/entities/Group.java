@@ -1,6 +1,8 @@
 package pl.team.touchtalk.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -38,13 +40,9 @@ public class Group implements Serializable {
     )
     private Set<User> users = new HashSet<>();
 
-   @ManyToMany
-    @JoinTable(
-        name = "messages_to_group",
-        joinColumns = @JoinColumn(name = "group_id"),
-        inverseJoinColumns = @JoinColumn(name = "message_id")
-    )
-    private Set<Message> message = new HashSet<>();
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "group")
+//    private Set<Message> messagesReceived;
 
     /*
     * constructor
@@ -83,4 +81,13 @@ public class Group implements Serializable {
     public void setCode(String code){
         this.code=code;
     }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
 }
