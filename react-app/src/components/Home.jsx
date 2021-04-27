@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import AppBar from '@material-ui/core/AppBar';
@@ -18,16 +18,18 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import Notifications from "./Notifications";
-import Divider from '@material-ui/core/Divider';
 import Messages from "./Messages";
 import Tasks from "./Tasks";
 import Calls from "./Calls";
 import Teams from "./Teams";
 import {  } from "module";
-import "./Home.css";
+import "../style/Home.css";
 
-import { useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
+import {getUserDetails} from "../actions/getUserDetails";
+import {Button} from "@material-ui/core";
+import {signout} from "../actions/auth";
 
 
 function detectMob() {
@@ -38,9 +40,32 @@ const Home = () => {
 
     const auth = useSelector(state => state.auth)
     const history = useHistory()
+    const dispatch = useDispatch();
     if (!auth.login)
         history.push('/');
 
+    const [userDetails, setUserDetails] = useState(
+        {
+            name: "",
+            surname: ""
+        }
+    );
+
+    const handleLogout = () => {
+        dispatch(signout()).then(() => {
+            history.replace("/");
+        });
+    }
+
+    const handleMessage = () => {
+        history.push("/message");
+    }
+
+    useEffect(() => {
+        getUserDetails().then(response=>{
+            setUserDetails(response.data.userDetails);
+        })
+    }, []);
 
     let menu = {};
     let  menuWidth = 2;
@@ -56,7 +81,7 @@ const Home = () => {
         content = {
             display: 'flex',
             flexDirection: 'column-reverse',
-            padding: 0,
+            padding: 0
         };
         contentWidth = 12;
     }
@@ -70,10 +95,10 @@ const Home = () => {
                                 <Avatar alt="User1" src="https://material-ui.com/static/images/avatar/3.jpg" />
                             </div>
                             <Typography variant="h6" >
-                                {auth.user.user.userDetails.name} {auth.user.user.userDetails.surname}
+                                {userDetails.name} {userDetails.surname}
                             </Typography>
                         </div>
-                        <div algin="flex-end">
+                        <div align="flex-end">
                             <div class='talk'>
                                 <button><PersonAddSharpIcon/></button>
                                 <button><VideocamSharpIcon/></button>
@@ -83,53 +108,75 @@ const Home = () => {
                     </div>
                 </div>
             </AppBar>
-            <Grid container style={content}>
-                <Grid item xs={menuWidth}>
-                    <Divider orientation='horizontal'></Divider>
+            
+            {/*<Grid container style={content}>*/}
+            <Grid container className={"new-container"}>
+                <Grid item xs={2}>
+                    {/*<Divider orientation='horizontal'></Divider>*/}
+
                     <div class='navbar-left'>
                         <List style={menu}>
-                            <ListItem key="notifications">
-                                <ListItemIcon>
-                                    <NotificationsActiveIcon/>
-                                </ListItemIcon>
-                                <NavLink to='/notifications'>Aktualności</NavLink>
+                            <ListItem>
+                                <NavLink to='/messages'>
+                                    <Button>
+                                        <MessageIcon/>
+                                        Wiadomości
+                                    </Button>
+                                </NavLink>
                             </ListItem>
 
-                            <ListItem key="messages">
-                                <ListItemIcon>
-                                    <MessageIcon/>
-                                </ListItemIcon>
-                                <NavLink to='/messages'>Wiadomości</NavLink>
+                            <ListItem>
+                                <NavLink to='/tasks'>
+                                    <Button>
+                                        <FormatListBulletedIcon/>
+                                        Zadania
+                                    </Button>
+                                </NavLink>
                             </ListItem>
-
-                            <ListItem key="tasks">
-                                <ListItemIcon>
-                                    <FormatListBulletedIcon/>
-                                </ListItemIcon>
-                                <NavLink to='/tasks'>Zadania</NavLink>
+                            <ListItem>
+                                <Button>
+                                    <PhoneSharpIcon/>Rozmowy
+                                </Button>
                             </ListItem>
-
-                            <ListItem key="calls">
-                                <ListItemIcon>
-                                    <PhoneSharpIcon/>
-                                </ListItemIcon>
-                                <NavLink to='/calls'>Rozmowy</NavLink>
-                            </ListItem>
-
-                            <ListItem key="teams">
-                                <ListItemIcon>
+                            <ListItem>
+                                <Button>
                                     <GroupAddIcon/>
-                                </ListItemIcon>
-                                <NavLink to='/teams'>Zespoły</NavLink>
+                                    Zespoły
+                                </Button>
                             </ListItem>
+                            {/*</ListItem>*/}
+                            {/*<ListItem>*/}
+                            {/*    <NavLink to='/messages'>*/}
+                            {/*        <MessageIcon/>*/}
+                            {/*        Wiadomości*/}
+                            {/*    </NavLink>*/}
+                            {/*</ListItem>*/}
 
-                            <ListItem key="log_out">
-                                <ListItemIcon>
+                            {/*<ListItem>*/}
+                            {/*    <NavLink to='/tasks'>*/}
+                            {/*        <FormatListBulletedIcon/>*/}
+                            {/*        Zadania*/}
+                            {/*    </NavLink>*/}
+                            {/*</ListItem>*/}
+                            {/*<ListItem>*/}
+                            {/*    <NavLink to='/calls'>*/}
+                            {/*        <PhoneSharpIcon/>Rozmowy*/}
+                            {/*    </NavLink>*/}
+                            {/*</ListItem>*/}
+                            {/*<ListItem>*/}
+                            {/*    <NavLink to='/teams'>*/}
+                            {/*        <GroupAddIcon/>*/}
+                            {/*        Zespoły*/}
+                            {/*    </NavLink>*/}
+                            {/*</ListItem>*/}
+                            <ListItem>
+                                <Button
+                                    onClick={handleLogout}
+                                >
                                     <ExitToAppIcon/>
-                                </ListItemIcon>
-                                <NavLink to='/log_out'>Wyloguj</NavLink>
+                                    Wyloguj
+                                </Button>
                             </ListItem>
-
                         </List>
                     </div>
                 </Grid>

@@ -1,11 +1,11 @@
 package pl.team.touchtalk.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
-import pl.team.touchtalk.entities.LoginResponseBody;
 import pl.team.touchtalk.entities.User;
 import pl.team.touchtalk.repositories.UserRepository;
 import pl.team.touchtalk.services.JsonWebTokenProvider;
@@ -43,7 +43,7 @@ public class LoginController {
      * @Param session HttpSession is used to get sessionId
      * @RequestParam email
      * @RequestParam password
-     * @Returns loginResponseEntity (if no user found, method returns null values with 404 HttpStatus)
+     * @Returns user Id with Json Web Token Pair
      * */
     @PostMapping(value = "/login")
     public ResponseEntity<?> loginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
@@ -62,13 +62,8 @@ public class LoginController {
             loggedUser.setLogged(true);
             repository.save(loggedUser);
 
-            return new ResponseEntity<>(
-                    new LoginResponseBody(
-                            webTokenProvider.generateToken(loggedUser),
-                            loggedUser
-                    ),
-                    HttpStatus.OK
-            );
+            Pair<Long, String> userIdWithTokenPair = Pair.of(loggedUser.getId(), webTokenProvider.generateToken(loggedUser));
+            return new ResponseEntity<>(userIdWithTokenPair, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
