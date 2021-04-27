@@ -1,0 +1,156 @@
+.task-section{
+    background-color: white;
+    padding: 1em;
+    color: black;
+    height: 86vh;
+    overflow: auto;
+}
+
+.task-header{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid black;
+}
+
+.tasks-list{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-gap: 1em;
+    padding: 1em;
+    overflow: auto;
+}
+
+.task-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.task{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #707070;
+    border-left: 3px solid #3081EE;
+    box-shadow: 4px 4px 19px -3px rgba(0,0,0,0.65);
+    background-color: #F8F7F5;
+}
+
+.col1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.5em;
+    align-items: center;
+}
+
+.col3{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.5em;
+    background-color: rgb(246,242,242,0.5);
+    align-items: center;
+}
+
+.col2{
+    border-bottom: 1px solid #292828;
+    padding: 0.5em;
+    align-items: center;
+    
+}
+
+.task-button-panel>li{
+    width: 15w;
+    font-weight: bold;
+}
+
+.find-task{
+    float: right;
+    height: 4vh;
+    width: 20vw;
+}
+
+.accept{
+    background-color: #3081EE ;
+}
+
+.discard{
+    background-color: #103B84;
+}
+
+.task-button-panel{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0;
+    margin-top: auto;
+}
+
+.accept-discard-buttons>button{
+    width: 35px;
+    height: 35px;
+    margin: 0.1em;
+    color: white;
+    cursor: pointer;
+}
+
+.button-input{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.MuiGrid-container {
+    overflow: hidden;
+}
+
+.black{
+    background-color: brown;
+}
+
+.white{
+    background-color: chartreuse;
+}
+
+.add-task-form{
+    display: flex;
+    flex-direction: column;
+}
+
+.aktywny{
+    background-color: teal;
+}
+
+.add-task-form{
+    align-items: center;
+}
+
+.add-task-form>input{
+    width: 50%;
+}
+
+
+.accept:hover{
+    background-color: #4690f1;
+}
+
+.discard:hover{
+    background-color: #264b8b;
+}
+
+.task:hover{
+    box-shadow: 6px 6px 19px -3px rgba(0,0,0,0.75);
+}
+
+.activebutton{
+    background-color: rgb(112,140,167,0.36);
+    border: 1px solid black;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.overlap{
+    padding-bottom: 0;
+    padding-left: 0;
+    margin-right: 10px;
+}
