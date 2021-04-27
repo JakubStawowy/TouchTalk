@@ -46,6 +46,7 @@ const Signup = () => {
               Rejestracja się powiodła. Możesz się zalogować.
             </div>
         ) : null}
+        
         <div className='login-container'>
           <img src={logo} className="logo"/>
           <div className='register-aside'>

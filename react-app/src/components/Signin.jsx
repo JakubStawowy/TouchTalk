@@ -75,6 +75,7 @@ const Signin = () => {
             <p>Nie masz jeszcze konta TouchTalk?</p>
             <button className='register-button-signin' onClick={togglePanel}>Utwórz nowe konto</button>
           </div>
+
         </div>
       </section>
 
