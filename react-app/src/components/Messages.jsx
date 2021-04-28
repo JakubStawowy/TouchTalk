@@ -197,7 +197,7 @@ const Messages = () => {
                             <ListItem button onClick={() => handleClick(user.id)} key={user.id}>
                                 <ListItemIcon>
                                     <Avatar alt={user.userDetails.name}
-                                            src="https://material-ui.com/static/images/avatar/1.jpg"/>
+                                            src="/broken-image.jpg"/>
                                 </ListItemIcon>
                                 <ListItemText primary={user.userDetails.name}/>
                                 <ListItemText secondary="online" align="right"/>
@@ -215,7 +215,7 @@ const Messages = () => {
                                     <ListItem key={messR.id}>
                                         <div class="photo">
                                             <Avatar alt="User"
-                                                    src="https://material-ui.com/static/images/avatar/3.jpg"/>
+                                                    src="/broken-image.jpg"/>
                                         </div>
                                         <Grid container>
                                             <Grid item xs={12}>
