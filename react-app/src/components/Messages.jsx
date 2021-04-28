@@ -39,7 +39,7 @@ const useStyles = makeStyles({
     },
     chatSection: {
         width: '100%',
-        height: '85vh'
+        height: '100%'
     },
     headBG: {
         backgroundColor: '#e0e0e0'
@@ -48,13 +48,12 @@ const useStyles = makeStyles({
         borderRight: '1px solid #e0e0e0'
     },
     messageArea: {
-        height: '65vh',
+        height: '76vh',
         overflowY: 'auto'
     },
 
     listScroll: {
-        height: '65vh',
-        overflow: "auto"
+        overflow: "auto",
     }
 });
 
@@ -171,7 +170,7 @@ const Messages = () => {
         <div>
             <Grid container component={Paper} className={classes.chatSection}>
 
-                <Grid item xs={4} className={classes.borderRight500}>
+                <Grid item xs={3} className={classes.borderRight500}>
                     <AppBar position="static">
                         <div className="navList3">
                             <div className="navList2">
@@ -209,7 +208,7 @@ const Messages = () => {
 
 
                 {conversation.is ? (
-                    <Grid item xs={8}>
+                    <Grid item xs={9}>
                         <List className={classes.messageArea}>
                             {actualMessage.map((messR) => (
                                 (messR.sender !== idActualUser) ? (
@@ -244,7 +243,7 @@ const Messages = () => {
                         </List>
 
                         <div class='bottom-bar'>
-                            <Grid container style={{padding: '10px'}}>
+                            <Grid container style={{padding: '20px'}}>
                                 <Grid item xs={11}>
                                     <TextField id="outlined-basic-email"
                                                label="Napisz nową wiadomość..."
