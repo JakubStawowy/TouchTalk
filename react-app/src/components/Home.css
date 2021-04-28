@@ -12,11 +12,11 @@ body{
 
 .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-2 {
     background-color: #3081EE;
-    height: 85vh;
+    height: 90vh;
 }
 
 .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-10 {
-    height: 85vh;
+    height: 90vh;
 }
 
 a {
