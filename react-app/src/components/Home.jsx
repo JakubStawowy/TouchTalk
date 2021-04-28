@@ -67,7 +67,7 @@ const Home = () => {
                     <div className="navList">
                         <div className="navList2">
                             <div class='photo1'>
-                                <Avatar alt="User1" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                                <Avatar alt="User1" src="/broken-image.jpg"/>
                             </div>
                             <Typography variant="h6" >
                                 {auth.user.user.userDetails.name} {auth.user.user.userDetails.surname}
