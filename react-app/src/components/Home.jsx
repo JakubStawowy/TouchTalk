@@ -88,42 +88,42 @@ const Home = () => {
                     <Divider orientation='horizontal'></Divider>
                     <div class='navbar-left'>
                         <List style={menu}>
-                            <ListItem key="notifications">
+                            <ListItem button key="notifications">
                                 <ListItemIcon>
                                     <NotificationsActiveIcon/>
                                 </ListItemIcon>
                                 <NavLink to='/notifications'>Aktualności</NavLink>
                             </ListItem>
 
-                            <ListItem key="messages">
+                            <ListItem button key="messages">
                                 <ListItemIcon>
                                     <MessageIcon/>
                                 </ListItemIcon>
                                 <NavLink to='/messages'>Wiadomości</NavLink>
                             </ListItem>
 
-                            <ListItem key="tasks">
+                            <ListItem button key="tasks">
                                 <ListItemIcon>
                                     <FormatListBulletedIcon/>
                                 </ListItemIcon>
                                 <NavLink to='/tasks'>Zadania</NavLink>
                             </ListItem>
 
-                            <ListItem key="calls">
+                            <ListItem button key="calls">
                                 <ListItemIcon>
                                     <PhoneSharpIcon/>
                                 </ListItemIcon>
                                 <NavLink to='/calls'>Rozmowy</NavLink>
                             </ListItem>
 
-                            <ListItem key="teams">
+                            <ListItem button key="teams">
                                 <ListItemIcon>
                                     <GroupAddIcon/>
                                 </ListItemIcon>
                                 <NavLink to='/teams'>Zespoły</NavLink>
                             </ListItem>
 
-                            <ListItem key="log_out">
+                            <ListItem button key="log_out">
                                 <ListItemIcon>
                                     <ExitToAppIcon/>
                                 </ListItemIcon>
