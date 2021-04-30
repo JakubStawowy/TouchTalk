@@ -40,6 +40,10 @@ public class Group implements Serializable {
     )
     private Set<User> users = new HashSet<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "group")
+    private Set<GroupMessage> groupMessagesSent;
+
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "group")
 //    private Set<Message> messagesReceived;
@@ -90,4 +94,20 @@ public class Group implements Serializable {
         this.users = users;
     }
 
+    public void addNewUser(User user){
+        Set<User> tmp = getUsers();
+        tmp.add(user);
+        setUsers(tmp);
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", users=" + users +
+                ", groupMessagesSent=" + groupMessagesSent +
+                '}';
+    }
 }

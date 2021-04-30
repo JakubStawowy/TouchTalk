@@ -18,7 +18,7 @@ body{
 .navList3{
     display: flex;
     justify-content: space-between;
-    padding: 1em;
+    padding: 0.35em;
 
 }
 
@@ -32,6 +32,6 @@ body{
     padding-right: 1em;
 }
 
-.new-messages {
-    height: 100%;
+.MuiPaper-root.MuiGrid-root.makeStyles-chatSection-2.MuiGrid-container.MuiPaper-elevation1.MuiPaper-rounded {
+    height: 90vh;
 }
