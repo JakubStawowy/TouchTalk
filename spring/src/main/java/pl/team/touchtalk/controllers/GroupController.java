@@ -12,6 +12,15 @@ import pl.team.touchtalk.repositories.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * @Author Bartosz Szlęzak
+ * @Author Grzegorz Szydło
+ * @Author Paweł Szydło
+ * @Author Łukasz Stolarz
+ * @Version 2.0
+ * @Since 2021-04-30
+ * */
+
 @CrossOrigin("http://localhost:3000")
 @RestController
 public class GroupController {

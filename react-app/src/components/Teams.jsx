@@ -31,6 +31,16 @@ import AddGroup from "./AddGroup";
 import JoinGroup from "./JoinGroup";
 
 
+/*
+ * @Functionalities
+ * @Author Bartosz Szlęzak
+ * @Author Grzegorz Szydło
+ * @Author Paweł Szydło
+ * @Author Łukasz Stolarz
+ * @Version 2.0
+ * @Since 2021-04-30
+ * */
+
 const useStyles = makeStyles({
     table: {
         minWidth: 650,
@@ -46,7 +56,7 @@ const useStyles = makeStyles({
         borderRight: '1px solid #e0e0e0'
     },
     messageArea: {
-        height: '76vh',
+        height: '65vh',
         overflowY: 'auto'
     },
 
@@ -61,7 +71,7 @@ const api = axios.create({
 })
 
 let stompClient = null;
-let receiverId = 0;
+let groupId = 0;
 
 const Teams = () => {
 
@@ -78,7 +88,6 @@ const Teams = () => {
 
 
     const [message, setMessage] = useState({
-        type: "",
         content: "",
         sender: 0,
         receiver: 0
@@ -100,21 +109,20 @@ const Teams = () => {
 
     }
     const onMessageReceived = (payload) => {
-        let mess = {id: '',type: '', content:'', sender: '', receiver: '', data: ''}
-        getMessage(receiverId);
+        getMessage(groupId);
         console.log(actualMessage)
     }
 
     const sendMessage = () => {
 
         if (stompClient) {
-            stompClient.send("/app/sendPrivateMessage", {}, JSON.stringify(message));
+            stompClient.send("/app/sendGroupMessage", {}, JSON.stringify(message));
             // localMessage.push(message);
             // console.log(localMessage)
             setMessage({...message, content: ""});
 
             setTimeout(() => {
-                getMessage(receiverId);
+                getMessage(groupId);
                 let a;
                 console.log(a);
                 console.log(actualMessage)
@@ -127,25 +135,28 @@ const Teams = () => {
         console.log("error");
     }
 
-    const getMessage = receiverId => {
-        api.get('/messagelist/' + idActualUser + "/" + receiverId).then(response => response.data)
+    const getMessage = groupId => {
+        api.get('/messgrouplist/' + groupId).then(response => response.data)
             .then(data => {
                     setActualMessage(data)
                 }
             )
 
-        console.log("receiver " + receiverId);
+        console.log("receiver " + groupId);
     }
 
 
     ///////////////////////////////////////
 
     const handleClick = group => {
+        groupId = group.id;
         setConversation({'is': true});
+        setMessage({...message, sender: idActualUser, receiver: groupId})
         setGroupDetails({
             name: group.name,
             code: group.code
         })
+        getMessage(groupId);
         connect();
     };
 
@@ -215,30 +226,30 @@ const Teams = () => {
                         </AppBar>
 
                         <List className={classes.messageArea}>
-                            {actualMessage.map((messR) => (
-                                (messR.sender !== idActualUser) ? (
-                                    <ListItem key={messR.id}>
+                            {actualMessage.map((groupMess) => (
+                                (groupMess.sender !== idActualUser) ? (
+                                    <ListItem key={groupMess.id}>
                                         <div class="photo">
                                             <Avatar alt="User"
                                                     src="https://material-ui.com/static/images/avatar/3.jpg"/>
                                         </div>
                                         <Grid container>
                                             <Grid item xs={12}>
-                                                <ListItemText align="left" primary={messR.content}/>
+                                                <ListItemText align="left" primary={groupMess.content}/>
                                             </Grid>
                                             <Grid item xs={12}>
-                                                <ListItemText align="left" secondary={messR.date.split("T")[0] + " " + messR.date.split("T")[1].split(".")[0]}/>
+                                                <ListItemText align="left" secondary={groupMess.date.split("T")[0] + " " + groupMess.date.split("T")[1].split(".")[0]}/>
                                             </Grid>
                                         </Grid>
                                     </ListItem>
                                 ) : (
-                                    <ListItem key={messR.id}>
+                                    <ListItem key={groupMess.id}>
                                         <Grid container>
                                             <Grid item xs={12}>
-                                                <ListItemText align="right" primary={messR.content}/>
+                                                <ListItemText align="right" primary={groupMess.content}/>
                                             </Grid>
                                             <Grid item xs={12}>
-                                                <ListItemText align="right" secondary={messR.date.split("T")[0] + " " + messR.date.split("T")[1].split(".")[0]}/>
+                                                <ListItemText align="right" secondary={groupMess.date.split("T")[0] + " " + groupMess.date.split("T")[1].split(".")[0]}/>
                                             </Grid>
                                         </Grid>
                                     </ListItem>
@@ -253,8 +264,7 @@ const Teams = () => {
                                                label="Napisz nową wiadomość..."
                                                onChange={e => setMessage({
                                                    ...message,
-                                                   content: e.target.value,
-                                                   type: "CHAT"
+                                                   content: e.target.value
                                                })}
                                                value={message.content}
                                                onKeyPress={event => {
@@ -264,10 +274,7 @@ const Teams = () => {
                                                }}
                                                required
                                                fullWidth/>
-                                    <button><TextFieldsIcon/></button>
                                     <button><WallpaperIcon/></button>
-                                    <button><MoodIcon/></button>
-                                    <button><GifIcon/></button>
                                 </Grid>
                                 <Grid xs={1} align="right">
                                     <button onClick={sendMessage} ><SendIcon/></button>

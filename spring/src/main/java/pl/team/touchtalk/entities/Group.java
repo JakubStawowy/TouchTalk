@@ -15,8 +15,15 @@ import java.util.Set;
 *
 * @Author Sebastian Pokrywka
 * @Version 1.0
-* @Since 2021-04-06
+* @Modification Paweł Szydło
+* @Modification Grzegorz Szydło
+* @Modification Bartosz Szlęzak
+* @Modification Łukasz Stolarz
+* @Since 2021-04-30
 * */
+
+
+
 
 @Entity
 @Table(name = "groups")

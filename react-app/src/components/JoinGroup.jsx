@@ -2,6 +2,16 @@ import React, {useState} from "react";
 import {Paper, TextField} from "@material-ui/core";
 import axios from "axios";
 
+/*
+ * @Functionalities
+ * @Author Bartosz Szlęzak
+ * @Author Grzegorz Szydło
+ * @Author Paweł Szydło
+ * @Author Łukasz Stolarz
+ * @Version 2.0
+ * @Since 2021-04-30
+ * */
+
 const api = axios.create({
     baseURL: `http://localhost:8080`
 })

@@ -1,19 +1,15 @@
 package pl.team.touchtalk.entities;
 
-import pl.team.touchtalk.enums.MessageType;
-
 import java.sql.Timestamp;
 
 public class MessagePayload {
     private String content;
-    private MessageType type;
     private Long sender;
     private Long receiver;
     private Timestamp date;
 
-    public MessagePayload(String content, MessageType type, Long sender, Long receiver, Timestamp date) {
+    public MessagePayload(String content, Long sender, Long receiver, Timestamp date) {
         this.content = content;
-        this.type = type;
         this.sender = sender;
         this.receiver = receiver;
         this.date = date;
@@ -28,14 +24,6 @@ public class MessagePayload {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public MessageType getType() {
-        return type;
-    }
-
-    public void setType(MessageType type) {
-        this.type = type;
     }
 
     public Long getSender() {

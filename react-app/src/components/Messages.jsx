@@ -28,6 +28,16 @@ import {useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 
 
+/*
+ * @Functionalities
+ * @Author Bartosz Szlęzak
+ * @Author Grzegorz Szydło
+ * @Author Paweł Szydło
+ * @Author Łukasz Stolarz
+ * @Version 2.0
+ * @Since 2021-04-30
+ * */
+
 const useStyles = makeStyles({
     table: {
         minWidth: 650,
@@ -75,7 +85,6 @@ const Messages = () => {
 
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState({
-        type: "",
         content: "",
         sender: 0,
         receiver: 0
@@ -102,7 +111,6 @@ const Messages = () => {
 
     }
     const onMessageReceived = (payload) => {
-        let mess = {id: '',type: '', content:'', sender: '', receiver: '', data: ''}
         getMessage(receiverId);
         console.log(actualMessage)
     }
@@ -235,8 +243,7 @@ const Messages = () => {
                                                label="Napisz nową wiadomość..."
                                                onChange={e => setMessage({
                                                    ...message,
-                                                   content: e.target.value,
-                                                   type: "CHAT"
+                                                   content: e.target.value
                                                })}
                                                value={message.content}
                                                onKeyPress={event => {

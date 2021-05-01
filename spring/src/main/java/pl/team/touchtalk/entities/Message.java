@@ -2,7 +2,6 @@ package pl.team.touchtalk.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.lang.Nullable;
-import pl.team.touchtalk.enums.MessageType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -43,9 +42,6 @@ public class Message implements Serializable {
     @JsonIgnore
     private User receiver;
 
-    @Enumerated(EnumType.STRING)
-    private MessageType type;
-
     /*
     * constructor
     *
@@ -53,12 +49,11 @@ public class Message implements Serializable {
     * @Param file - when no file is attached to message then value is null
     * @Param sender
     * */
-    public Message(@NotNull String content, @Nullable String file, MessageType type, User sender, User receiver) {
+    public Message(@NotNull String content, @Nullable String file, User sender, User receiver) {
         this.content = content;
         this.file = file;
         this.sender = sender;
         this.receiver = receiver;
-        this.type = type;
     }
 
     public Message() {
@@ -117,11 +112,4 @@ public class Message implements Serializable {
         this.receiver = receiver;
     }
 
-    public MessageType getType() {
-        return type;
-    }
-
-    public void setType(MessageType type) {
-        this.type = type;
-    }
 }

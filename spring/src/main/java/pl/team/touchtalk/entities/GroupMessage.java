@@ -83,8 +83,9 @@ public class GroupMessage implements Serializable {
         return sentAt;
     }
 
-    public void setSentAt(Timestamp sentAt) {
-        this.sentAt = sentAt;
+    @PrePersist
+    public void setSentAt() {
+        this.sentAt = new Timestamp(System.currentTimeMillis());
     }
 
     public User getSender() {
