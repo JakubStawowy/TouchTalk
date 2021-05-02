@@ -6,15 +6,15 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
+import pl.team.touchtalk.dto.GroupTransferObject;
+import pl.team.touchtalk.dto.UserTransferObject;
 import pl.team.touchtalk.model.Message;
 import pl.team.touchtalk.dto.MessageTransferObject;
 import pl.team.touchtalk.model.User;
 import pl.team.touchtalk.dao.MessageRepository;
 import pl.team.touchtalk.dao.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @CrossOrigin("http://localhost:3000")
@@ -58,13 +58,24 @@ public class ChatController {
 	@GetMapping("/messagelist/{sender}/{receiver}")
 	public List<MessageTransferObject> getAllChatMessageBySenderAndReceiver(@PathVariable("sender") Long sender, @PathVariable("receiver") Long receiver){
 		List<MessageTransferObject> messagesResponse = new ArrayList<>();
+
+		// TOREMOVE
+		Set<UserTransferObject> users = new LinkedHashSet<>();
+		users.add(new UserTransferObject("Jacob", "Stawovy", null, null));
+		users.add(new UserTransferObject("Grzegorz", "Szydlo", null, null));
+
 		for(Message message: messageRepository.findAllBySenderAndReceiverOrReceiverAndSender(sender,receiver,sender,receiver)) {
 			messagesResponse.add(new MessageTransferObject(
 					message.getContent(),
 					message.getType(),
 					message.getSender().getId(),
 					message.getReceiver().getId(),
-					message.getSentAt()
+					message.getSentAt(),
+					new GroupTransferObject(
+							"groupa1",
+							"czx1223",
+							users
+					)
 			));
 		}
 		return messagesResponse;

@@ -37,11 +37,6 @@ public class Group implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> users = new HashSet<>();
-
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "group")
-//    private Set<Message> messagesReceived;
-
     /*
     * constructor
     *

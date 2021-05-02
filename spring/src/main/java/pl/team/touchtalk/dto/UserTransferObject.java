@@ -2,7 +2,7 @@ package pl.team.touchtalk.dto;
 
 import java.io.Serializable;
 
-public class UserTransferObject implements Serializable {
+public class UserTransferObject implements Serializable, Receiver {
 
     private final String username;
     private final String surname;

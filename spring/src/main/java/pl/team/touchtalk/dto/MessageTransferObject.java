@@ -2,21 +2,25 @@ package pl.team.touchtalk.dto;
 
 import pl.team.touchtalk.enums.MessageType;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class MessageTransferObject {
+public class MessageTransferObject implements Serializable {
+
     private String content;
     private MessageType type;
     private Long sender;
     private Long receiver;
     private Timestamp date;
+    private Receiver receiverBody;
 
-    public MessageTransferObject(String content, MessageType type, Long sender, Long receiver, Timestamp date) {
+    public MessageTransferObject(String content, MessageType type, Long sender, Long receiver, Timestamp date, Receiver receiverBody) {
         this.content = content;
         this.type = type;
         this.sender = sender;
         this.receiver = receiver;
         this.date = date;
+        this.receiverBody = receiverBody;
     }
 
     public MessageTransferObject() {
@@ -60,5 +64,13 @@ public class MessageTransferObject {
 
     public void setDate(Timestamp date) {
         this.date = date;
+    }
+
+    public Receiver getReceiverBody() {
+        return receiverBody;
+    }
+
+    public void setReceiverBody(Receiver receiverBody) {
+        this.receiverBody = receiverBody;
     }
 }
