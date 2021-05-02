@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.team.touchtalk.entities.User;
-import pl.team.touchtalk.entities.UserDetails;
-import pl.team.touchtalk.repositories.UserRepository;
+import pl.team.touchtalk.model.User;
+import pl.team.touchtalk.model.UserDetails;
+import pl.team.touchtalk.dao.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,8 +2,8 @@ package pl.team.touchtalk.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.team.touchtalk.entities.Message;
-import pl.team.touchtalk.repositories.MessageRepository;
+import pl.team.touchtalk.model.Message;
+import pl.team.touchtalk.dao.MessageRepository;
 
 import java.util.List;
 

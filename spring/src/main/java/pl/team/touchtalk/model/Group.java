@@ -1,7 +1,5 @@
-package pl.team.touchtalk.entities;
+package pl.team.touchtalk.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;

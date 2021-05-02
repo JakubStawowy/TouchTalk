@@ -3,8 +3,8 @@ package pl.team.touchtalk.services;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Service;
-import pl.team.touchtalk.entities.User;
-import pl.team.touchtalk.repositories.SigningKeyRepository;
+import pl.team.touchtalk.model.User;
+import pl.team.touchtalk.repo.SigningKeyRepository;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;

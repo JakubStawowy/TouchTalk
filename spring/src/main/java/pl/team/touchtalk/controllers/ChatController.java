@@ -6,11 +6,11 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
-import pl.team.touchtalk.entities.Message;
-import pl.team.touchtalk.entities.MessagePayload;
-import pl.team.touchtalk.entities.User;
-import pl.team.touchtalk.repositories.MessageRepository;
-import pl.team.touchtalk.repositories.UserRepository;
+import pl.team.touchtalk.model.Message;
+import pl.team.touchtalk.dto.MessageTransferObject;
+import pl.team.touchtalk.model.User;
+import pl.team.touchtalk.dao.MessageRepository;
+import pl.team.touchtalk.dao.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class ChatController {
 	}
 
 	@MessageMapping("/sendPrivateMessage")
-	public void sendPrivateMessage(@Payload MessagePayload messagePayload) {
+	public void sendPrivateMessage(@Payload MessageTransferObject messagePayload) {
 		Optional<User> sender = userRepository.findById(messagePayload.getSender());
 		Optional<User> receiver = userRepository.findById(messagePayload.getReceiver());
 
@@ -56,10 +56,10 @@ public class ChatController {
 	}
 
 	@GetMapping("/messagelist/{sender}/{receiver}")
-	public List<MessagePayload> getAllChatMessageBySenderAndReceiver(@PathVariable("sender") Long sender, @PathVariable("receiver") Long receiver){
-		List<MessagePayload> messagesResponse = new ArrayList<>();
+	public List<MessageTransferObject> getAllChatMessageBySenderAndReceiver(@PathVariable("sender") Long sender, @PathVariable("receiver") Long receiver){
+		List<MessageTransferObject> messagesResponse = new ArrayList<>();
 		for(Message message: messageRepository.findAllBySenderAndReceiverOrReceiverAndSender(sender,receiver,sender,receiver)) {
-			messagesResponse.add(new MessagePayload(
+			messagesResponse.add(new MessageTransferObject(
 					message.getContent(),
 					message.getType(),
 					message.getSender().getId(),

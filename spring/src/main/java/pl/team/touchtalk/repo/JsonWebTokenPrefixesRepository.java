@@ -1,4 +1,4 @@
-package pl.team.touchtalk.repositories;
+package pl.team.touchtalk.repo;
 
 public class JsonWebTokenPrefixesRepository {
     private final static String authPrefix = "Authorization";
