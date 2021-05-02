@@ -19,6 +19,7 @@ import java.util.*;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
+@RequestMapping("/api/chats")
 public class ChatController {
 
 	private final SimpMessagingTemplate simpMessagingTemplate;
@@ -32,7 +33,8 @@ public class ChatController {
 		this.userRepository = userRepository;
 	}
 
-	@MessageMapping("/sendPrivateMessage")
+//	@MessageMapping("/sendPrivateMessage")
+	@MessageMapping("/send")
 	public void sendPrivateMessage(@Payload MessageTransferObject messagePayload) {
 		Optional<User> sender = userRepository.findById(messagePayload.getSender());
 		Optional<User> receiver = userRepository.findById(messagePayload.getReceiver());
@@ -50,13 +52,14 @@ public class ChatController {
 		}
 	}
 
-	@GetMapping("/messagelist")
-	public Iterable<Message> getChatMessage(){
+	@GetMapping({"/", ""})
+	public Iterable<Message> index(){
 		return messageRepository.findAll();
 	}
 
-	@GetMapping("/messagelist/{sender}/{receiver}")
-	public List<MessageTransferObject> getAllChatMessageBySenderAndReceiver(@PathVariable("sender") Long sender, @PathVariable("receiver") Long receiver){
+	@GetMapping("/private")
+//	@GetMapping("/messagelist/{sender}/{receiver}")
+	public List<MessageTransferObject> getAllChatMessageBySenderAndReceiver(@RequestParam("sender") Long sender, @RequestParam("receiver") Long receiver){
 		List<MessageTransferObject> messagesResponse = new ArrayList<>();
 
 		// TOREMOVE

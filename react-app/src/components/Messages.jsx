@@ -137,7 +137,7 @@ const Messages = () => {
     }
 
     const getMessage = receiverId => {
-        api.get('/messagelist/' + idActualUser + "/" + receiverId).then(response => response.data)
+        api.get('/api/chats/private?sender=' + idActualUser + "&receiver=" + receiverId).then(response => response.data)
             .then(data => {
                     setActualMessage(data)
                 }
