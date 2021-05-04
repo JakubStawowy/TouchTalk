@@ -8,7 +8,6 @@ import java.sql.Timestamp;
 public class MessageTransferObject implements Serializable {
 
     private String content;
-    private MessageType type;
     private Long sender;
     private Long receiver;
     private Timestamp date;
@@ -16,7 +15,6 @@ public class MessageTransferObject implements Serializable {
 
     public MessageTransferObject(String content, MessageType type, Long sender, Long receiver, Timestamp date, Receiver receiverBody) {
         this.content = content;
-        this.type = type;
         this.sender = sender;
         this.receiver = receiver;
         this.date = date;
@@ -32,14 +30,6 @@ public class MessageTransferObject implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public MessageType getType() {
-        return type;
-    }
-
-    public void setType(MessageType type) {
-        this.type = type;
     }
 
     public Long getSender() {
