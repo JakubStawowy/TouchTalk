@@ -8,7 +8,7 @@ import {GoX } from "react-icons/go";
 const Task = () => {
 
     return (
-        <div class='task'>
+        <div className='task'>
             <div className='col1'>
                 <div>
                     tytul

@@ -1,12 +1,8 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import "./Tasks.css"
-import { Route, Link, Switch, NavLink} from "react-router-dom";
+import { Route,  Switch, NavLink} from "react-router-dom";
 import TaskForm from "./TaskForm";
-import Task from "./Task"
 import ListOfTask from "./ListOfTask";
-import { withTheme } from "@material-ui/core";
-import { PinDropSharp } from "@material-ui/icons";
 
 
 const Tasks = () => {
@@ -30,7 +26,7 @@ const Tasks = () => {
                         <li ><NavLink activeClassName="activebutton" className='overlap' to='/tasks/add'>Dodaj zadanie</NavLink></li>
                     </ul>
                     <div>
-                        <input className='find-task' placeholder='Wyszukaj...'></input>
+                        <input className='find-task' placeholder='Wyszukaj...'/>
                     </div>
                 </div>
             </div>

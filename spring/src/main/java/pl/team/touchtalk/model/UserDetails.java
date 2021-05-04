@@ -1,10 +1,9 @@
-package pl.team.touchtalk.entities;
+package pl.team.touchtalk.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 
 /*
  * UserDetails POJO
@@ -15,7 +14,7 @@ import java.io.Serializable;
  * */
 @Entity
 @Table(name = "user_details")
-public class UserDetails implements Serializable {
+public class UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
