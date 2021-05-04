@@ -110,7 +110,7 @@ const Messages = () => {
     const sendMessage = () => {
 
         if (stompClient) {
-            stompClient.send("/app/sendPrivateMessage", {}, JSON.stringify(message));
+            stompClient.send("/app/send", {}, JSON.stringify(message));
             // localMessage.push(message);
             // console.log(localMessage)
             setMessage({...message, content: ""});
@@ -137,7 +137,7 @@ const Messages = () => {
     }
 
     const getMessage = receiverId => {
-        api.get('/messagelist/' + idActualUser + "/" + receiverId).then(response => response.data)
+        api.get('/messages?sender=' + idActualUser + "&receiver=" + receiverId).then(response => response.data)
             .then(data => {
                     setActualMessage(data)
                 }
@@ -169,10 +169,10 @@ const Messages = () => {
                         {users.map(user => (
                             <ListItem button onClick={() => handleClick(user.id)} key={user.id}>
                                 <ListItemIcon>
-                                    <Avatar alt={user.userDetails.name}
+                                    <Avatar alt={user.username}
                                             src="https://material-ui.com/static/images/avatar/1.jpg"/>
                                 </ListItemIcon>
-                                <ListItemText primary={user.userDetails.name}/>
+                                <ListItemText primary={`${user.username} ${user.surname}`}/>
                                 <ListItemText secondary="online" align="right"/>
                             </ListItem>
                         ))}

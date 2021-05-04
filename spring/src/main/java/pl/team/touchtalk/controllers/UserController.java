@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.team.touchtalk.dto.UserTransferObject;
 import pl.team.touchtalk.model.User;
 import pl.team.touchtalk.model.UserDetails;
 import pl.team.touchtalk.dao.UserRepository;
@@ -44,9 +45,17 @@ public class UserController {
     * @Returns users List - all users from database
     * */
     @GetMapping({"/", ""})
-    public List<User> getUsers(){
-        List<User> users = new ArrayList<>();
-        userRepository.findAll().forEach(users::add);
+    public List<UserTransferObject> index(){
+        List<UserTransferObject> users = new ArrayList<>();
+        userRepository.findAll().forEach(user->
+            users.add(new UserTransferObject(
+                user.getId(),
+              user.getUserDetails().getName(),
+              user.getUserDetails().getSurname(),
+              user.getUserDetails().getPhone(),
+              user.getUserDetails().getImage()
+            ))
+        );
         return users;
     }
 
@@ -59,9 +68,15 @@ public class UserController {
     * @Returns user User
     * */
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable("id") Long id){
+    public ResponseEntity<UserTransferObject> getUser(@PathVariable("id") Long id){
         return userRepository.findById(id).map(
-                user -> new ResponseEntity<>(user, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                user -> new ResponseEntity<>(new UserTransferObject(
+                        user.getId(),
+                        user.getUserDetails().getName(),
+                        user.getUserDetails().getSurname(),
+                        user.getUserDetails().getPhone(),
+                        user.getUserDetails().getImage()
+                ), HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)
         );
     }
 
@@ -81,14 +96,14 @@ public class UserController {
     * @Returns user?null if no user found
     * */
     @PutMapping(path = "/{id}/edit", consumes = "application/json")
-    public ResponseEntity<String> editUser(@RequestBody UserDetails details, @PathVariable("id") Long id) {
+    public ResponseEntity<Boolean> editUser(@RequestBody UserDetails details, @PathVariable("id") Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if(optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setUserDetails(details);
             userRepository.save(user);
-            return new ResponseEntity<>("User edited successfully", HttpStatus.OK);
+            return new ResponseEntity<>(true, HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
     }
 }

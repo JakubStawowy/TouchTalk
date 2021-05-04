@@ -1,12 +1,8 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import "./Tasks.css"
 import { Route, Link, Switch, NavLink} from "react-router-dom";
 import TaskForm from "./TaskForm";
-import Task from "./Task"
 import ListOfTask from "./ListOfTask";
-import { withTheme } from "@material-ui/core";
-import { PinDropSharp } from "@material-ui/icons";
 
 
 const Tasks = () => {

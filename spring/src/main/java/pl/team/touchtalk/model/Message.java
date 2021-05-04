@@ -21,14 +21,13 @@ import java.sql.Timestamp;
  * */
 @Entity
 @Table(name = "messages")
-public class Message implements Serializable {
+public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
     private String content;
-    @Nullable
-    private String file;
+
     @NotNull
     @Column(name = "sent_at")
     private Timestamp sentAt;
@@ -46,6 +45,8 @@ public class Message implements Serializable {
     @Enumerated(EnumType.STRING)
     private MessageType type;
 
+    @OneToOne(mappedBy = "message")
+    private File file;
     /*
     * constructor
     *
@@ -53,7 +54,7 @@ public class Message implements Serializable {
     * @Param file - when no file is attached to message then value is null
     * @Param sender
     * */
-    public Message(@NotNull String content, @Nullable String file, MessageType type, User sender, User receiver) {
+    public Message(@NotNull String content, @Nullable File file, MessageType type, User sender, User receiver) {
         this.content = content;
         this.file = file;
         this.sender = sender;
@@ -82,15 +83,6 @@ public class Message implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    @Nullable
-    public String getFile() {
-        return file;
-    }
-
-    public void setFile(@Nullable String file) {
-        this.file = file;
     }
 
     public Timestamp getSentAt() {
@@ -123,5 +115,13 @@ public class Message implements Serializable {
 
     public void setType(MessageType type) {
         this.type = type;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
     }
 }

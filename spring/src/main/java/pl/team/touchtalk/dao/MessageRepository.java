@@ -11,6 +11,6 @@ import java.util.List;
 public interface MessageRepository extends CrudRepository<Message, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM messages WHERE sender_id=?1 AND receiver_id=?2")
     List<Message> getAllBySenderAndReceiver(Long senderId, Long receiverId);
-    @Query(nativeQuery = true, value = "SELECT * FROM messages WHERE (sender_id=?1 AND receiver_id=?2) OR (receiver_id=?3 AND sender_id=?4)")
-    List<Message> findAllBySenderAndReceiverOrReceiverAndSender(Long sender, Long receiver, Long receiver2, Long sender2);
+    @Query(nativeQuery = true, value = "SELECT * FROM messages WHERE (sender_id=?1 AND receiver_id=?2) OR (receiver_id=?1 AND sender_id=?2)")
+    List<Message> findAllBySenderAndReceiverOrReceiverAndSender(Long sender, Long receiver);
 }
