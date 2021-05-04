@@ -11,12 +11,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import SendIcon from '@material-ui/icons/Send';
 import MoodIcon from '@material-ui/icons/Mood';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import WallpaperIcon from '@material-ui/icons/Wallpaper';
-import SearchIcon from '@material-ui/icons/Search';
 import AppBar from '@material-ui/core/AppBar';
-import EmailIcon from '@material-ui/icons/Email';
 import GifIcon from '@material-ui/icons/Gif';
 import "../style/Messages.css"
 
@@ -52,7 +49,7 @@ const useStyles = makeStyles({
         borderRight: '1px solid #e0e0e0'
     },
     messageArea: {
-        height: '76vh',
+        height: '68vh',
         overflowY: 'auto'
     },
 
@@ -181,7 +178,7 @@ const Messages = () => {
                             <ListItem button onClick={() => handleClick(user)} key={user.id}>
                                 <ListItemIcon>
                                     <Avatar alt={user.username}
-                                            src="https://material-ui.com/static/images/avatar/1.jpg"/>
+                                            src="/broken-image.jpg"/>
                                 </ListItemIcon>
                                 <ListItemText primary={`${user.username} ${user.surname}`}/>
                             </ListItem>
@@ -204,11 +201,12 @@ const Messages = () => {
 
                         <List className={classes.messageArea}>
                             {actualMessage.map((messR) => (
+
                                 (messR.sender !== idActualUser) ? (
                                     <ListItem key={messR.id}>
-                                        <div class="photo">
+                                        <div className="photo">
                                             <Avatar alt="User"
-                                                    src="https://material-ui.com/static/images/avatar/3.jpg"/>
+                                                    src="/broken-image.jpg"/>
                                         </div>
                                         <Grid container>
                                             <Grid item xs={12}>
@@ -234,7 +232,7 @@ const Messages = () => {
                             ))}
                         </List>
 
-                        <div class='bottom-bar'>
+                        <div className='bottom-bar'>
                             <Grid container style={{padding: '20px'}}>
                                 <Grid item xs={11}>
                                     <TextField id="outlined-basic-email"
@@ -251,10 +249,7 @@ const Messages = () => {
                                                }}
                                                required
                                                fullWidth/>
-                                    <button><TextFieldsIcon/></button>
                                     <button><WallpaperIcon/></button>
-                                    <button><MoodIcon/></button>
-                                    <button><GifIcon/></button>
                                 </Grid>
                                 <Grid xs={1} align="right">
                                     <button onClick={sendMessage} ><SendIcon/></button>

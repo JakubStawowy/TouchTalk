@@ -1,7 +1,6 @@
 package pl.team.touchtalk.model;
 
 import javax.persistence.*;
-import javax.sql.rowset.serial.SerialBlob;
 import javax.validation.constraints.NotNull;
 
 @Entity

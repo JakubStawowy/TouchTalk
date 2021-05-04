@@ -140,8 +140,6 @@ const Teams = () => {
     }
 
 
-    ///////////////////////////////////////
-
     const handleClick = group => {
         groupId = group.id;
         console.log(group);
@@ -222,11 +220,12 @@ const Teams = () => {
 
                         <List className={classes.messageArea}>
                             {actualMessage.map((groupMess) => (
+                                console.log(groupMess),
                                 (groupMess.sender !== idActualUser) ? (
                                     <ListItem key={groupMess.id}>
-                                        <div class="photo">
+                                        <div className="photo">
                                             <Avatar alt="User"
-                                                    src="https://material-ui.com/static/images/avatar/3.jpg"/>
+                                                    src="/broken-image.jpg"/>
                                         </div>
                                         <Grid container>
                                             <Grid item xs={12}>
@@ -252,7 +251,7 @@ const Teams = () => {
                             ))}
                         </List>
 
-                        <div class='bottom-bar'>
+                        <div className='bottom-bar'>
                             <Grid container style={{padding: '20px'}}>
                                 <Grid item xs={11}>
                                     <TextField id="outlined-basic-email"

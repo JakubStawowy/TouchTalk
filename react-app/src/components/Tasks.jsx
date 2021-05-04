@@ -1,6 +1,6 @@
 import React from "react";
 import "./Tasks.css"
-import { Route, Link, Switch, NavLink} from "react-router-dom";
+import { Route,  Switch, NavLink} from "react-router-dom";
 import TaskForm from "./TaskForm";
 import ListOfTask from "./ListOfTask";
 
@@ -26,7 +26,7 @@ const Tasks = () => {
                         <li ><NavLink activeClassName="activebutton" className='overlap' to='/tasks/add'>Dodaj zadanie</NavLink></li>
                     </ul>
                     <div>
-                        <input className='find-task' placeholder='Wyszukaj...'></input>
+                        <input className='find-task' placeholder='Wyszukaj...'/>
                     </div>
                 </div>
             </div>
