@@ -41,7 +41,6 @@ public class ChatController {
 			Message message = new Message(
 					messagePayload.getContent(),
 					null,
-					messagePayload.getType(),
 					sender.get(),
 					receiver.get()
 			);
@@ -61,7 +60,6 @@ public class ChatController {
 		for(Message message: messageRepository.findAllBySenderAndReceiverOrReceiverAndSender(sender,receiver,sender,receiver)) {
 			messagesResponse.add(new MessagePayload(
 					message.getContent(),
-					message.getType(),
 					message.getSender().getId(),
 					message.getReceiver().getId(),
 					message.getSentAt()

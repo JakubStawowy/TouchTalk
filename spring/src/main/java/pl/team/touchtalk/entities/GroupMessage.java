@@ -7,20 +7,22 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
+
 /*
  * Message POJO
  *
- * @Author Jakub Stawowy,
- * @Author Paweł Szydło
+ * @Author Paweł Szydło,
  * @Author Grzegorz Szydło
  * @Author Bartosz Szlęzak
  * @Author Łukasz Stolarz
- * @Version 2.0
- * @Since 2021-04-06
+ * @Version 1.0
+ * @Since 2021-04-30
  * */
 @Entity
-@Table(name = "messages")
-public class Message implements Serializable {
+@Table(name = "group_messages")
+
+public class GroupMessage implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,29 +40,18 @@ public class Message implements Serializable {
     private User sender;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "receiver_id")
+    @JoinColumn(name = "group_id")
     @JsonIgnore
-    private User receiver;
+    private Group group;
 
-    /*
-    * constructor
-    *
-    * @Param content
-    * @Param file - when no file is attached to message then value is null
-    * @Param sender
-    * */
-    public Message(@NotNull String content, @Nullable String file, User sender, User receiver) {
+    public GroupMessage() {
+    }
+
+    public GroupMessage(@NotNull String content, @Nullable String file, User sender, Group group) {
         this.content = content;
         this.file = file;
         this.sender = sender;
-        this.receiver = receiver;
-    }
-
-    public Message() {
-    }
-    @PrePersist
-    public void setSentAt() {
-        this.sentAt = new Timestamp(System.currentTimeMillis());
+        this.group = group;
     }
 
     public Long getId() {
@@ -92,8 +83,9 @@ public class Message implements Serializable {
         return sentAt;
     }
 
-    public void setSentAt(Timestamp sentAt) {
-        this.sentAt = sentAt;
+    @PrePersist
+    public void setSentAt() {
+        this.sentAt = new Timestamp(System.currentTimeMillis());
     }
 
     public User getSender() {
@@ -104,12 +96,11 @@ public class Message implements Serializable {
         this.sender = sender;
     }
 
-    public User getReceiver() {
-        return receiver;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setReceiver(User receiver) {
-        this.receiver = receiver;
+    public void setGroup(Group group) {
+        this.group = group;
     }
-
 }

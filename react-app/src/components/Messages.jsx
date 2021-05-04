@@ -28,6 +28,16 @@ import {useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 
 
+/*
+ * @Functionalities
+ * @Author Bartosz Szlęzak
+ * @Author Grzegorz Szydło
+ * @Author Paweł Szydło
+ * @Author Łukasz Stolarz
+ * @Version 2.0
+ * @Since 2021-04-30
+ * */
+
 const useStyles = makeStyles({
     table: {
         minWidth: 650,
@@ -43,12 +53,12 @@ const useStyles = makeStyles({
         borderRight: '1px solid #e0e0e0'
     },
     messageArea: {
-        height: '67vh',
+        height: '76vh',
         overflowY: 'auto'
     },
 
     listScroll: {
-        height: '71vh',
+        // height: '71vh',
         overflow: "auto"
     }
 });
@@ -75,7 +85,6 @@ const Messages = () => {
 
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState({
-        type: "",
         content: "",
         sender: 0,
         receiver: 0
@@ -102,7 +111,6 @@ const Messages = () => {
 
     }
     const onMessageReceived = (payload) => {
-        let mess = {id: '',type: '', content:'', sender: '', receiver: '', data: ''}
         getMessage(receiverId);
         console.log(actualMessage)
     }
@@ -124,10 +132,14 @@ const Messages = () => {
         }
     }
 
-    const handleClick = id => {
-        receiverId = id;
+    const handleClick = user => {
+        receiverId = user.id;
         setConversation({'is': true});
         setMessage({...message, sender: idActualUser, receiver: receiverId})
+        setUserDetails({
+            name: user.userDetails.name,
+            surname: user.userDetails.surname
+        })
         getMessage(receiverId);
         connect();
     };
@@ -146,34 +158,33 @@ const Messages = () => {
         console.log("receiver " + receiverId);
     }
 
+    const [userDetails, setUserDetails] = useState({
+        name: "",
+        surname: ""
+    })
+
     return (
         <div className={"new-messages"}>
             <Grid container component={Paper} className={classes.chatSection}>
 
-                <Grid item xs={4} className={classes.borderRight500}>
+                <Grid item xs={3} className={classes.borderRight500}>
                     <AppBar position="static">
                         <div className="navList3">
                             <div className="navList2">
                                 <Typography variant="h6">
                                     Czat
                                 </Typography>
-                                <button><ExpandMoreIcon/></button>
-                            </div>
-                            <div align="flex-end">
-                                <button><SearchIcon/></button>
-                                <button><EmailIcon/></button>
                             </div>
                         </div>
                     </AppBar>
                     <List className={classes.listScroll}>
                         {users.map(user => (
-                            <ListItem button onClick={() => handleClick(user.id)} key={user.id}>
+                            <ListItem button onClick={() => handleClick(user)} key={user.id}>
                                 <ListItemIcon>
                                     <Avatar alt={user.userDetails.name}
-                                            src="https://material-ui.com/static/images/avatar/1.jpg"/>
+                                            src="/broken-image.jpg"/>
                                 </ListItemIcon>
-                                <ListItemText primary={user.userDetails.name}/>
-                                <ListItemText secondary="online" align="right"/>
+                                <ListItemText primary={user.userDetails.name + " " + user.userDetails.surname}/>
                             </ListItem>
                         ))}
                     </List>
@@ -181,7 +192,18 @@ const Messages = () => {
 
 
                 {conversation.is ? (
-                    <Grid item xs={8}>
+                    <Grid item xs={9}>
+
+                        <AppBar position="static">
+                            <div className="navList3">
+                                <div className="navList2">
+                                    <Typography variant="h6">
+                                        {userDetails.name + " " + userDetails.surname}
+                                    </Typography>
+                                </div>
+                            </div>
+                        </AppBar>
+
                         <List className={classes.messageArea}>
                             {actualMessage.map((messR) => (
                                 (messR.sender !== idActualUser) ? (
@@ -221,8 +243,7 @@ const Messages = () => {
                                                label="Napisz nową wiadomość..."
                                                onChange={e => setMessage({
                                                    ...message,
-                                                   content: e.target.value,
-                                                   type: "CHAT"
+                                                   content: e.target.value
                                                })}
                                                value={message.content}
                                                onKeyPress={event => {

@@ -92,18 +92,11 @@ const Home = () => {
                     <div className="navList">
                         <div className="navList2">
                             <div class='photo1'>
-                                <Avatar alt="User1" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                                <Avatar alt="User1" src="/broken-image.jpg" />
                             </div>
                             <Typography variant="h6" >
                                 {userDetails.name} {userDetails.surname}
                             </Typography>
-                        </div>
-                        <div align="flex-end">
-                            <div class='talk'>
-                                <button><PersonAddSharpIcon/></button>
-                                <button><VideocamSharpIcon/></button>
-                                <button><PhoneSharpIcon/></button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -116,67 +109,48 @@ const Home = () => {
 
                     <div class='navbar-left'>
                         <List style={menu}>
-                            <ListItem>
-                                <NavLink to='/messages'>
-                                    <Button>
-                                        <MessageIcon/>
-                                        Wiadomości
-                                    </Button>
-                                </NavLink>
+                            <ListItem button key="notifications">
+                                <ListItemIcon>
+                                    <NotificationsActiveIcon/>
+                                </ListItemIcon>
+                                <NavLink to='/notifications'>Aktualności</NavLink>
                             </ListItem>
 
-                            <ListItem>
-                                <NavLink to='/tasks'>
-                                    <Button>
-                                        <FormatListBulletedIcon/>
-                                        Zadania
-                                    </Button>
-                                </NavLink>
+                            <ListItem button key="messages">
+                                <ListItemIcon>
+                                    <MessageIcon/>
+                                </ListItemIcon>
+                                <NavLink to='/messages'>Wiadomości</NavLink>
                             </ListItem>
-                            <ListItem>
-                                <Button>
-                                    <PhoneSharpIcon/>Rozmowy
-                                </Button>
+
+                            <ListItem button key="tasks">
+                                <ListItemIcon>
+                                    <FormatListBulletedIcon/>
+                                </ListItemIcon>
+                                <NavLink to='/tasks'>Zadania</NavLink>
                             </ListItem>
-                            <ListItem>
-                                <Button>
+
+                            <ListItem button key="calls">
+                                <ListItemIcon>
+                                    <PhoneSharpIcon/>
+                                </ListItemIcon>
+                                <NavLink to='/calls'>Rozmowy</NavLink>
+                            </ListItem>
+
+                            <ListItem button key="teams">
+                                <ListItemIcon>
                                     <GroupAddIcon/>
-                                    Zespoły
-                                </Button>
+                                </ListItemIcon>
+                                <NavLink to='/teams'>Zespoły</NavLink>
                             </ListItem>
-                            {/*</ListItem>*/}
-                            {/*<ListItem>*/}
-                            {/*    <NavLink to='/messages'>*/}
-                            {/*        <MessageIcon/>*/}
-                            {/*        Wiadomości*/}
-                            {/*    </NavLink>*/}
-                            {/*</ListItem>*/}
 
-                            {/*<ListItem>*/}
-                            {/*    <NavLink to='/tasks'>*/}
-                            {/*        <FormatListBulletedIcon/>*/}
-                            {/*        Zadania*/}
-                            {/*    </NavLink>*/}
-                            {/*</ListItem>*/}
-                            {/*<ListItem>*/}
-                            {/*    <NavLink to='/calls'>*/}
-                            {/*        <PhoneSharpIcon/>Rozmowy*/}
-                            {/*    </NavLink>*/}
-                            {/*</ListItem>*/}
-                            {/*<ListItem>*/}
-                            {/*    <NavLink to='/teams'>*/}
-                            {/*        <GroupAddIcon/>*/}
-                            {/*        Zespoły*/}
-                            {/*    </NavLink>*/}
-                            {/*</ListItem>*/}
-                            <ListItem>
-                                <Button
-                                    onClick={handleLogout}
-                                >
+                            <ListItem button key="log_out" onClick={handleLogout}>
+                                <ListItemIcon>
                                     <ExitToAppIcon/>
-                                    Wyloguj
-                                </Button>
+                                </ListItemIcon>
+                                <NavLink to='/home'>Wyloguj</NavLink>
                             </ListItem>
+
                         </List>
                     </div>
                 </Grid>

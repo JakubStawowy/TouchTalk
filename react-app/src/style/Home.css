@@ -7,22 +7,16 @@ body{
     background: rgb(48,129,238);
     background: linear-gradient( rgba(48,129,238,1) 0%, rgba(28,162,240,1) 32%, rgba(32,108,174,1) 40%, rgba(24,74,143,1) 50%, rgba(16,59,132,1) 70%);
     font-size: 20px;
+    font-family: 'Montserrat', sens-serif;
     color: white;}
-
-section{
-    height: 100vh;
-}
-
-header{
-    height: 10%;
-}
 
 .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-2 {
     background-color: #3081EE;
+    height: 90vh;
 }
 
-.new-container {
-    height: 90%;
+.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-10 {
+    height: 90vh;
 }
 
 a {
@@ -42,14 +36,16 @@ li {
 
 
 .navbar-left{
+    font-family: 'Montserrat', sens-serif;
     font-size: 24px;
-    height: 100%;
 }
 
 .MuiListItemIcon-root {
     margin-top: -1em;
     margin-left: 0.5em;
 }
+
+
 
 h6.MuiTypography-root.MuiTypography-h6 {
     font-weight: bold;
@@ -58,6 +54,7 @@ h6.MuiTypography-root.MuiTypography-h6 {
 
 .right-navbar{
     background-color: #3081EE;
+    height: 10vh;
 }
 
 .photo1{
