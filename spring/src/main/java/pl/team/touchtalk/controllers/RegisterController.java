@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
-import pl.team.touchtalk.entities.User;
-import pl.team.touchtalk.repositories.UserRepository;
+import pl.team.touchtalk.model.User;
+import pl.team.touchtalk.dao.UserRepository;
 
 /*
 * RegisterController

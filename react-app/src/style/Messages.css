@@ -1,0 +1,37 @@
+body{
+    font-family: 'Montserrat', sens-serif;
+}
+
+.size{
+    display: flex;
+}
+
+.bottom-bar{
+    border: 1px solid grey;
+}
+
+.navList2{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.navList3{
+    display: flex;
+    justify-content: space-between;
+    padding: 0.35em;
+
+}
+
+.navList1{
+    display: flex;
+    justify-content: left;
+    grid-template-rows: auto;
+}
+
+.photo{
+    padding-right: 1em;
+}
+
+.MuiPaper-root.MuiGrid-root.makeStyles-chatSection-2.MuiGrid-container.MuiPaper-elevation1.MuiPaper-rounded {
+    height: 90vh;
+}

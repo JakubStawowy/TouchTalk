@@ -1,4 +1,4 @@
-package pl.team.touchtalk.entities;
+package pl.team.touchtalk.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import pl.team.touchtalk.enums.UserRoles;
@@ -6,7 +6,6 @@ import pl.team.touchtalk.enums.UserRoles;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +19,7 @@ import java.util.Set;
  * */
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,9 +49,11 @@ public class User implements Serializable {
     @JoinColumn(name = "user_details_id", referencedColumnName = "id")
     private UserDetails userDetails;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "sender")
     private Set<Message> messagesSent;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "receiver")
     private Set<Message> messagesReceived;
 

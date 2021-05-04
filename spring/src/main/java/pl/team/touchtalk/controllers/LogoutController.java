@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.team.touchtalk.entities.User;
-import pl.team.touchtalk.repositories.UserRepository;
+import pl.team.touchtalk.model.User;
+import pl.team.touchtalk.dao.UserRepository;
 
 import java.util.Optional;
 
@@ -37,13 +37,11 @@ public class LogoutController {
     @PutMapping(value = "/logout")
     public ResponseEntity<?> logoutUser(@RequestParam("userId")Long id) {
         Optional<User> loggedUser = repository.findById(id);
-
         if(loggedUser.isPresent()) {
             loggedUser.get().setLogged(false);
             repository.save(loggedUser.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
-
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

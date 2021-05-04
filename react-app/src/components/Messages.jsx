@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
@@ -11,11 +9,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
-import Fab from '@material-ui/core/Fab';
 import SendIcon from '@material-ui/icons/Send';
 import MoodIcon from '@material-ui/icons/Mood';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
-import PhoneSharpIcon from '@material-ui/icons/PhoneSharp';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import WallpaperIcon from '@material-ui/icons/Wallpaper';
@@ -23,7 +18,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AppBar from '@material-ui/core/AppBar';
 import EmailIcon from '@material-ui/icons/Email';
 import GifIcon from '@material-ui/icons/Gif';
-import "./Messages.css"
+import "../style/Messages.css"
 
 
 import axios from "axios";
@@ -33,6 +28,15 @@ import {useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 
 
+/*
+ * @Functionalities
+ * @Author Bartosz Szlęzak
+ * @Author Grzegorz Szydło
+ * @Author Paweł Szydło
+ * @Author Łukasz Stolarz
+ * @Version 2.0
+ * @Since 2021-04-30
+ * */
 const useStyles = makeStyles({
     table: {
         minWidth: 650,
@@ -48,12 +52,13 @@ const useStyles = makeStyles({
         borderRight: '1px solid #e0e0e0'
     },
     messageArea: {
-        height: '70vh',
+        height: '76vh',
         overflowY: 'auto'
     },
 
     listScroll: {
-        overflow: "auto",
+        // height: '71vh',
+        overflow: "auto"
     }
 });
 
@@ -73,21 +78,18 @@ const Messages = () => {
 
     const classes = useStyles();
 
-    let idActualUser = auth.user.user.id;
-    let usersWidth = 3;
-    let conversationWidth = 8;
+    let idActualUser = parseInt(localStorage.getItem("id"));
+    console.log("ID UZYTKOWNIKA "+idActualUser);
     const [conversation, setConversation] = useState({'is': false});
 
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState({
-        type: "",
         content: "",
         sender: 0,
         receiver: 0
     })
 
     const [actualMessage, setActualMessage] = useState([]);
-    const [localMessage, setLocalMessage] = useState([]);
 
     useEffect(() => {
         api.get('/api/users').then(response => response.data)
@@ -108,19 +110,6 @@ const Messages = () => {
 
     }
     const onMessageReceived = (payload) => {
-        let mess = {id: '',type: '', content:'', sender: '', receiver: '', data: ''}
-
-        //let message = JSON.stringify(payload.body); JSON.parse(payload.body)
-        // console.log("parse")
-        // let message =  JSON.parse(payload.body);
-        // //localMessage.push(message);
-        // localMessage.push(message)
-        // console.log(payload.body)
-        // console.log(" ")
-        // console.log(message)
-        // console.log(" ")
-        // console.log(localMessage)
-        //actualMessage.push(message)
         getMessage(receiverId);
         console.log(actualMessage)
     }
@@ -128,7 +117,7 @@ const Messages = () => {
     const sendMessage = () => {
 
         if (stompClient) {
-            stompClient.send("/app/sendPrivateMessage", {}, JSON.stringify(message));
+            stompClient.send("/app/send", {}, JSON.stringify(message));
             // localMessage.push(message);
             // console.log(localMessage)
             setMessage({...message, content: ""});
@@ -142,11 +131,14 @@ const Messages = () => {
         }
     }
 
-    const handleClick = id => {
-        receiverId = id;
-        console.log(receiverId);
+    const handleClick = user => {
+        receiverId = user.id;
         setConversation({'is': true});
         setMessage({...message, sender: idActualUser, receiver: receiverId})
+        setUserDetails({
+            username: user.username,
+            surname: user.surname
+        })
         getMessage(receiverId);
         connect();
     };
@@ -156,7 +148,7 @@ const Messages = () => {
     }
 
     const getMessage = receiverId => {
-        api.get('/messagelist/' + idActualUser + "/" + receiverId).then(response => response.data)
+        api.get('/messages?sender=' + idActualUser + "&receiver=" + receiverId).then(response => response.data)
             .then(data => {
                     setActualMessage(data)
                 }
@@ -165,9 +157,13 @@ const Messages = () => {
         console.log("receiver " + receiverId);
     }
 
+    const [userDetails, setUserDetails] = useState({
+        username: "",
+        surname: ""
+    })
 
     return (
-        <div>
+        <div className={"new-messages"}>
             <Grid container component={Paper} className={classes.chatSection}>
 
                 <Grid item xs={3} className={classes.borderRight500}>
@@ -177,30 +173,17 @@ const Messages = () => {
                                 <Typography variant="h6">
                                     Czat
                                 </Typography>
-                                <button><ExpandMoreIcon/></button>
-                            </div>
-                            <div align="flex-end">
-                                <button><SearchIcon/></button>
-                                {/* <InputBase
-                                    inputProps={{ 'aria-label': 'search' }}
-                                /> */}
-
-                                {/* <div class="sea">
-                                <InputBase placeholder="Search…"></InputBase>
-                            </div> */}
-                                <button><EmailIcon/></button>
                             </div>
                         </div>
                     </AppBar>
                     <List className={classes.listScroll}>
                         {users.map(user => (
-                            <ListItem button onClick={() => handleClick(user.id)} key={user.id}>
+                            <ListItem button onClick={() => handleClick(user)} key={user.id}>
                                 <ListItemIcon>
-                                    <Avatar alt={user.userDetails.name}
+                                    <Avatar alt={user.username}
                                             src="https://material-ui.com/static/images/avatar/1.jpg"/>
                                 </ListItemIcon>
-                                <ListItemText primary={user.userDetails.name}/>
-                                <ListItemText secondary="online" align="right"/>
+                                <ListItemText primary={`${user.username} ${user.surname}`}/>
                             </ListItem>
                         ))}
                     </List>
@@ -209,6 +192,16 @@ const Messages = () => {
 
                 {conversation.is ? (
                     <Grid item xs={9}>
+                        <AppBar position="static">
+                            <div className="navList3">
+                                <div className="navList2">
+                                    <Typography variant="h6">
+                                        {userDetails.username + " " + userDetails.surname}
+                                    </Typography>
+                                </div>
+                            </div>
+                        </AppBar>
+
                         <List className={classes.messageArea}>
                             {actualMessage.map((messR) => (
                                 (messR.sender !== idActualUser) ? (
@@ -227,7 +220,6 @@ const Messages = () => {
                                         </Grid>
                                     </ListItem>
                                 ) : (
-
                                     <ListItem key={messR.id}>
                                         <Grid container>
                                             <Grid item xs={12}>
@@ -249,8 +241,7 @@ const Messages = () => {
                                                label="Napisz nową wiadomość..."
                                                onChange={e => setMessage({
                                                    ...message,
-                                                   content: e.target.value,
-                                                   type: "CHAT"
+                                                   content: e.target.value
                                                })}
                                                value={message.content}
                                                onKeyPress={event => {

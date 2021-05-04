@@ -1,12 +1,10 @@
-package pl.team.touchtalk.entities;
+package pl.team.touchtalk.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.lang.Nullable;
-import pl.team.touchtalk.enums.MessageType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.sql.Timestamp;
 /*
  * Message POJO
@@ -21,14 +19,13 @@ import java.sql.Timestamp;
  * */
 @Entity
 @Table(name = "messages")
-public class Message implements Serializable {
+public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
     private String content;
-    @Nullable
-    private String file;
+
     @NotNull
     @Column(name = "sent_at")
     private Timestamp sentAt;
@@ -43,9 +40,8 @@ public class Message implements Serializable {
     @JsonIgnore
     private User receiver;
 
-    @Enumerated(EnumType.STRING)
-    private MessageType type;
-
+    @OneToOne(mappedBy = "message")
+    private File file;
     /*
     * constructor
     *
@@ -53,12 +49,11 @@ public class Message implements Serializable {
     * @Param file - when no file is attached to message then value is null
     * @Param sender
     * */
-    public Message(@NotNull String content, @Nullable String file, MessageType type, User sender, User receiver) {
+    public Message(@NotNull String content, @Nullable File file, User sender, User receiver) {
         this.content = content;
         this.file = file;
         this.sender = sender;
         this.receiver = receiver;
-        this.type = type;
     }
 
     public Message() {
@@ -82,15 +77,6 @@ public class Message implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    @Nullable
-    public String getFile() {
-        return file;
-    }
-
-    public void setFile(@Nullable String file) {
-        this.file = file;
     }
 
     public Timestamp getSentAt() {
@@ -117,11 +103,11 @@ public class Message implements Serializable {
         this.receiver = receiver;
     }
 
-    public MessageType getType() {
-        return type;
+    public File getFile() {
+        return file;
     }
 
-    public void setType(MessageType type) {
-        this.type = type;
+    public void setFile(File file) {
+        this.file = file;
     }
 }

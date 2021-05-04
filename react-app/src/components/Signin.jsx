@@ -1,7 +1,7 @@
 import React from "react";
 import {Redirect, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
-import "./Signin.css"
+import "../style/Signin.css"
 import logo from './logo.svg'
 import { SigninSchema } from "../validation/formValidation.js";
 import { useDispatch, useSelector} from "react-redux";
@@ -75,6 +75,7 @@ const Signin = () => {
             <p>Nie masz jeszcze konta TouchTalk?</p>
             <button className='register-button-signin' onClick={togglePanel}>Utwórz nowe konto</button>
           </div>
+
         </div>
       </section>
 

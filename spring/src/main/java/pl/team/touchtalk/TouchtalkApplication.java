@@ -1,15 +1,10 @@
 package pl.team.touchtalk;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import pl.team.touchtalk.entities.Message;
-import pl.team.touchtalk.entities.User;
-import pl.team.touchtalk.entities.UserDetails;
-import pl.team.touchtalk.repositories.MessageRepository;
-import pl.team.touchtalk.repositories.UserRepository;
+import pl.team.touchtalk.dao.MessageRepository;
+import pl.team.touchtalk.dao.UserRepository;
 
 @SpringBootApplication
 public class TouchtalkApplication {
