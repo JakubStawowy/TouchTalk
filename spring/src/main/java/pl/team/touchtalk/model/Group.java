@@ -13,8 +13,15 @@ import java.util.Set;
 *
 * @Author Sebastian Pokrywka
 * @Version 1.0
-* @Since 2021-04-06
+* @Modification Paweł Szydło
+* @Modification Grzegorz Szydło
+* @Modification Bartosz Szlęzak
+* @Modification Łukasz Stolarz
+* @Since 2021-04-30
 * */
+
+
+
 
 @Entity
 @Table(name = "groups")
@@ -37,6 +44,11 @@ public class Group implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> users = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "group")
+    private Set<GroupMessage> groupMessagesSent;
+
     /*
     * constructor
     *
@@ -83,4 +95,20 @@ public class Group implements Serializable {
         this.users = users;
     }
 
+    public void addNewUser(User user){
+        Set<User> tmp = getUsers();
+        tmp.add(user);
+        setUsers(tmp);
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", users=" + users +
+                ", groupMessagesSent=" + groupMessagesSent +
+                '}';
+    }
 }
