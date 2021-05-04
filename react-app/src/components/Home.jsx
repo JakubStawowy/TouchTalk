@@ -94,7 +94,7 @@ const Home = () => {
                             <div class='photo1'>
                                 <Avatar alt="User1" src="https://material-ui.com/static/images/avatar/3.jpg" />
                             </div>
-                            <Typography variant="h6" >
+                            <Typography variant="h5" >
                                 {userDetails.name} {userDetails.surname}
                             </Typography>
                         </div>
@@ -134,15 +134,20 @@ const Home = () => {
                                 </NavLink>
                             </ListItem>
                             <ListItem>
+                                <NavLink to='/'>
                                 <Button>
                                     <PhoneSharpIcon/>Rozmowy
                                 </Button>
+                                </NavLink>
                             </ListItem>
+
                             <ListItem>
+                                <NavLink to='/'>
                                 <Button>
                                     <GroupAddIcon/>
                                     Zespoły
                                 </Button>
+                                </NavLink>
                             </ListItem>
                             {/*</ListItem>*/}
                             {/*<ListItem>*/}
@@ -170,12 +175,15 @@ const Home = () => {
                             {/*    </NavLink>*/}
                             {/*</ListItem>*/}
                             <ListItem>
+                                <NavLink to='/home'>
                                 <Button
                                     onClick={handleLogout}
                                 >
                                     <ExitToAppIcon/>
                                     Wyloguj
                                 </Button>
+                                </NavLink>
+                                
                             </ListItem>
                         </List>
                     </div>

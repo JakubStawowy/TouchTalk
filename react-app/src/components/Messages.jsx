@@ -172,7 +172,7 @@ const Messages = () => {
                                     <Avatar alt={user.userDetails.name}
                                             src="https://material-ui.com/static/images/avatar/1.jpg"/>
                                 </ListItemIcon>
-                                <ListItemText primary={user.userDetails.name}/>
+                                <ListItemText primary={user.userDetails.name + " " + user.userDetails.surname}/>
                                 <ListItemText secondary="online" align="right"/>
                             </ListItem>
                         ))}
