@@ -1,9 +1,8 @@
-package pl.team.touchtalk.repositories;
+package pl.team.touchtalk.dao;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import pl.team.touchtalk.entities.GroupMessage;
+import pl.team.touchtalk.model.GroupMessage;
 
 import java.util.List;
 

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import pl.team.touchtalk.model.Group;
 
-import java.util.Optional;
+import java.util.List;
 /*
  * @Author Bartosz Szlęzak
  * @Author Grzegorz Szydło
@@ -15,8 +15,6 @@ import java.util.Optional;
  * @Version 2.0
  * @Since 2021-04-30
  * */
-
-
 @Repository
 public interface GroupRepository extends CrudRepository<Group, Long> {
 

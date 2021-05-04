@@ -40,7 +40,6 @@ public class MessageController {
 			Message message = new Message(
 					messagePayload.getContent(),
 					null,
-					messagePayload.getType(),
 					sender.get(),
 					receiver.get()
 			);
@@ -61,7 +60,6 @@ public class MessageController {
 		for(Message message: messageRepository.findAllBySenderAndReceiverOrReceiverAndSender(sender,receiver)) {
 			messagesResponse.add(new MessageTransferObject(
 					message.getContent(),
-					message.getType(),
 					message.getSender().getId(),
 					message.getReceiver().getId(),
 					message.getSentAt(),

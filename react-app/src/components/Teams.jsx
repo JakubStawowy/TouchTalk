@@ -10,14 +10,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import SendIcon from '@material-ui/icons/Send';
-import MoodIcon from '@material-ui/icons/Mood';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import TextFieldsIcon from '@material-ui/icons/TextFields';
 import WallpaperIcon from '@material-ui/icons/Wallpaper';
-import SearchIcon from '@material-ui/icons/Search';
 import AppBar from '@material-ui/core/AppBar';
-import EmailIcon from '@material-ui/icons/Email';
-import GifIcon from '@material-ui/icons/Gif';
 import "../style/Messages.css"
 
 
@@ -67,7 +61,7 @@ const useStyles = makeStyles({
 });
 
 const api = axios.create({
-    baseURL: `http://localhost:8080`
+    baseURL: `http://localhost:8080/api`
 })
 
 let stompClient = null;
@@ -150,6 +144,7 @@ const Teams = () => {
 
     const handleClick = group => {
         groupId = group.id;
+        console.log(group);
         setConversation({'is': true});
         setMessage({...message, sender: idActualUser, receiver: groupId})
         setGroupDetails({

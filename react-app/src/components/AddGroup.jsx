@@ -42,7 +42,7 @@ const AddGroup = ({status}) => {
 
         console.log(group);
 
-        api.post('/creategroup', group).then(data => {
+        api.post('/add', group).then(data => {
             console.log(data)
         }
         )

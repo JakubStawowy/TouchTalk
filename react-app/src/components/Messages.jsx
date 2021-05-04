@@ -37,7 +37,6 @@ import {useHistory} from "react-router-dom";
  * @Version 2.0
  * @Since 2021-04-30
  * */
-
 const useStyles = makeStyles({
     table: {
         minWidth: 650,
@@ -137,8 +136,8 @@ const Messages = () => {
         setConversation({'is': true});
         setMessage({...message, sender: idActualUser, receiver: receiverId})
         setUserDetails({
-            name: user.userDetails.name,
-            surname: user.userDetails.surname
+            username: user.username,
+            surname: user.surname
         })
         getMessage(receiverId);
         connect();
@@ -159,7 +158,7 @@ const Messages = () => {
     }
 
     const [userDetails, setUserDetails] = useState({
-        name: "",
+        username: "",
         surname: ""
     })
 
@@ -193,12 +192,11 @@ const Messages = () => {
 
                 {conversation.is ? (
                     <Grid item xs={9}>
-
                         <AppBar position="static">
                             <div className="navList3">
                                 <div className="navList2">
                                     <Typography variant="h6">
-                                        {userDetails.name + " " + userDetails.surname}
+                                        {userDetails.username + " " + userDetails.surname}
                                     </Typography>
                                 </div>
                             </div>

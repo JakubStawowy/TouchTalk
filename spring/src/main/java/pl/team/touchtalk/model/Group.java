@@ -1,6 +1,8 @@
 package pl.team.touchtalk.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -19,10 +21,6 @@ import java.util.Set;
 * @Modification Łukasz Stolarz
 * @Since 2021-04-30
 * */
-
-
-
-
 @Entity
 @Table(name = "groups")
 public class Group implements Serializable {

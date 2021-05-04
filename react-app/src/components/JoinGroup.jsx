@@ -22,7 +22,7 @@ const JoinGroup = () => {
     let idActualUser = parseInt(localStorage.getItem("id"));
 
     const joinGroup = async () => {
-        await api.post(`/joingroup?id=${idActualUser}&code=${code}`)
+        await api.post(`/join?id=${idActualUser}&code=${code}`)
     }
 
     return (

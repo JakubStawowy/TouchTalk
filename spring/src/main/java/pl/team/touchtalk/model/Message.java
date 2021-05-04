@@ -5,7 +5,6 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.sql.Timestamp;
 /*
  * Message POJO
@@ -41,9 +40,6 @@ public class Message {
     @JsonIgnore
     private User receiver;
 
-    @Enumerated(EnumType.STRING)
-    private MessageType type;
-
     @OneToOne(mappedBy = "message")
     private File file;
     /*
@@ -53,7 +49,7 @@ public class Message {
     * @Param file - when no file is attached to message then value is null
     * @Param sender
     * */
-    public Message(@NotNull String content, @Nullable File file, MessageType type, User sender, User receiver) {
+    public Message(@NotNull String content, @Nullable File file, User sender, User receiver) {
         this.content = content;
         this.file = file;
         this.sender = sender;
@@ -105,14 +101,6 @@ public class Message {
 
     public void setReceiver(User receiver) {
         this.receiver = receiver;
-    }
-
-    public MessageType getType() {
-        return type;
-    }
-
-    public void setType(MessageType type) {
-        this.type = type;
     }
 
     public File getFile() {
