@@ -49,6 +49,7 @@ public class UserController {
         List<UserTransferObject> users = new ArrayList<>();
         userRepository.findAll().forEach(user->
             users.add(new UserTransferObject(
+                user.getId(),
               user.getUserDetails().getName(),
               user.getUserDetails().getSurname(),
               user.getUserDetails().getPhone(),
@@ -70,6 +71,7 @@ public class UserController {
     public ResponseEntity<UserTransferObject> getUser(@PathVariable("id") Long id){
         return userRepository.findById(id).map(
                 user -> new ResponseEntity<>(new UserTransferObject(
+                        user.getId(),
                         user.getUserDetails().getName(),
                         user.getUserDetails().getSurname(),
                         user.getUserDetails().getPhone(),

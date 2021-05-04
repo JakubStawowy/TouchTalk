@@ -38,6 +38,7 @@ public class GroupController {
         groupRepository.findAll().forEach(group -> {
             Set<UserTransferObject> users = new LinkedHashSet<>();
             group.getUsers().forEach(user -> users.add(new UserTransferObject(
+                    user.getId(),
                     user.getUserDetails().getName(),
                     user.getUserDetails().getSurname(),
                     user.getUserDetails().getPhone(),
@@ -63,6 +64,7 @@ public class GroupController {
         if(optionalGroup.isPresent())
             return optionalGroup.map(group -> {
                 group.getUsers().forEach(user -> users.add(new UserTransferObject(
+                        user.getId(),
                         user.getUserDetails().getName(),
                         user.getUserDetails().getSurname(),
                         user.getUserDetails().getPhone(),

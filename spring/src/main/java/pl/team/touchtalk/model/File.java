@@ -12,13 +12,14 @@ public class File {
     private Long id;
 
     @NotNull
-    private SerialBlob byteFile;
+    @Lob
+    private String fileUrl;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Message message;
 
-    public File(@NotNull SerialBlob byteFile, Message message) {
-        this.byteFile = byteFile;
+    public File(@NotNull String fileUrl, Message message) {
+        this.fileUrl = fileUrl;
         this.message = message;
     }
 
@@ -33,13 +34,6 @@ public class File {
         this.id = id;
     }
 
-    public SerialBlob getByteFile() {
-        return byteFile;
-    }
-
-    public void setByteFile(SerialBlob byteFile) {
-        this.byteFile = byteFile;
-    }
 
     public Message getMessage() {
         return message;
@@ -47,5 +41,13 @@ public class File {
 
     public void setMessage(Message message) {
         this.message = message;
+    }
+
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 }

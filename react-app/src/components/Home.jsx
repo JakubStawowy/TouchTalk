@@ -46,7 +46,7 @@ const Home = () => {
 
     const [userDetails, setUserDetails] = useState(
         {
-            name: "",
+            username: "",
             surname: ""
         }
     );
@@ -63,7 +63,8 @@ const Home = () => {
 
     useEffect(() => {
         getUserDetails().then(response=>{
-            setUserDetails(response.data.userDetails);
+            // setUserDetails(response.data.userDetails);
+            setUserDetails(response.data);
         })
     }, []);
 
@@ -95,7 +96,7 @@ const Home = () => {
                                 <Avatar alt="User1" src="https://material-ui.com/static/images/avatar/3.jpg" />
                             </div>
                             <Typography variant="h6" >
-                                {userDetails.name} {userDetails.surname}
+                                {userDetails.username} {userDetails.surname}
                             </Typography>
                         </div>
                         <div align="flex-end">
