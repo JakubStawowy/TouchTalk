@@ -4,14 +4,14 @@ html, body {
 }
 
 body{
-    background: rgb(48,129,238);
-    background: linear-gradient( rgba(48,129,238,1) 0%, rgba(28,162,240,1) 32%, rgba(32,108,174,1) 40%, rgba(24,74,143,1) 50%, rgba(16,59,132,1) 70%);
+    background: #ffffff;
+
     font-size: 20px;
-    font-family: 'Montserrat', sens-serif;
-    color: white;}
+
+}
 
 .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-2 {
-    background-color: #3081EE;
+    background-color: #8acffc;
     height: 90vh;
 }
 
@@ -52,10 +52,6 @@ h6.MuiTypography-root.MuiTypography-h6 {
     font-family: 'Montserrat', sens-serif;
 }
 
-.right-navbar{
-    background-color: #3081EE;
-    height: 10vh;
-}
 
 .photo1{
     padding-right: 1em;
@@ -101,8 +97,10 @@ li.MuiListItem-root.MuiListItem-gutters:hover {
 .navList{
     display: flex;
     justify-content: space-between;
-    padding-top: 1em;
-    padding-bottom: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border: 1px solid #103B84;
+    background-color: #035fdd;
 
 }
 

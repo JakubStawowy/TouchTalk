@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import { Route, NavLink} from "react-router-dom";
+import {Route, NavLink} from "react-router-dom";
 import PhoneSharpIcon from '@material-ui/icons/PhoneSharp';
 import VideocamSharpIcon from '@material-ui/icons/VideocamSharp';
 import PersonAddSharpIcon from '@material-ui/icons/PersonAddSharp';
@@ -22,7 +22,7 @@ import Messages from "./Messages";
 import Tasks from "./Tasks";
 import Calls from "./Calls";
 import Teams from "./Teams";
-import {  } from "module";
+import {} from "module";
 import "../style/Home.css";
 
 import {useDispatch, useSelector} from "react-redux";
@@ -33,7 +33,7 @@ import {signout} from "../actions/auth";
 
 
 function detectMob() {
-    return ( ( window.innerWidth <= 800 ) && ( window.innerHeight <= 600 ) );
+    return ((window.innerWidth <= 800) && (window.innerHeight <= 600));
 }
 
 const Home = () => {
@@ -62,18 +62,18 @@ const Home = () => {
     }
 
     useEffect(() => {
-        getUserDetails().then(response=>{
+        getUserDetails().then(response => {
             // setUserDetails(response.data.userDetails);
             setUserDetails(response.data);
         })
     }, []);
 
     let menu = {};
-    let  menuWidth = 2;
-    let  content = {};
-    let  contentWidth = 10;
-    if (detectMob()){
-        menu ={
+    let menuWidth = 2;
+    let content = {};
+    let contentWidth = 10;
+    if (detectMob()) {
+        menu = {
             display: 'flex',
             flexDirection: 'row',
             padding: 0,
@@ -88,25 +88,35 @@ const Home = () => {
     }
     return (
         <section>
-            <AppBar position="relative">
-                <div class='right-navbar'>
+            {/*<AppBar position="relative">*/}
+            {/*    <div class='right-navbar'>*/}
+            {/*        <div className="navList">*/}
+            {/*            <div className="navList2">*/}
+            {/*                <div class='photo1'>*/}
+            {/*                    <Avatar alt="User1" src="/broken-image.jpg" />*/}
+            {/*                </div>*/}
+            {/*                <Typography variant="h6" >*/}
+            {/*                    {userDetails.username} {userDetails.surname}*/}
+            {/*                </Typography>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</AppBar>*/}
+
+            {/*<Grid container style={content}>*/}
+            <Grid container className={"new-container"}>
+                <Grid item xs={2}>
+
                     <div className="navList">
                         <div className="navList2">
                             <div class='photo1'>
-                                <Avatar alt="User1" src="/broken-image.jpg" />
+                                <Avatar alt="User1" src="/broken-image.jpg"/>
                             </div>
-                            <Typography variant="h6" >
+                            <Typography variant="h6">
                                 {userDetails.username} {userDetails.surname}
                             </Typography>
                         </div>
                     </div>
-                </div>
-            </AppBar>
-            
-            {/*<Grid container style={content}>*/}
-            <Grid container className={"new-container"}>
-                <Grid item xs={2}>
-                    {/*<Divider orientation='horizontal'></Divider>*/}
 
                     <div class='navbar-left'>
                         <List style={menu}>

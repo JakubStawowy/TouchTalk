@@ -29,7 +29,10 @@ body{
 }
 
 .photo{
-    padding-right: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*padding-right: 1em;*/
 }
 
 .MuiPaper-root.MuiGrid-root.makeStyles-chatSection-2.MuiGrid-container.MuiPaper-elevation1.MuiPaper-rounded {

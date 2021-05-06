@@ -13,6 +13,7 @@ import SendIcon from '@material-ui/icons/Send';
 import WallpaperIcon from '@material-ui/icons/Wallpaper';
 import AppBar from '@material-ui/core/AppBar';
 import "../style/Messages.css"
+import "../style/Teams.css"
 
 
 import axios from "axios";
@@ -104,22 +105,21 @@ const Teams = () => {
     }
     const onMessageReceived = (payload) => {
         getMessage(groupId);
-        console.log(actualMessage)
     }
 
     const sendMessage = () => {
 
-        if (stompClient) {
+        if (stompClient && message.content !== "") {
+
             stompClient.send("/app/sendGroupMessage", {}, JSON.stringify(message));
-            // localMessage.push(message);
-            // console.log(localMessage)
+            console.log(message)
+
             setMessage({...message, content: ""});
 
             setTimeout(() => {
                 getMessage(groupId);
-                let a;
-                console.log(a);
-                console.log(actualMessage)
+                let a = 0;
+                a = a + 1
             }, 500);
         }
     }
@@ -169,6 +169,20 @@ const Teams = () => {
 
     const addGroup = () => {
         setAddGroupStatus("true");
+    }
+    const getUserDetails = group => {
+        let userDetails = {
+            username: "",
+            surname: ""
+        }
+
+        group.receiverBody.users.filter((userId) => userId["id"] === group.sender).map(user => {
+            userDetails.surname = user.surname
+            userDetails.username = user.username
+
+        })
+        return userDetails.username + " " + userDetails.surname;
+
     }
 
     return (
@@ -220,19 +234,19 @@ const Teams = () => {
 
                         <List className={classes.messageArea}>
                             {actualMessage.map((groupMess) => (
-                                console.log(groupMess),
                                 (groupMess.sender !== idActualUser) ? (
-                                    <ListItem key={groupMess.id}>
-                                        <div className="photo">
-                                            <Avatar alt="User"
-                                                    src="/broken-image.jpg"/>
-                                        </div>
-                                        <Grid container>
-                                            <Grid item xs={12}>
-                                                <ListItemText align="left" primary={groupMess.content}/>
+                                    <ListItem key={groupMess.id} xs={12}>
+                                        <Grid className="messageArea" container xs={12}>
+                                            <Grid xs={1} className="photo">
+                                                <Avatar alt="User"
+                                                        src="/broken-image.jpg"/>
                                             </Grid>
-                                            <Grid item xs={12}>
-                                                <ListItemText align="left" secondary={groupMess.date.split("T")[0] + " " + groupMess.date.split("T")[1].split(".")[0]}/>
+                                            <Grid item className="messageContent">
+                                                <ListItemText align="left" secondary={getUserDetails(groupMess)}/>
+                                                <ListItemText  align="left" primary={groupMess.content}  />
+                                                <ListItemText align="left"
+                                                                  secondary={groupMess.date.split("T")[0] + " " + groupMess.date.split("T")[1].split(".")[0]}/>
+
                                             </Grid>
                                         </Grid>
                                     </ListItem>
@@ -243,7 +257,8 @@ const Teams = () => {
                                                 <ListItemText align="right" primary={groupMess.content}/>
                                             </Grid>
                                             <Grid item xs={12}>
-                                                <ListItemText align="right" secondary={groupMess.date.split("T")[0] + " " + groupMess.date.split("T")[1].split(".")[0]}/>
+                                                <ListItemText align="right"
+                                                              secondary={groupMess.date.split("T")[0] + " " + groupMess.date.split("T")[1].split(".")[0]}/>
                                             </Grid>
                                         </Grid>
                                     </ListItem>
@@ -271,7 +286,7 @@ const Teams = () => {
                                     <button><WallpaperIcon/></button>
                                 </Grid>
                                 <Grid xs={1} align="right">
-                                    <button onClick={sendMessage} ><SendIcon/></button>
+                                    <button onClick={sendMessage}><SendIcon/></button>
                                 </Grid>
                             </Grid>
                         </div>
