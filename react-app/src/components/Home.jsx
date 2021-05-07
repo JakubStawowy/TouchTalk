@@ -108,14 +108,12 @@ const Home = () => {
                 <Grid item xs={2}>
 
                     <div className="navList">
-                        <div className="navList2">
                             <div class='photo1'>
                                 <Avatar alt="User1" src="/broken-image.jpg"/>
                             </div>
                             <Typography variant="h6">
                                 {userDetails.username} {userDetails.surname}
                             </Typography>
-                        </div>
                     </div>
 
                     <div class='navbar-left'>
@@ -175,6 +173,7 @@ const Home = () => {
             </Grid>
         </section>
     );
+
 };
 
 export default Home;

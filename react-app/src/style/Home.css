@@ -1,29 +1,17 @@
-html, body {
-    height: 100%;
-    overflow: auto;
-}
-
-body{
-    background: #ffffff;
-
-    font-size: 20px;
-
-}
 
 .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-2 {
-    background-color: #8acffc;
-    height: 90vh;
+    background-color: var(--lightBlue);
+    height: 100vh;
 }
 
 .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-10 {
-    height: 90vh;
+    height: 100vh;
 }
 
 a {
     text-decoration: none;
     color: black;
-    padding-bottom: 1em;
-    padding-left: 1em;
+    padding: 0.25em  0.5em;
 }
 
 li {
@@ -31,31 +19,17 @@ li {
 }
 
 .page-content{
-    align-self: right;
+    align-self:flex-start;
 }
 
 
 .navbar-left{
-    font-family: 'Montserrat', sens-serif;
     font-size: 24px;
 }
 
-.MuiListItemIcon-root {
-    margin-top: -1em;
-    margin-left: 0.5em;
-}
-
-
-
-h6.MuiTypography-root.MuiTypography-h6 {
-    font-weight: bold;
-    font-family: 'Montserrat', sens-serif;
-}
-
-
 .photo1{
-    padding-right: 1em;
-    padding-left: 1em;
+    padding-right: 0.25em;
+    padding-left: 0.5em;
 }
 
 .talk :hover {
@@ -71,16 +45,12 @@ svg.MuiSvgIcon-root {
     color: black;
 }
 
-c1{
-    border: 3px solid green;
-    border-radius: 2em;
-    margin-left: 8em;
-}
+
 
 h6.MuiTypography-root.MuiTypography-h6 {
     color: black;
-    font-size: 30px;
-    font-family: 'Montserrat', sens-serif;
+    font-size: 150%;
+    font-family: 'Cormorant', serif;
     font-weight: bold;
 }
 
@@ -90,17 +60,14 @@ li.MuiListItem-root.MuiListItem-gutters:hover {
     margin-left: inherit;
     font-weight: bold;
 }
-.navList2{
-    display: flex;
-    justify-content: flex-start;
-}
+
 .navList{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
     border: 1px solid #103B84;
-    background-color: #035fdd;
+    background-color: var(--mainBlue);
 
 }
 

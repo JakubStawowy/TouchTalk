@@ -42,7 +42,7 @@ const useStyles = makeStyles({
     },
     chatSection: {
         width: '100%',
-        height: '100%'
+        height: '100vh'
     },
     headBG: {
         backgroundColor: '#e0e0e0'
@@ -51,12 +51,13 @@ const useStyles = makeStyles({
         borderRight: '1px solid #e0e0e0'
     },
     messageArea: {
+
         height: '65vh',
         overflowY: 'auto'
     },
 
     listScroll: {
-        // height: '71vh',
+        height: '100vh',
         overflow: "auto"
     }
 });
@@ -191,16 +192,14 @@ const Teams = () => {
 
                 <Grid item xs={3} className={classes.borderRight500}>
                     <AppBar position="static">
-                        <div className="navList3">
-                            <div className="navList2">
+                        <div className="navList">
                                 <Typography variant="h6">
                                     Czat
                                 </Typography>
-                            </div>
-                            <div align="flex-end">
+
                                 <button onClick={addGroup}><Add/></button>
-                            </div>
                         </div>
+
                     </AppBar>
                     <JoinGroup/>
                     {addGroupStatus === "true" ? <AddGroup status={setAddGroupStatus}/> : null}
@@ -208,11 +207,11 @@ const Teams = () => {
                     <List className={classes.listScroll}>
                         {groups.map(group => (
                             <ListItem button onClick={() => handleClick(group)} key={group.id}>
-                                <ListItemIcon>
+
                                     <Avatar alt={group.name}
                                             src="/broken-image.jpg"/>
-                                </ListItemIcon>
-                                <ListItemText primary={group.name}/>
+
+                                <a>{group.name}</a>
                             </ListItem>
                         ))}
                     </List>
@@ -220,15 +219,16 @@ const Teams = () => {
 
 
                 {conversation.is ? (
-                    <Grid item xs={9}>
+                    <Grid item xs={9} className="messageSpace">
 
                         <AppBar position="static">
-                            <div className="navList3">
-                                <div className="navList2">
+                            <div className="navList">
                                     <Typography variant="h6">
-                                        {groupDetails.name + " " + "Kod dostępu: " + groupDetails.code}
+                                        {groupDetails.name}
                                     </Typography>
-                                </div>
+                                <Typography variant="h6">
+                                    {"Kod dostępu: " + groupDetails.code}
+                                </Typography>
                             </div>
                         </AppBar>
 
