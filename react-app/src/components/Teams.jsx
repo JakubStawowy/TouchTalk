@@ -82,7 +82,17 @@ const Teams = () => {
 
     const [conversation, setConversation] = useState({'is': false});
 
+    const [searchText, setSearchText] = useState("");
 
+    function search (groups){
+        const groupKey =["name"];
+
+        let filtr =groups.filter((group) =>
+        groupKey.some((key)=> group[key].toString().toLowerCase().indexOf(searchText.toString()) > -1));
+        return filtr;
+
+
+    }
     const [message, setMessage] = useState({
         content: "",
         sender: 0,
@@ -101,7 +111,7 @@ const Teams = () => {
 
     const onConnected = () => {
 
-        stompClient.subscribe('/user/' + idActualUser + "/reply", onMessageReceived);
+        stompClient.subscribe('/topic/' + groupId, onMessageReceived);
 
     }
     const onMessageReceived = (payload) => {
@@ -197,6 +207,12 @@ const Teams = () => {
                                     Czat
                                 </Typography>
 
+                            <input id="search"
+                                   className="searchInput"
+                                   placeholder="Search"
+                                   onChange={(e) => setSearchText(e.target.value)}
+                                   autoComplete="off" />
+
                                 <button onClick={addGroup}><Add/></button>
                         </div>
 
@@ -205,7 +221,7 @@ const Teams = () => {
                     {addGroupStatus === "true" ? <AddGroup status={setAddGroupStatus}/> : null}
 
                     <List className={classes.listScroll}>
-                        {groups.map(group => (
+                        {search(groups).map(group => (
                             <ListItem button onClick={() => handleClick(group)} key={group.id}>
 
                                     <Avatar alt={group.name}

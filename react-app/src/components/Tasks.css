@@ -60,9 +60,9 @@
 }
 
 .task-button-panel>li{
-    width: 25%;
+    /*width: 25%;*/
     font-weight: bold;
-    font-size: 150%;
+    font-size: 1em;
 
 }
 

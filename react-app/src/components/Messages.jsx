@@ -159,6 +159,18 @@ const Messages = () => {
         surname: ""
     })
 
+    const [searchText, setSearchText] = useState("");
+
+    function search (users){
+        const userKey =["username"];
+
+        let filtr =users.filter((user) =>
+            userKey.some((key)=> user[key].toString().toLowerCase().indexOf(searchText.toString()) > -1));
+        return filtr;
+
+
+    }
+
     return (
         <div className={"new-messages"}>
             <Grid container component={Paper} className={classes.chatSection}>
@@ -169,12 +181,16 @@ const Messages = () => {
                                 <Typography variant="h6">
                                     Czat
                                 </Typography>
-                            <input id="search" className="searchInput" placeholder="Search" autoComplete="off" />
+                            <input id="search"
+                                   className="searchInput"
+                                   placeholder="Search"
+                                   onChange={(e) => setSearchText(e.target.value)}
+                                   autoComplete="off" />
                         </div>
                     </AppBar>
 
                     <List className={classes.listScroll}>
-                        {users.map(user => (
+                        {search(users).map(user => (
                             <ListItem button onClick={() => handleClick(user)} key={user.id} className="userList">
                                     <Avatar alt={user.username}
                                             src="/broken-image.jpg"/>

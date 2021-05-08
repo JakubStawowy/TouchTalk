@@ -59,7 +59,7 @@ public class GroupChatController {
                     group.get()
             );
             groupMessageRepository.save(groupMessage);
-            simpMessagingTemplate.convertAndSendToUser(messageTransferObject.getReceiver().toString(), "/reply", messageTransferObject);
+            simpMessagingTemplate.convertAndSend(messageTransferObject.getReceiver().toString(), messageTransferObject);
         }
     }
 
