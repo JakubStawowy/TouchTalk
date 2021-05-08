@@ -40,7 +40,7 @@ const useStyles = makeStyles({
     },
     chatSection: {
         width: '100%',
-        height: '100%'
+        height: '100vh'
     },
     headBG: {
         backgroundColor: '#e0e0e0'
@@ -54,7 +54,7 @@ const useStyles = makeStyles({
     },
 
     listScroll: {
-        // height: '71vh',
+        height: "100%",
         overflow: "auto"
     }
 });
@@ -165,22 +165,23 @@ const Messages = () => {
 
                 <Grid item xs={3} className={classes.borderRight500}>
                     <AppBar position="static">
-                        <div className="navList3">
-                            <div className="navList2">
+                        <div className="navList">
                                 <Typography variant="h6">
                                     Czat
                                 </Typography>
-                            </div>
+                            <input id="search" className="searchInput" placeholder="Search" autoComplete="off" />
                         </div>
                     </AppBar>
+
                     <List className={classes.listScroll}>
                         {users.map(user => (
-                            <ListItem button onClick={() => handleClick(user)} key={user.id}>
-                                <ListItemIcon>
+                            <ListItem button onClick={() => handleClick(user)} key={user.id} className="userList">
                                     <Avatar alt={user.username}
                                             src="/broken-image.jpg"/>
-                                </ListItemIcon>
-                                <ListItemText primary={`${user.username} ${user.surname}`}/>
+                                <a   className="UserDescription">
+                                    {user.username + " " +user.surname}
+                                </a>
+
                             </ListItem>
                         ))}
                     </List>
@@ -190,12 +191,10 @@ const Messages = () => {
                 {conversation.is ? (
                     <Grid item xs={9}>
                         <AppBar position="static">
-                            <div className="navList3">
-                                <div className="navList2">
+                            <div className="navList">
                                     <Typography variant="h6">
                                         {userDetails.username + " " + userDetails.surname}
                                     </Typography>
-                                </div>
                             </div>
                         </AppBar>
 

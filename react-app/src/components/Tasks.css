@@ -1,10 +1,10 @@
 .task-section{
     background-color: white;
-    padding: 1em;
     color: black;
-    height: 86vh;
+    height: 100%;
     overflow: auto;
 }
+
 
 .task-header{
     display: flex;
@@ -48,7 +48,7 @@
     flex-direction: row;
     justify-content: space-between;
     padding: 0.5em;
-    background-color: rgb(246,242,242,0.5);
+    background-color: rgba(246,242,242,0.5);
     align-items: center;
 }
 
@@ -60,14 +60,16 @@
 }
 
 .task-button-panel>li{
-    width: 15w;
+    width: 25%;
     font-weight: bold;
+    font-size: 150%;
+
 }
 
 .find-task{
     float: right;
     height: 4vh;
-    width: 20vw;
+    width: 25%;
 }
 
 .accept{
@@ -80,6 +82,7 @@
 
 .task-button-panel{
     display: flex;
+    width: 60%;
     flex-direction: row;
     margin-bottom: 0;
     margin-top: auto;
@@ -95,9 +98,12 @@
 
 .button-input{
     display: flex;
+    width: 100%;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
 }
 
 .MuiGrid-container {
@@ -143,10 +149,11 @@
 }
 
 .activebutton{
-    background-color: rgb(112,140,167,0.36);
+    background-color: rgba(112,140,167,0.36);
     border: 1px solid black;
     padding-bottom: 0;
     padding-left: 0;
+
 }
 
 .overlap{

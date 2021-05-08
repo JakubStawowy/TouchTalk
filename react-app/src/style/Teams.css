@@ -1,0 +1,40 @@
+.messageArea{
+    display: flex;
+
+}
+
+.messageContent{
+    background-color: #a5d7ff;
+    border-radius: 0.5em;
+    padding: 0.25em 0.75em;
+
+}
+
+.searchInput{
+    border-radius: 3em;
+    border:2px solid black;
+    width: 70%;
+    padding:0.5em;
+    font-size: 100%;
+    background: rgba(255,255,255,0.4);
+
+
+}
+.searchInput::placeholder{
+    color:black;
+
+}
+.userList{
+    justify-content: space-between;
+
+}
+.UserDescription{
+    font-size: 100%;
+    font-family: 'Cormorant', serif;
+}
+
+.messageSpace{
+
+
+}
+
