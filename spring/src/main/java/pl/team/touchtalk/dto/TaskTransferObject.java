@@ -16,15 +16,17 @@ import java.sql.Date;
 public class TaskTransferObject implements Serializable {
     private Long id;
     private String name;
+    private String data_task;
     private Boolean done;
     private Date start;
     private Date finish;
     private Date created_at;
 
-    public TaskTransferObject(Long id, String name, Boolean done, Date start, Date finish, Date created_at){
+    public TaskTransferObject(Long id, String name, String data_task, Boolean done, Date start, Date finish, Date created_at){
 
         this.id =id;
         this.name=name;
+        this.data_task=data_task;
         this.done=done;
         this.start=start;
         this.finish=finish;
@@ -38,6 +40,10 @@ public class TaskTransferObject implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getData_task() {
+        return data_task;
     }
 
     public Boolean getDone() {

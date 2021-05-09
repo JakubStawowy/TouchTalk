@@ -26,6 +26,8 @@ public class Task implements Serializable {
     @NotNull
     private String name;
 
+
+
     @Column(name = "date_task")
     private String date_task;
 
@@ -56,8 +58,9 @@ public class Task implements Serializable {
 
     }
 
-    public Task(@NotEmpty String name, @NotEmpty Data start, @NotEmpty Data finish) {
+    public Task(@NotEmpty String name,@NotEmpty String date_task , @NotEmpty Data start, @NotEmpty Data finish) {
         this.name = name;
+        this.date_task=date_task;
         this.start = (Date) start;
         this.finish = (Date) finish;
     }
@@ -86,6 +89,13 @@ public class Task implements Serializable {
         this.start = start;
     }
 
+    public String getDate_task() {
+        return date_task;
+    }
+
+    public void setDate_task(String date_task) {
+        this.date_task = date_task;
+    }
 
 
     public Date getFinish() {
