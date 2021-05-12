@@ -56,6 +56,12 @@ const useStyles = makeStyles({
     listScroll: {
         height: "100%",
         overflow: "auto"
+    },
+
+    picture: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
     }
 });
 
@@ -87,6 +93,9 @@ const Messages = () => {
     })
 
     const [actualMessage, setActualMessage] = useState([]);
+
+    const [image, setImage] = useState();
+    const [inputHolder] = useState();
 
     useEffect(() => {
         api.get('/api/users').then(response => response.data)
@@ -171,6 +180,14 @@ const Messages = () => {
 
     }
 
+    const handleChange = (event) => {
+        if (event.target.files && event.target.files[0]) {
+            setImage(
+              URL.createObjectURL(event.target.files[0])
+            );
+        }
+    }
+
     return (
         <div className={"new-messages"}>
             <Grid container component={Paper} className={classes.chatSection}>
@@ -245,8 +262,21 @@ const Messages = () => {
                                     </ListItem>
                                 )
                             ))}
+                            <ListItem>
+                                <Grid container>
+                                    <Grid item xs={12} className={classes.picture}>
+                                        <div class="pictureContainer">
+                                            <img class="picture" src="https://exumag.com/wp-content/uploads/2018/02/Grumpy-Cat-t%C5%82o-1170x659.jpg"></img>
+                                        </div>
+                                    </Grid>
+                                </Grid>
+                            </ListItem>
+                            
                         </List>
-
+                            {image ? 
+                            (<div class="pictureContainerMini">
+                                <img class="pictureMini" src={image}/>
+                            </div>) : null}
                         <div className='bottom-bar'>
                             <Grid container style={{padding: '20px'}}>
                                 <Grid item xs={11}>
@@ -264,7 +294,13 @@ const Messages = () => {
                                                }}
                                                required
                                                fullWidth/>
-                                    <button><WallpaperIcon/></button>
+                                    
+                                    <input value={inputHolder} onChange={handleChange} type="file"  accept="image/*" name="image" id="file" style={{display: "none"}}>
+                                        
+                                    </input>
+                                    <label for="file" style={{cursor: "pointer"}}><WallpaperIcon/></label>
+                                    
+                                    
                                 </Grid>
                                 <Grid xs={1} align="right">
                                     <button onClick={sendMessage} ><SendIcon/></button>
