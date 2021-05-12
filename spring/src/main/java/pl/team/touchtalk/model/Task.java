@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.crypto.Data;
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Set;
 /*
  * User POJO
@@ -32,10 +33,10 @@ public class Task implements Serializable {
     private String date_task;
 
     @Column(name = "start")
-    private Date start;
+    private String start;
 
     @Column(name = "finish")
-    private Date finish;
+    private String finish;
 
     @NotNull
     private Boolean done;
@@ -48,9 +49,20 @@ public class Task implements Serializable {
     @ManyToMany(mappedBy = "tasks")
     private Set<Calendar> cal;
 
+
+    public Task(Long id, @NotNull String name, String date_task, String start, String finish, @NotNull Boolean done) {
+        this.id = id;
+        this.name = name;
+        this.date_task = date_task;
+        this.start = start;
+        this.finish = finish;
+        this.done = done;
+    }
+
     public Task() {
 
     }
+
 
     @PrePersist
     public void setTask() {
@@ -58,13 +70,13 @@ public class Task implements Serializable {
 
     }
 
-    public Task(@NotEmpty String name,@NotEmpty String date_task , @NotEmpty Data start, @NotEmpty Data finish) {
+   /* public Task(@NotEmpty String name, @NotEmpty String date_task, @NotEmpty Boolean done, String start, String finish) {
         this.name = name;
         this.date_task=date_task;
-        this.start = (Date) start;
-        this.finish = (Date) finish;
-    }
-
+        this.done=done;
+        this.start = start;
+        this.finish = finish;
+    }*/
     public Long getId() {
         return id;
     }
@@ -81,11 +93,11 @@ public class Task implements Serializable {
         this.name = name;
     }
 
-    public @NotEmpty Data getStart() {
-        return (Data) start;
+    public @NotEmpty String getStart() {
+        return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(String start) {
         this.start = start;
     }
 
@@ -98,11 +110,11 @@ public class Task implements Serializable {
     }
 
 
-    public Date getFinish() {
-        return (Date) finish;
+    public String getFinish() {
+        return finish;
     }
 
-    public void setFinish(Date finish) {
+    public void setFinish(String finish) {
         this.finish = finish;
     }
 

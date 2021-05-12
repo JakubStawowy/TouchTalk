@@ -3,6 +3,8 @@ package pl.team.touchtalk.controllers;
 import org.springframework.web.bind.annotation.*;
 import pl.team.touchtalk.dto.TaskTransferObject;
 //import pl.team.touchtalk.dao.TaskRepository;
+import pl.team.touchtalk.model.Task;
+import  pl.team.touchtalk.services.TaskServices;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -23,39 +25,37 @@ import java.util.Optional;
 public class TaskController {
 
 
-    private List<TaskTransferObject> taskTransferObject;
+    private TaskServices taskServices;
 
-    public TaskController(){
-        taskTransferObject = new ArrayList<>();
-        taskTransferObject.add(new TaskTransferObject(1, "Zadanie 1"," Idz spać",false, new Date(121,5,3),new Date(2021,5,10)));
+    public  TaskController(TaskServices taskServices){
+        this.taskServices=taskServices;
+    }
 
-        };
 
 
 
     @GetMapping("/all")
-    public List<TaskTransferObject> getAll(){
-        return  taskTransferObject;
+    public Iterable<Task> getAll() {
+        return taskServices.findAll();
+    }
+    @GetMapping
+    public Optional<Task> getById(@RequestParam Long id) {
+        return taskServices.findById(id);
     }
 
-    @GetMapping
-    public TaskTransferObject getById(@RequestParam int id){
-        Optional<TaskTransferObject> first=taskTransferObject.stream().filter(element -> element.getId()==id).findFirst();
-        return (TaskTransferObject) first.get();
-    }
     @PostMapping
-    public boolean addTask(@RequestBody TaskTransferObject taskRepositoryV){
-        return taskTransferObject.add((TaskTransferObject) taskRepositoryV);
+    public Task addVideo(@RequestBody Task taskServicesS) {
+        return taskServices.save(taskServicesS);
     }
+
     @PutMapping
-    public boolean updateTask(@RequestBody TaskTransferObject taskTransferObjectV) {
-        return taskTransferObject.add(taskTransferObjectV);
+    public Task updateVideo(@RequestBody Task taskServicesS) {
+        return taskServices.save(taskServicesS);
     }
 
     @DeleteMapping
-    public boolean deleteTask(@RequestParam int id) {
-        return taskTransferObject.removeIf(element -> element.getId() == id);
-
+    public void deleteVideo(@RequestParam Long id) {
+        taskServices.deleteById(id);
     }
     }
 
