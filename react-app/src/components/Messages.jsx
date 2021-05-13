@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -10,11 +10,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import SendIcon from '@material-ui/icons/Send';
-import MoodIcon from '@material-ui/icons/Mood';
-import TextFieldsIcon from '@material-ui/icons/TextFields';
 import WallpaperIcon from '@material-ui/icons/Wallpaper';
 import AppBar from '@material-ui/core/AppBar';
-import GifIcon from '@material-ui/icons/Gif';
+
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import IconButton from '@material-ui/core/IconButton';
 import "../style/Messages.css"
 
 
@@ -35,9 +35,7 @@ import {useHistory} from "react-router-dom";
  * @Since 2021-04-30
  * */
 const useStyles = makeStyles({
-    table: {
-        minWidth: 650,
-    },
+
     chatSection: {
         width: '100%',
         height: '100vh'
@@ -49,7 +47,7 @@ const useStyles = makeStyles({
         borderRight: '1px solid #e0e0e0'
     },
     messageArea: {
-        height: '68vh',
+        height: '73vh',
         overflowY: 'auto'
     },
 
@@ -167,9 +165,34 @@ const Messages = () => {
         let filtr =users.filter((user) =>
             userKey.some((key)=> user[key].toString().toLowerCase().indexOf(searchText.toString()) > -1));
         return filtr;
+    }
 
+    let file ="";
+    const addNewPhoto = async (event) =>{
+
+        file = event.target.files[0];
+
+
+        const resp = (file) =>new Promise((resolve, reject) =>{
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        })
+
+        const dataURL = await resp(file);
+        console.log(dataURL);
+
+        let container = document.getElementById("photoArea");
+        let photo = document.createElement("img");
+        photo.alt="zdiecie";
+        photo.src = dataURL;
+        container.appendChild(photo);
 
     }
+
+
+
 
     return (
         <div className={"new-messages"}>
@@ -248,9 +271,12 @@ const Messages = () => {
                         </List>
 
                         <div className='bottom-bar'>
-                            <Grid container style={{padding: '20px'}}>
+                            <Grid container>
+                                <Grid xs={12} id="photoArea">
+
+                                </Grid>
                                 <Grid item xs={11}>
-                                    <TextField id="outlined-basic-email"
+                                    <TextField id="outlined-basic messageInput"
                                                label="Napisz nową wiadomość..."
                                                onChange={e => setMessage({
                                                    ...message,
@@ -263,10 +289,19 @@ const Messages = () => {
                                                    }
                                                }}
                                                required
+                                               autoComplete="off"
                                                fullWidth/>
-                                    <button><WallpaperIcon/></button>
+
+                                        <input accept="image/*"
+                                               id="icon-button-file"
+                                               onChange={(e) => addNewPhoto(e)}
+                                               type="file"
+                                               style={{ display: 'none' }} />
+                                        <label htmlFor="icon-button-file">
+                                                <WallpaperIcon />
+                                        </label>
                                 </Grid>
-                                <Grid xs={1} align="right">
+                                <Grid xs={1} align="right" className="sendButtonIcon">
                                     <button onClick={sendMessage} ><SendIcon/></button>
                                 </Grid>
                             </Grid>

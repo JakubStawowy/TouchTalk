@@ -260,7 +260,7 @@ const Teams = () => {
                                             <Grid item className="messageContent">
                                                 <ListItemText align="left" secondary={getUserDetails(groupMess)}/>
                                                 <ListItemText  align="left" primary={groupMess.content}  />
-                                                <ListItemText align="left"
+                                                <ListItemText className="data-message" align="left"
                                                                   secondary={groupMess.date.split("T")[0] + " " + groupMess.date.split("T")[1].split(".")[0]}/>
 
                                             </Grid>
