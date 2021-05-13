@@ -21,10 +21,11 @@ public class TaskTransferObject implements Serializable {
     private Date start;
     private Date finish;
     private Date created_at;
+    private  Long id_user;
 
 
 
-    public TaskTransferObject(Long id, String name, String data_task, boolean done, Date start, Date finish) {
+    public TaskTransferObject(Long id, String name, String data_task, boolean done, Date start, Date finish,Long id_user) {
         this.id =id;
         this.name=name;
         this.data_task=data_task;
@@ -32,6 +33,7 @@ public class TaskTransferObject implements Serializable {
         this.start=start;
         this.finish=finish;
         this.created_at=created_at;
+        this.id_user=id_user;
 
     }
 
@@ -62,5 +64,8 @@ public class TaskTransferObject implements Serializable {
 
     public Date getCreated_at() {
         return created_at;
+    }
+    public Long getId_user() {
+        return id_user;
     }
 }

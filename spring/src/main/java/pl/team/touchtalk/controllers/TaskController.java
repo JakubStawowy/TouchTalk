@@ -1,13 +1,10 @@
 package pl.team.touchtalk.controllers;
 
 import org.springframework.web.bind.annotation.*;
-import pl.team.touchtalk.dto.TaskTransferObject;
-//import pl.team.touchtalk.dao.TaskRepository;
 import pl.team.touchtalk.model.Task;
 import  pl.team.touchtalk.services.TaskServices;
+import pl.team.touchtalk.dao.UserRepository;
 
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,9 +23,13 @@ public class TaskController {
 
 
     private TaskServices taskServices;
+    private UserRepository userRepository;
 
-    public  TaskController(TaskServices taskServices){
+
+    public  TaskController(TaskServices taskServices,UserRepository userRepository){
+
         this.taskServices=taskServices;
+        this.userRepository=userRepository;
     }
 
 
@@ -36,12 +37,19 @@ public class TaskController {
 
     @GetMapping("/all")
     public Iterable<Task> getAll() {
+
         return taskServices.findAll();
+
     }
     @GetMapping
     public Optional<Task> getById(@RequestParam Long id) {
         return taskServices.findById(id);
     }
+    @GetMapping("/user/{id_user}")
+    public List<Task> getTaskUser(@PathVariable("id_user") Long id_user) {
+        return taskServices.getTaskByUserId(id_user);
+    }
+
 
     @PostMapping
     public Task addVideo(@RequestBody Task taskServicesS) {

@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface TaskRepository extends CrudRepository<Task, Long> {
 
-
-
+    @Query(value = "SELECT * FROM task t WHERE t.id_user=?1 ", nativeQuery = true)
+    List<Task> getTaskByUserId(Long id);
 
     /*
 

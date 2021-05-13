@@ -45,24 +45,36 @@ public class Task implements Serializable {
     @Column(name = "created_at")
     private Date createdAt;
 
+    @NotNull
+    @Column(name = "id_user")
+    private Long id_user;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "tasks")
     private Set<Calendar> cal;
 
 
-    public Task(Long id, @NotNull String name, String date_task, String start, String finish, @NotNull Boolean done) {
+    public Task(Long id, @NotNull String name, String date_task, String start, String finish, @NotNull Boolean done,Long  id_user) {
         this.id = id;
         this.name = name;
         this.date_task = date_task;
         this.start = start;
         this.finish = finish;
         this.done = done;
+        this.id_user=id_user;
     }
 
     public Task() {
 
     }
 
+    public Long getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(Long id_user) {
+        this.id_user = id_user;
+    }
 
     @PrePersist
     public void setTask() {
