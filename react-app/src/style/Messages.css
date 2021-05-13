@@ -28,3 +28,27 @@
     justify-content: center;
 }
 
+.pictureContainer{
+    max-height:30vh;
+    max-width:30vh;
+}
+
+.picture{
+    height:auto;
+    max-width:100%;
+    border-radius: 7px;
+}
+
+.pictureContainerMini{
+    position: absolute;
+    bottom: 20vh;
+    right: 10px;
+    max-height:10vh;
+    max-width:10vh;
+}
+
+.pictureMini{
+    height:auto;
+    max-width:100%;
+    border-radius: 2px;
+}
