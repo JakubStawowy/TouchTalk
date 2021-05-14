@@ -202,7 +202,7 @@ const Messages = () => {
 
         const dataURL = await resp(file);
         setImage(dataURL);
-        setMessage({...message, imageURL: " Paweł"});
+        setMessage({...message, imageURL: dataURL});
 
 
     }
