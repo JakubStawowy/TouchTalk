@@ -80,19 +80,19 @@ const Messages = () => {
     const classes = useStyles();
 
     let idActualUser = parseInt(localStorage.getItem("id"));
-    console.log("ID UZYTKOWNIKA "+idActualUser);
     const [conversation, setConversation] = useState({'is': false});
 
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState({
         content: "",
         sender: 0,
-        receiver: 0
+        receiver: 0,
+        imageURL: ""
     })
 
     const [actualMessage, setActualMessage] = useState([]);
 
-    const [image, setImage] = useState();
+    const [image, setImage] = useState("");
     const [inputHolder] = useState();
 
     useEffect(() => {
@@ -114,9 +114,11 @@ const Messages = () => {
 
     }
     const onMessageReceived = (payload) => {
+
         getMessage(receiverId);
         console.log(actualMessage)
     }
+
 
     const sendMessage = () => {
 
@@ -124,7 +126,9 @@ const Messages = () => {
             stompClient.send("/app/send", {}, JSON.stringify(message));
             // localMessage.push(message);
             // console.log(localMessage)
-            setMessage({...message, content: ""});
+            setMessage({...message, content: "", imageURL: ""});
+            setImage("")
+
 
             setTimeout(() => {
                 getMessage(receiverId);
@@ -152,13 +156,20 @@ const Messages = () => {
     }
 
     const getMessage = receiverId => {
-        api.get('/messages?sender=' + idActualUser + "&receiver=" + receiverId).then(response => response.data)
-            .then(data => {
-                    setActualMessage(data)
+        api.get('/messages?sender=' + idActualUser + "&receiver=" + receiverId).then(response => {
+
+                   Promise.all(response.data.map(mess=> {
+
+                           api.get("/imageMess/" + mess.id).then(response => response.data)
+                               .then(data => {
+                                   console.log(data);
+                                   //return data;
+                                   setImage(data);
+                               })
+                       }
+                    ))
                 }
             )
-
-        console.log("receiver " + receiverId);
     }
 
     const [userDetails, setUserDetails] = useState({
@@ -190,25 +201,11 @@ const Messages = () => {
         })
 
         const dataURL = await resp(file);
-        console.log(dataURL);
+        setImage(dataURL);
+        setMessage({...message, imageURL: " Paweł"});
 
-        let container = document.getElementById("photoArea");
-        let photo = document.createElement("img");
-        photo.alt="zdiecie";
-        photo.src = dataURL;
-        container.appendChild(photo);
 
     }
-
-//maks
-    const handleChange = (event) => {
-        if (event.target.files && event.target.files[0]) {
-            setImage(
-              URL.createObjectURL(event.target.files[0])
-            );
-        }
-    }
-//
 
     return (
         <div className={"new-messages"}>
@@ -288,22 +285,21 @@ const Messages = () => {
                                 <Grid container>
                                     <Grid item xs={12} className={classes.picture}>
                                         <div class="pictureContainer">
-                                            <img class="picture" src="https://exumag.com/wp-content/uploads/2018/02/Grumpy-Cat-t%C5%82o-1170x659.jpg"></img>
+                                            <img className="picture" src={image} alt="image"/>
                                         </div>
                                     </Grid>
                                 </Grid>
                             </ListItem>
                             
                         </List>
-                            {image ? 
+                            {image ?
                             (<div class="pictureContainerMini">
                                 <img class="pictureMini" src={image}/>
                             </div>) : null}
+
                         <div className='bottom-bar'>
                             <Grid container>
-                                <Grid xs={12} id="photoArea">
 
-                                </Grid>
                                 <Grid item xs={11}>
                                     <TextField id="outlined-basic messageInput"
                                                label="Napisz nową wiadomość..."
@@ -320,14 +316,6 @@ const Messages = () => {
                                                required
                                                autoComplete="off"
                                                fullWidth/>
-             
-                                                 //mask
-                                    <input value={inputHolder} onChange={handleChange} type="file"  accept="image/*" name="image" id="file" style={{display: "none"}}>
-                                        
-                                    </input>
-                                    <label for="file" style={{cursor: "pointer"}}><WallpaperIcon/></label>
-                                    //
-                                    
 
                                         <input accept="image/*"
                                                id="icon-button-file"

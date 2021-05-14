@@ -40,6 +40,7 @@ public class Message {
     @JsonIgnore
     private User receiver;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "message")
     private File file;
     /*
@@ -49,9 +50,9 @@ public class Message {
     * @Param file - when no file is attached to message then value is null
     * @Param sender
     * */
-    public Message(@NotNull String content, @Nullable File file, User sender, User receiver) {
+    public Message(@NotNull String content,  User sender, User receiver) {
         this.content = content;
-        this.file = file;
+
         this.sender = sender;
         this.receiver = receiver;
     }
