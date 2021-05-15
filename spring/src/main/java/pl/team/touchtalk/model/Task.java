@@ -29,8 +29,8 @@ public class Task implements Serializable {
 
 
 
-    @Column(name = "date_task")
-    private String date_task;
+    @Column(name = "data_task")
+    private String data_task;
 
     @Column(name = "start")
     private String start;
@@ -54,10 +54,10 @@ public class Task implements Serializable {
     private Set<Calendar> cal;
 
 
-    public Task(Long id, @NotNull String name, String date_task, String start, String finish, @NotNull Boolean done,Long  id_user) {
+    public Task(Long id, @NotNull String name, String data_task, String start, String finish, @NotNull Boolean done,Long  id_user) {
         this.id = id;
         this.name = name;
-        this.date_task = date_task;
+        this.data_task = data_task;
         this.start = start;
         this.finish = finish;
         this.done = done;
@@ -113,12 +113,12 @@ public class Task implements Serializable {
         this.start = start;
     }
 
-    public String getDate_task() {
-        return date_task;
+    public String getData_task() {
+        return data_task;
     }
 
-    public void setDate_task(String date_task) {
-        this.date_task = date_task;
+    public void setData_task(String data_task) {
+        this.data_task = data_task;
     }
 
 
