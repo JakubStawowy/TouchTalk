@@ -19,7 +19,7 @@ import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import Notifications from "./Notifications";
 import Messages from "./Messages";
-import Tasks from "./Tasks";
+import Tasks from "./task/Tasks";
 import Calls from "./Calls";
 import Teams from "./Teams";
 import {  } from "module";
