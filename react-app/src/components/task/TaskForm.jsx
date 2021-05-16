@@ -1,41 +1,54 @@
 import React from "react";
 import "./Tasks.css"
 import { useFormik } from "formik";
+import {useHistory} from "react-router-dom";
 import axios from 'axios';
 
 const TaskForm = () => {
-   
-    const formik = useFormik({
-        initialValues: {
-          name: "",
-          date_task: "",
-          start: "",
-          finish: "",
-          done: "",
-          id_user: "", 
-        },
-        onSubmit: (values, {resetForm}) =>  {
 
-          const form = {
-                name: values.name,
-                date_task: values.date_task,
-                start: values.start,
-                finish: values.finish,
-                done: false,
-                // id_user: {$idusera},//TODO tutaj dodac id usera
-          };
-          const xd = JSON.stringify(form)
-          console.log(xd)
-        //   const res = axios.post(`http://localhost:8080/api/films/add`, xd, {headers: {'Content-Type': 'application/json', 'Host' : 'http://localhost:3000'  
-        //   , 'Content-Length' : '1000' }})
-        //   console.log(res);
-          resetForm();
-        },
-      });
+  const history = useHistory()
+  const lz = (i) => {
+    return `${i}`.padStart(2, "0");
+  }
+
+  const now = new Date();
+  const createdAt = `${now.getFullYear()}-${lz((now.getMonth()+1))}-${lz(now.getDate())}`;
+
+  const formik = useFormik({
+      initialValues: {
+        name: "",
+        data_task: "",
+        start: "",
+        finish: "",
+        done: "",
+        createdAt: "",
+        id_user: "", 
+      },
+      onSubmit: (values, {resetForm}) =>  {
+
+        const form = {
+              name: values.name,
+              data_task: values.data_task,
+              start: values.start,
+              finish: values.finish,
+              done: false,
+              createdAt: createdAt,
+              // id_user: ${localStorage.getItem("id")},
+              id_user: 1, 
+        };
+        const xd = JSON.stringify(form)
+        console.log(xd)
+        const res = axios.post(`http://localhost:9093/calendar`, xd, {headers: {'Content-Type': 'application/json', 'Host' : 'http://localhost:3000'  
+          , 'Content-Length' : '1000' }})
+        console.log(res);
+        resetForm();
+        history.push('/tasks/active')
+      },
+    });
 
     return (
-        //TODO
         <form className='add-task-form' onSubmit={formik.handleSubmit}>
+            <label className='addTask-label2'>DODAJ ZADANIE</label>
             <label className='addTask-label'>TYTUŁ ZADANIA</label>
             <input
             id='name-task'
@@ -46,9 +59,9 @@ const TaskForm = () => {
             />
             <label className='addTask-label'>OPIS ZADANIA</label>
             <input
-            id='date_task'
+            id='data_task'
             className='input-task'
-            name='date_task'
+            name='data_task'
             placeholder='Opis'
             onChange={formik.handleChange}
             />
