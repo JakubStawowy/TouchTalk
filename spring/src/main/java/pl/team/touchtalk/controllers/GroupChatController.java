@@ -73,24 +73,13 @@ public class GroupChatController {
         List<MessageTransferObject> messagesResponse = new ArrayList<>();
         for(GroupMessage groupMessage: groupMessageRepository.findAllByGroupId(group)) {
             Set<UserTransferObject> users = new LinkedHashSet<>();
-            groupMessage.getGroup().getUsers().forEach(user->users.add(new UserTransferObject(
-                    user.getId(),
-                    user.getUserDetails().getName(),
-                    user.getUserDetails().getSurname(),
-                    user.getUserDetails().getPhone(),
-                    user.getUserDetails().getImage()
-            )));
+            groupMessage.getGroup().getUsers().forEach(user->users.add(new UserTransferObject(user)));
             messagesResponse.add(new MessageTransferObject(
                     groupMessage.getContent(),
                     groupMessage.getSender().getId(),
                     groupMessage.getGroup().getId(),
                     groupMessage.getSentAt(),
-                    new GroupTransferObject(
-                            groupMessage.getId(),
-                            groupMessage.getGroup().getName(),
-                            groupMessage.getGroup().getCode(),
-                            users
-                    )
+                    new GroupTransferObject(groupMessage.getGroup(), users)
             ));
         }
         return messagesResponse;

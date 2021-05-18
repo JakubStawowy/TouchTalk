@@ -71,7 +71,7 @@ let groupId = 0;
 
 const Teams = () => {
 
-    const auth = useSelector(state => state.auth)
+    const auth = useSelector(state => state.auth);
     const history = useHistory()
     if (!auth.login)
         history.push('/');
@@ -90,8 +90,6 @@ const Teams = () => {
         let filtr =groups.filter((group) =>
         groupKey.some((key)=> group[key].toString().toLowerCase().indexOf(searchText.toString()) > -1));
         return filtr;
-
-
     }
     const [message, setMessage] = useState({
         content: "",
@@ -141,7 +139,13 @@ const Teams = () => {
     }
 
     const getMessage = groupId => {
-        api.get('/messgrouplist/' + groupId).then(response => response.data)
+
+        const config = {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }
+        api.get('/messgrouplist/' + groupId, config).then(response => response.data)
             .then(data => {
                     setActualMessage(data)
                 }
@@ -165,7 +169,14 @@ const Teams = () => {
     };
 
     useEffect(() => {
-        api.get(`/groups?id=${idActualUser}`).then(response => response.data)
+
+        const config = {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        };
+
+        api.get(`/groups?id=${idActualUser}`, config).then(response => response.data)
             .then(data => setGroups(data))
     }, []);
 

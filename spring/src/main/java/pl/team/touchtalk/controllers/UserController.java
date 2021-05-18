@@ -48,13 +48,7 @@ public class UserController {
     public List<UserTransferObject> index(){
         List<UserTransferObject> users = new ArrayList<>();
         userRepository.findAll().forEach(user->
-            users.add(new UserTransferObject(
-                user.getId(),
-              user.getUserDetails().getName(),
-              user.getUserDetails().getSurname(),
-              user.getUserDetails().getPhone(),
-              user.getUserDetails().getImage()
-            ))
+            users.add(new UserTransferObject(user))
         );
         return users;
     }
@@ -70,13 +64,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserTransferObject> getUser(@PathVariable("id") Long id){
         return userRepository.findById(id).map(
-                user -> new ResponseEntity<>(new UserTransferObject(
-                        user.getId(),
-                        user.getUserDetails().getName(),
-                        user.getUserDetails().getSurname(),
-                        user.getUserDetails().getPhone(),
-                        user.getUserDetails().getImage()
-                ), HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                user -> new ResponseEntity<>(new UserTransferObject(user), HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)
         );
     }
 

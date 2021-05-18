@@ -63,13 +63,7 @@ public class MessageController {
 					message.getSender().getId(),
 					message.getReceiver().getId(),
 					message.getSentAt(),
-					new UserTransferObject(
-							message.getReceiver().getId(),
-							message.getReceiver().getUserDetails().getName(),
-							message.getReceiver().getUserDetails().getSurname(),
-							message.getReceiver().getUserDetails().getPhone(),
-							message.getReceiver().getUserDetails().getImage()
-					)
+					new UserTransferObject(message.getReceiver())
 			));
 		}
 		return messagesResponse;
