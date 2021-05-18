@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -10,11 +10,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import SendIcon from '@material-ui/icons/Send';
-import MoodIcon from '@material-ui/icons/Mood';
-import TextFieldsIcon from '@material-ui/icons/TextFields';
 import WallpaperIcon from '@material-ui/icons/Wallpaper';
 import AppBar from '@material-ui/core/AppBar';
-import GifIcon from '@material-ui/icons/Gif';
+
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import IconButton from '@material-ui/core/IconButton';
 import "../style/Messages.css"
 
 
@@ -35,9 +35,7 @@ import {useHistory} from "react-router-dom";
  * @Since 2021-04-30
  * */
 const useStyles = makeStyles({
-    table: {
-        minWidth: 650,
-    },
+
     chatSection: {
         width: '100%',
         height: '100vh'
@@ -49,13 +47,18 @@ const useStyles = makeStyles({
         borderRight: '1px solid #e0e0e0'
     },
     messageArea: {
-        height: '68vh',
+        height: '73vh',
         overflowY: 'auto'
     },
 
     listScroll: {
-        height: "100%",
         overflow: "auto"
+    },
+
+    picture: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
     }
 });
 
@@ -76,17 +79,20 @@ const Messages = () => {
     const classes = useStyles();
 
     let idActualUser = parseInt(localStorage.getItem("id"));
-    console.log("ID UZYTKOWNIKA "+idActualUser);
     const [conversation, setConversation] = useState({'is': false});
 
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState({
         content: "",
         sender: 0,
-        receiver: 0
+        receiver: 0,
+        imageURL: ""
     })
 
     const [actualMessage, setActualMessage] = useState([]);
+
+    const [image, setImage] = useState("");
+    const [inputHolder] = useState();
 
     useEffect(() => {
         const config = {
@@ -112,9 +118,11 @@ const Messages = () => {
 
     }
     const onMessageReceived = (payload) => {
+
         getMessage(receiverId);
         console.log(actualMessage)
     }
+
 
     const sendMessage = () => {
 
@@ -124,7 +132,9 @@ const Messages = () => {
             }, JSON.stringify(message));
             // localMessage.push(message);
             // console.log(localMessage)
-            setMessage({...message, content: ""});
+            setMessage({...message, content: "", imageURL: ""});
+            setImage("")
+
 
             setTimeout(() => {
                 getMessage(receiverId);
@@ -159,14 +169,23 @@ const Messages = () => {
             }
         };
 
-        api.get('/messages?sender=' + idActualUser + "&receiver=" + receiverId, config).then(response => response.data)
-            .then(data => {
-                    setActualMessage(data)
-                }
-            )
+        api.get('/messages?sender=' + idActualUser + "&receiver=" + receiverId, config)
+            .then(response => {
 
-        console.log("receiver " + receiverId);
+                    Promise.all(response.data.map(mess =>
+                        api.get("/imageMess/" + mess.id)
+                            .then(resp => resp.data)
+                            .then(data => {
+
+                                return {mess, data};
+                            })
+                    )).then(res => {
+                        res.map(m => m.mess.imageURL = m.data);
+                        setActualMessage(response.data)
+                })
+            })
     }
+
 
     const [userDetails, setUserDetails] = useState({
         username: "",
@@ -181,6 +200,24 @@ const Messages = () => {
         let filtr =users.filter((user) =>
             userKey.some((key)=> user[key].toString().toLowerCase().indexOf(searchText.toString()) > -1));
         return filtr;
+    }
+
+    let file ="";
+    const addNewPhoto = async (event) =>{
+
+        file = event.target.files[0];
+
+
+        const resp = (file) =>new Promise((resolve, reject) =>{
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        })
+
+        const dataURL = await resp(file);
+        setImage(dataURL);
+        setMessage({...message, imageURL: dataURL});
 
 
     }
@@ -233,12 +270,32 @@ const Messages = () => {
 
                                 (messR.sender !== idActualUser) ? (
                                     <ListItem key={messR.id}>
+
+
+
                                         <div className="photo">
                                             <Avatar alt="User"
                                                     src="/broken-image.jpg"/>
                                         </div>
                                         <Grid container>
                                             <Grid item xs={12}>
+
+                                                {(messR.imageURL!=="Empty")?(
+                                                    <ListItem>
+                                                        <Grid container>
+                                                            <Grid item xs={12} className={classes.picture}>
+                                                                <div class="pictureContainer">
+                                                                    <img className="picture" src={messR.imageURL} alt="/broken-image.jpg"/>
+                                                                </div>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </ListItem>
+                                                ):null}
+
+
+
+
+
                                                 <ListItemText align="left" primary={messR.content}/>
                                             </Grid>
                                             <Grid item xs={12}>
@@ -250,6 +307,22 @@ const Messages = () => {
                                     <ListItem key={messR.id}>
                                         <Grid container>
                                             <Grid item xs={12}>
+
+
+                                                {(messR.imageURL!=="Empty")?(
+                                                    <ListItem>
+                                                        <Grid container>
+                                                            <Grid item xs={12} className={classes.picture}>
+                                                                <div class="pictureContainer">
+                                                                    <img className="picture" src={messR.imageURL} alt="/broken-image.jpg"/>
+                                                                </div>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </ListItem>
+                                                ):null}
+
+
+
                                                 <ListItemText align="right" primary={messR.content}/>
                                             </Grid>
                                             <Grid item xs={12}>
@@ -259,12 +332,19 @@ const Messages = () => {
                                     </ListItem>
                                 )
                             ))}
+
+                            
                         </List>
+                            {image ?
+                            (<div class="pictureContainerMini">
+                                <img class="pictureMini" src={image}/>
+                            </div>) : null}
 
                         <div className='bottom-bar'>
-                            <Grid container style={{padding: '20px'}}>
+                            <Grid container>
+
                                 <Grid item xs={11}>
-                                    <TextField id="outlined-basic-email"
+                                    <TextField id="outlined-basic messageInput"
                                                label="Napisz nową wiadomość..."
                                                onChange={e => setMessage({
                                                    ...message,
@@ -277,10 +357,21 @@ const Messages = () => {
                                                    }
                                                }}
                                                required
+                                               autoComplete="off"
                                                fullWidth/>
-                                    <button><WallpaperIcon/></button>
+
+                                        <input accept="image/*"
+                                               id="icon-button-file"
+                                               onChange={(e) => addNewPhoto(e)}
+                                               type="file"
+                                               style={{ display: 'none' }} />
+                                        <label htmlFor="icon-button-file">
+                                                <WallpaperIcon />
+                                        </label>
+
+
                                 </Grid>
-                                <Grid xs={1} align="right">
+                                <Grid xs={1} align="right" className="sendButtonIcon">
                                     <button onClick={sendMessage} ><SendIcon/></button>
                                 </Grid>
                             </Grid>

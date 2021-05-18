@@ -57,13 +57,12 @@ const useStyles = makeStyles({
     },
 
     listScroll: {
-        height: '100vh',
         overflow: "auto"
     }
 });
 
 const api = axios.create({
-    baseURL: `http://localhost:8080/api`
+    baseURL: `http://localhost:8080/`
 })
 
 let stompClient = null;
@@ -94,7 +93,8 @@ const Teams = () => {
     const [message, setMessage] = useState({
         content: "",
         sender: 0,
-        receiver: 0
+        receiver: 0,
+        imageURL: "Empty"
     })
 
     const [actualMessage, setActualMessage] = useState([]);
@@ -145,7 +145,7 @@ const Teams = () => {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         }
-        api.get('/messgrouplist/' + groupId, config).then(response => response.data)
+        api.get('/api/messgrouplist/' + groupId, config).then(response => response.data)
             .then(data => {
                     setActualMessage(data)
                 }
@@ -176,7 +176,7 @@ const Teams = () => {
             }
         };
 
-        api.get(`/groups?id=${idActualUser}`, config).then(response => response.data)
+        api.get(`/api/groups?id=${idActualUser}`, config).then(response => response.data)
             .then(data => setGroups(data))
     }, []);
 
@@ -269,9 +269,24 @@ const Teams = () => {
                                                         src="/broken-image.jpg"/>
                                             </Grid>
                                             <Grid item className="messageContent">
+
+                                                {/*{(groupMess.imageURL!=="Empty")?(*/}
+                                                {/*    <ListItem>*/}
+                                                {/*        <Grid container>*/}
+                                                {/*            <Grid item xs={12} className={classes.picture}>*/}
+                                                {/*                <div class="pictureContainer">*/}
+                                                {/*                    <img className="picture" src={groupMess.imageURL} alt="/broken-image.jpg"/>*/}
+                                                {/*                </div>*/}
+                                                {/*            </Grid>*/}
+                                                {/*        </Grid>*/}
+                                                {/*    </ListItem>*/}
+                                                {/*):null}*/}
+
+
+
                                                 <ListItemText align="left" secondary={getUserDetails(groupMess)}/>
                                                 <ListItemText  align="left" primary={groupMess.content}  />
-                                                <ListItemText align="left"
+                                                <ListItemText className="data-message" align="left"
                                                                   secondary={groupMess.date.split("T")[0] + " " + groupMess.date.split("T")[1].split(".")[0]}/>
 
                                             </Grid>
@@ -281,6 +296,19 @@ const Teams = () => {
                                     <ListItem key={groupMess.id}>
                                         <Grid container>
                                             <Grid item xs={12}>
+                                                {/*{(groupMess.imageURL!=="Empty")?(*/}
+
+                                                {/*    <ListItem>*/}
+                                                {/*        <Grid container>*/}
+                                                {/*            <Grid item xs={12} className={classes.picture}>*/}
+                                                {/*                <div class="pictureContainer">*/}
+                                                {/*                    <img className="picture" src={groupMess.imageURL} alt="/broken-image.jpg"/>*/}
+                                                {/*                </div>*/}
+                                                {/*            </Grid>*/}
+                                                {/*        </Grid>*/}
+                                                {/*    </ListItem>*/}
+                                                {/*):null}*/}
+
                                                 <ListItemText align="right" primary={groupMess.content}/>
                                             </Grid>
                                             <Grid item xs={12}>
