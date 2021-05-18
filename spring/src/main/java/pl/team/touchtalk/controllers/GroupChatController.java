@@ -81,6 +81,7 @@ public class GroupChatController {
                     user.getUserDetails().getImage()
             )));
             messagesResponse.add(new MessageTransferObject(
+                    groupMessage.getId(),
                     groupMessage.getContent(),
                     groupMessage.getSender().getId(),
                     groupMessage.getGroup().getId(),
@@ -90,7 +91,8 @@ public class GroupChatController {
                             groupMessage.getGroup().getName(),
                             groupMessage.getGroup().getCode(),
                             users
-                    )
+                    ),
+                    null
             ));
         }
         return messagesResponse;

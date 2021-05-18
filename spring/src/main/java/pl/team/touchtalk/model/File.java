@@ -1,5 +1,7 @@
 package pl.team.touchtalk.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -14,7 +16,8 @@ public class File {
     @Lob
     private String fileUrl;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToOne(fetch=FetchType.LAZY, optional = false)
     private Message message;
 
     public File(@NotNull String fileUrl, Message message) {
@@ -48,5 +51,14 @@ public class File {
 
     public void setFileUrl(String fileUrl) {
         this.fileUrl = fileUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "File{" +
+                "id=" + id +
+                ", fileUrl='" + fileUrl + '\'' +
+                ", message=" + message +
+                '}';
     }
 }

@@ -4,7 +4,9 @@
 }
 
 .bottom-bar{
+    margin: 1em;
     border: 1px solid grey;
+
 }
 
 
@@ -20,4 +22,36 @@
     align-items: center;
     /*padding-right: 1em;*/
 }
+.sendButtonIcon{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
 
+.pictureContainer{
+    max-height:30vh;
+    width:30vh;
+}
+
+.picture{
+    width:100%;
+
+    border-radius: 7px;
+}
+.picture:hover{
+    transform: scale(2.2);
+}
+
+.pictureContainerMini{
+    position: absolute;
+    bottom: 20vh;
+    right: 10px;
+    max-height:20vh;
+    max-width:20vh;
+}
+
+.pictureMini{
+    height:auto;
+    max-width:100%;
+    border-radius: 2px;
+}
