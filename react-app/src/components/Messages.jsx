@@ -171,9 +171,9 @@ const Messages = () => {
 
         api.get('/messages?sender=' + idActualUser + "&receiver=" + receiverId, config)
             .then(response => {
-
+                    console.log(response);
                     Promise.all(response.data.map(mess =>
-                        api.get("/imageMess/" + mess.id)
+                        api.get("/imageMess/" + mess.id, config)
                             .then(resp => resp.data)
                             .then(data => {
 

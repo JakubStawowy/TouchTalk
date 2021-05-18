@@ -1,6 +1,5 @@
 package pl.team.touchtalk.controllers;
 
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -55,9 +54,6 @@ public class MessageController {
 			if (!messagePayload.getImageURL().equals(""))
 			{
 				File file = new File(messagePayload.getImageURL(), message);
-				System.out.println("Przed filem kurka wodna");
-				System.out.println(file.getFileUrl());
-				System.out.println(message.getContent());
 				fileRepository.save(file);
 
 
@@ -81,14 +77,15 @@ public class MessageController {
 		User userSender = userRepository.findById(sender).get();
 		User userReceiver = userRepository.findById(receiver).get();
 
-		for(Message message: messageRepository.findAllBySenderAndReceiverOrReceiverAndSender(userSender,userReceiver,userReceiver,userSender)) {
+		for(Message message: messageRepository.findAllBySenderAndReceiverOrReceiverAndSender(userSender,userReceiver,userSender, userReceiver)) {
 			messagesResponse.add(new MessageTransferObject(
 					message.getId(),
 					message.getContent(),
 					message.getSender().getId(),
 					message.getReceiver().getId(),
 					message.getSentAt(),
-					new UserTransferObject(message.getReceiver())
+					new UserTransferObject(message.getReceiver()),
+					null
 			));
 		}
 		return messagesResponse;

@@ -269,7 +269,6 @@ const Teams = () => {
                                                         src="/broken-image.jpg"/>
                                             </Grid>
                                             <Grid item className="messageContent">
-
                                                 {/*{(groupMess.imageURL!=="Empty")?(*/}
                                                 {/*    <ListItem>*/}
                                                 {/*        <Grid container>*/}

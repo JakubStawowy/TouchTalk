@@ -80,7 +80,8 @@ public class GroupChatController {
                     groupMessage.getSender().getId(),
                     groupMessage.getGroup().getId(),
                     groupMessage.getSentAt(),
-                    new GroupTransferObject(groupMessage.getGroup(), users)
+                    new GroupTransferObject(groupMessage.getGroup(), users),
+                    null
             ));
         }
         return messagesResponse;
