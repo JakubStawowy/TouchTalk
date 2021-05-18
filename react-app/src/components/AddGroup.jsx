@@ -16,7 +16,6 @@ const api = axios.create({
     baseURL: `http://localhost:8080/api/groups`
 })
 
-
 const AddGroup = ({status}) => {
 
     let idActualUser = parseInt(localStorage.getItem("id"));
@@ -41,11 +40,16 @@ const AddGroup = ({status}) => {
     const createGroup = () => {
 
         console.log(group);
-
-        api.post('/add', group).then(data => {
-            console.log(data)
+        const config = {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
         }
-        )
+        api.post('/add', group, config).then(data => {
+            alert("Grupa dodana");
+        }).catch((error) => {
+            alert(error);
+        })
     }
 
     return(

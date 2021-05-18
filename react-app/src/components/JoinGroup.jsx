@@ -22,7 +22,14 @@ const JoinGroup = () => {
     let idActualUser = parseInt(localStorage.getItem("id"));
 
     const joinGroup = async () => {
-        await api.post(`/join?id=${idActualUser}&code=${code}`)
+
+        const config = {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }
+
+        await api.post(`/join?id=${idActualUser}&code=${code}`, null, config);
     }
 
     return (
@@ -34,7 +41,7 @@ const JoinGroup = () => {
                 value={code}
                 onKeyPress={event => {
                     if (event.key === 'Enter') {
-                        joinGroup().then(r => {console.log(r)});
+                        joinGroup().then(() => {alert("Zostales zapisany do grupy poprawnie")}).catch((error) => alert(error));
                         setCode("");
                     }
                 }}

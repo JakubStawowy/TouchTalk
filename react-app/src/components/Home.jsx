@@ -1,16 +1,12 @@
 import React, {useEffect, useState} from "react";
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import {Route, NavLink} from "react-router-dom";
 import PhoneSharpIcon from '@material-ui/icons/PhoneSharp';
-import VideocamSharpIcon from '@material-ui/icons/VideocamSharp';
-import PersonAddSharpIcon from '@material-ui/icons/PersonAddSharp';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import MessageIcon from '@material-ui/icons/Message';
@@ -28,7 +24,6 @@ import "../style/Home.css";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {getUserDetails} from "../actions/getUserDetails";
-import {Button} from "@material-ui/core";
 import {signout} from "../actions/auth";
 
 

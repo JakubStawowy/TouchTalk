@@ -95,7 +95,12 @@ const Messages = () => {
     const [inputHolder] = useState();
 
     useEffect(() => {
-        api.get('/api/users').then(response => response.data)
+        const config = {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        };
+        api.get('/api/users', config).then(response => response.data)
             .then(data => setUsers(data))
 
     }, []);
@@ -103,12 +108,12 @@ const Messages = () => {
     const connect = () => {
         const socket = new SockJS('http://localhost:8080/ws');
         stompClient = Stomp.over(socket);
-        stompClient.connect({}, onConnected, onError);
-
+        stompClient.connect({
+            "Authorization": "Bearer " + localStorage.getItem('token')
+        }, onConnected, onError);
     }
 
     const onConnected = () => {
-
         stompClient.subscribe('/user/' + idActualUser + "/reply", onMessageReceived);
 
     }
@@ -122,7 +127,9 @@ const Messages = () => {
     const sendMessage = () => {
 
         if (stompClient) {
-            stompClient.send("/app/send", {}, JSON.stringify(message));
+            stompClient.send("/app/send", {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }, JSON.stringify(message));
             // localMessage.push(message);
             // console.log(localMessage)
             setMessage({...message, content: "", imageURL: ""});
@@ -151,11 +158,18 @@ const Messages = () => {
     };
 
     const onError = (error) => {
-        console.log("error");
+        console.log(error);
     }
 
     const getMessage = receiverId => {
-        api.get('/messages?sender=' + idActualUser + "&receiver=" + receiverId)
+
+        const config = {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        };
+
+        api.get('/messages?sender=' + idActualUser + "&receiver=" + receiverId, config)
             .then(response => {
 
                     Promise.all(response.data.map(mess =>

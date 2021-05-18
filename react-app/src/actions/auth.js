@@ -31,7 +31,12 @@ export const signup = (signupData) => async (dispatch) => {
 
 export const signout = () => async (dispatch) => {
     const url = "http://localhost:8080/api/logout?userId="+localStorage.getItem("id");
-    await axios.put(url);
+    const config = {
+        headers:{
+            "Authorization": "Bearer " + localStorage.getItem('token')
+        }
+    }
+    await axios.put(url, null, config);
     dispatch({
         type: 'SIGNOUT'
     })

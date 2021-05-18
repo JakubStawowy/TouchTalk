@@ -22,10 +22,9 @@ const initialState = user ? {
 const auth = (state = initialState, action) => {
     switch (action.type) {
         case SIGNIN:
-            // localStorage.setItem("user", JSON.stringify(action.payload));
             localStorage.setItem("user", JSON.stringify(action.payload));
             localStorage.setItem("id", JSON.stringify(action.payload.first));
-            localStorage.setItem("token", JSON.stringify(action.payload.second));
+            localStorage.setItem("token", action.payload.second);
 
             return {
                 ...state, auth: action.payload, login: true, login_error: false

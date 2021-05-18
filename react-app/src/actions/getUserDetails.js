@@ -7,5 +7,5 @@ export const getUserDetails = async () => {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
     }
-    return await axios.get(url);
+    return await axios.get(url, config);
 }
