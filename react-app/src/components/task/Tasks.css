@@ -1,10 +1,10 @@
 .task-section{
     background-color: white;
+    padding: 1em;
     color: black;
     height: 100%;
     overflow: auto;
 }
-
 
 .task-header{
     display: flex;
@@ -26,7 +26,7 @@
     justify-content: space-between;
 }
 
-.task{
+.task1{
     display: flex;
     flex-direction: column;
     border: 1px solid #707070;
@@ -34,6 +34,16 @@
     box-shadow: 4px 4px 19px -3px rgba(0,0,0,0.65);
     background-color: #F8F7F5;
 }
+
+.task2{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #707070;
+    border-left: 3px solid #103B84;
+    box-shadow: 4px 4px 19px -3px rgba(0,0,0,0.65);
+    background-color: #F8F7F5;
+}
+
 
 .col1{
     display: flex;
@@ -48,7 +58,7 @@
     flex-direction: row;
     justify-content: space-between;
     padding: 0.5em;
-    background-color: rgba(246,242,242,0.5);
+    background-color: rgb(246,242,242,0.5);
     align-items: center;
 }
 
@@ -56,20 +66,19 @@
     border-bottom: 1px solid #292828;
     padding: 0.5em;
     align-items: center;
-    
+    overflow: auto;
+    height: 5vh;
 }
 
 .task-button-panel>li{
-    /*width: 25%;*/
+    width: 15w;
     font-weight: bold;
-    font-size: 1em;
-
 }
 
 .find-task{
     float: right;
     height: 4vh;
-    width: 25%;
+    width: 20vw;
 }
 
 .accept{
@@ -82,7 +91,6 @@
 
 .task-button-panel{
     display: flex;
-    width: 60%;
     flex-direction: row;
     margin-bottom: 0;
     margin-top: auto;
@@ -98,15 +106,14 @@
 
 .button-input{
     display: flex;
-    width: 100%;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
-    padding-top: 0.1em;
-    padding-bottom: 0.1em;
 }
 
-
+.MuiGrid-container {
+    overflow: hidden;
+}
 
 .black{
     background-color: brown;
@@ -119,14 +126,12 @@
 .add-task-form{
     display: flex;
     flex-direction: column;
+    align-items: center;
+    padding: 1em;
 }
 
 .aktywny{
     background-color: teal;
-}
-
-.add-task-form{
-    align-items: center;
 }
 
 .add-task-form>input{
@@ -147,15 +152,55 @@
 }
 
 .activebutton{
-    background-color: rgba(112,140,167,0.36);
-    border: 1px solid black;
-    padding-bottom: 0;
-    padding-left: 0;
-
+    background-color: rgb(112,140,167,0.36);
 }
 
 .overlap{
     padding-bottom: 0;
     padding-left: 0;
     margin-right: 10px;
+}
+
+.addTask-label{
+    font-size: 17px;
+    font-weight: 100;
+    letter-spacing: 5px;
+    padding: 0.5em
+}
+
+.addTask-label2{
+    font-size: 20px;
+    font-weight: 100;
+    letter-spacing: 5px;
+    padding: 0.5em;
+    border-bottom: 1px solid rgba(2, 92, 211, 0.815);
+    margin-bottom: 2em;
+    width: 45%;
+    text-align: center;
+}
+
+.input-task{
+    padding: 10px;
+    letter-spacing: 3px;
+    border: 1px solid rgba(18, 74, 128, 0.267);
+}
+
+.task-btn{
+    margin-top: 20px;
+    cursor: pointer;
+    padding: 0.5em;
+
+    border-radius: 8px;
+    letter-spacing: 3px;
+    background-color:rgba(2, 92, 211, 0.815);
+    color: rgb(255, 255, 255);
+}
+
+.loading-task{
+    text-align: center;
+    margin-top: 2em;
+}
+
+.task-button-panel>li:hover{
+    background-color: rgb(112,140,167,0.36);
 }
