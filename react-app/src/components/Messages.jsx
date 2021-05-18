@@ -52,7 +52,6 @@ const useStyles = makeStyles({
     },
 
     listScroll: {
-        height: "100%",
         overflow: "auto"
     },
 
@@ -156,21 +155,23 @@ const Messages = () => {
     }
 
     const getMessage = receiverId => {
-        api.get('/messages?sender=' + idActualUser + "&receiver=" + receiverId).then(response => {
+        api.get('/messages?sender=' + idActualUser + "&receiver=" + receiverId)
+            .then(response => {
 
-                   Promise.all(response.data.map(mess=> {
+                    Promise.all(response.data.map(mess =>
+                        api.get("/imageMess/" + mess.id)
+                            .then(resp => resp.data)
+                            .then(data => {
 
-                           api.get("/imageMess/" + mess.id).then(response => response.data)
-                               .then(data => {
-                                   console.log(data);
-                                   //return data;
-                                   setImage(data);
-                               })
-                       }
-                    ))
-                }
-            )
+                                return {mess, data};
+                            })
+                    )).then(res => {
+                        res.map(m => m.mess.imageURL = m.data);
+                        setActualMessage(response.data)
+                })
+            })
     }
+
 
     const [userDetails, setUserDetails] = useState({
         username: "",
@@ -255,12 +256,32 @@ const Messages = () => {
 
                                 (messR.sender !== idActualUser) ? (
                                     <ListItem key={messR.id}>
+
+
+
                                         <div className="photo">
                                             <Avatar alt="User"
                                                     src="/broken-image.jpg"/>
                                         </div>
                                         <Grid container>
                                             <Grid item xs={12}>
+
+                                                {(messR.imageURL!=="Empty")?(
+                                                    <ListItem>
+                                                        <Grid container>
+                                                            <Grid item xs={12} className={classes.picture}>
+                                                                <div class="pictureContainer">
+                                                                    <img className="picture" src={messR.imageURL} alt="/broken-image.jpg"/>
+                                                                </div>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </ListItem>
+                                                ):null}
+
+
+
+
+
                                                 <ListItemText align="left" primary={messR.content}/>
                                             </Grid>
                                             <Grid item xs={12}>
@@ -272,6 +293,22 @@ const Messages = () => {
                                     <ListItem key={messR.id}>
                                         <Grid container>
                                             <Grid item xs={12}>
+
+
+                                                {(messR.imageURL!=="Empty")?(
+                                                    <ListItem>
+                                                        <Grid container>
+                                                            <Grid item xs={12} className={classes.picture}>
+                                                                <div class="pictureContainer">
+                                                                    <img className="picture" src={messR.imageURL} alt="/broken-image.jpg"/>
+                                                                </div>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </ListItem>
+                                                ):null}
+
+
+
                                                 <ListItemText align="right" primary={messR.content}/>
                                             </Grid>
                                             <Grid item xs={12}>
@@ -281,15 +318,7 @@ const Messages = () => {
                                     </ListItem>
                                 )
                             ))}
-                            <ListItem>
-                                <Grid container>
-                                    <Grid item xs={12} className={classes.picture}>
-                                        <div class="pictureContainer">
-                                            <img className="picture" src={image} alt="image"/>
-                                        </div>
-                                    </Grid>
-                                </Grid>
-                            </ListItem>
+
                             
                         </List>
                             {image ?

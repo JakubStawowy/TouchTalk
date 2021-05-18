@@ -106,10 +106,9 @@ public class MessageController {
 	public String show(@PathVariable("id") Long id){
 		File file = fileRepository.findFileUrlByMessageId(id);
 		if(file == null) {
-			return "EmptyFile";
+			return "Empty";
 		}
 		else {
-			//System.out.println(fileURL);
 			return file.getFileUrl();
 		}
 

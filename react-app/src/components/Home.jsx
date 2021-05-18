@@ -88,22 +88,7 @@ const Home = () => {
     }
     return (
         <section>
-            {/*<AppBar position="relative">*/}
-            {/*    <div class='right-navbar'>*/}
-            {/*        <div className="navList">*/}
-            {/*            <div className="navList2">*/}
-            {/*                <div class='photo1'>*/}
-            {/*                    <Avatar alt="User1" src="/broken-image.jpg" />*/}
-            {/*                </div>*/}
-            {/*                <Typography variant="h6" >*/}
-            {/*                    {userDetails.username} {userDetails.surname}*/}
-            {/*                </Typography>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</AppBar>*/}
 
-            {/*<Grid container style={content}>*/}
             <Grid container className={"new-container"}>
                 <Grid item xs={2}>
 
