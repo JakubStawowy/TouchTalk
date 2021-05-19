@@ -1,5 +1,6 @@
 package pl.team.touchtalk.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.team.touchtalk.model.Task;
 import  pl.team.touchtalk.services.TaskServices;
@@ -21,26 +22,18 @@ import java.util.Optional;
 @RequestMapping("/calendar")
 public class TaskController {
 
+    private final TaskServices taskServices;
 
-    private TaskServices taskServices;
-    private UserRepository userRepository;
-
-
-    public  TaskController(TaskServices taskServices,UserRepository userRepository){
-
+    @Autowired
+    public  TaskController(TaskServices taskServices){
         this.taskServices=taskServices;
-        this.userRepository=userRepository;
     }
-
-
-
 
     @GetMapping("/all")
     public Iterable<Task> getAll() {
-
         return taskServices.findAll();
-
     }
+
     @GetMapping
     public Optional<Task> getById(@RequestParam Long id) {
         return taskServices.findById(id);
@@ -50,19 +43,18 @@ public class TaskController {
         return taskServices.getTaskByUserId(id_user);
     }
 
-
     @PostMapping
-    public Task addVideo(@RequestBody Task taskServicesS) {
-        return taskServices.save(taskServicesS);
+    public Task addTask(@RequestBody Task task) {
+        return taskServices.save(task);
     }
 
     @PutMapping
-    public Task updateVideo(@RequestBody Task taskServicesS) {
-        return taskServices.save(taskServicesS);
+    public Task updateTask(@RequestBody Task task) {
+        return taskServices.save(task);
     }
 
     @DeleteMapping
-    public void deleteVideo(@RequestParam Long id) {
+    public void deleteTask(@RequestParam Long id) {
         taskServices.deleteById(id);
     }
 }

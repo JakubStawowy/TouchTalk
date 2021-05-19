@@ -18,5 +18,4 @@ public interface MessageRepository extends CrudRepository<Message, Long> {
     @Transactional
     List<Message> findAllBySenderAndReceiverOrReceiverAndSender(User sender, User receiver, User receiver2, User sender2);
 
-
 }
