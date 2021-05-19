@@ -1,29 +1,17 @@
-html, body {
-    height: 100%;
-    overflow: auto;
-}
-
-body{
-    background: rgb(48,129,238);
-    background: linear-gradient( rgba(48,129,238,1) 0%, rgba(28,162,240,1) 32%, rgba(32,108,174,1) 40%, rgba(24,74,143,1) 50%, rgba(16,59,132,1) 70%);
-    font-size: 20px;
-    font-family: 'Montserrat', sens-serif;
-    color: white;}
 
 .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-2 {
-    background-color: #3081EE;
-    height: 90vh;
+    background-color: var(--lightBlue);
+    height: 100vh;
 }
 
 .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-10 {
-    height: 90vh;
+    height: 100vh;
 }
 
 a {
     text-decoration: none;
     color: black;
-    padding-bottom: 1em;
-    padding-left: 1em;
+    padding: 0.25em  0.5em;
 }
 
 li {
@@ -31,35 +19,17 @@ li {
 }
 
 .page-content{
-    align-self: right;
+    align-self:flex-start;
 }
 
 
 .navbar-left{
-    font-family: 'Montserrat', sens-serif;
     font-size: 24px;
 }
 
-.MuiListItemIcon-root {
-    margin-top: -1em;
-    margin-left: 0.5em;
-}
-
-
-
-h6.MuiTypography-root.MuiTypography-h6 {
-    font-weight: bold;
-    font-family: 'Montserrat', sens-serif;
-}
-
-.right-navbar{
-    background-color: #3081EE;
-    height: 10vh;
-}
-
 .photo1{
-    padding-right: 1em;
-    padding-left: 1em;
+    padding-right: 0.25em;
+    padding-left: 0.5em;
 }
 
 .talk :hover {
@@ -75,16 +45,12 @@ svg.MuiSvgIcon-root {
     color: black;
 }
 
-c1{
-    border: 3px solid green;
-    border-radius: 2em;
-    margin-left: 8em;
-}
+
 
 h6.MuiTypography-root.MuiTypography-h6 {
     color: black;
-    font-size: 30px;
-    font-family: 'Montserrat', sens-serif;
+    font-size: 2vw;
+    font-family: 'Cormorant', serif;
     font-weight: bold;
 }
 
@@ -94,15 +60,15 @@ li.MuiListItem-root.MuiListItem-gutters:hover {
     margin-left: inherit;
     font-weight: bold;
 }
-.navList2{
-    display: flex;
-    justify-content: flex-start;
-}
+
 .navList{
     display: flex;
-    justify-content: space-between;
-    padding-top: 1em;
-    padding-bottom: 1em;
+    justify-content: space-around;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border: 1px solid #103B84;
+    background-color: var(--mainBlue);
+
 
 }
 

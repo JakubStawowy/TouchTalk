@@ -26,6 +26,9 @@ public class UserDetails {
     private String surname;
 
     private String phone;
+
+
+    @Lob
     private String image;
 
     @JsonIgnore

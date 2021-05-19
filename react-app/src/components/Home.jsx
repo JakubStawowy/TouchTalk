@@ -1,44 +1,43 @@
 import React, {useEffect, useState} from "react";
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import { Route, NavLink} from "react-router-dom";
+import {Route, NavLink} from "react-router-dom";
 import PhoneSharpIcon from '@material-ui/icons/PhoneSharp';
-import VideocamSharpIcon from '@material-ui/icons/VideocamSharp';
-import PersonAddSharpIcon from '@material-ui/icons/PersonAddSharp';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import MessageIcon from '@material-ui/icons/Message';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+import SettingsIcon from '@material-ui/icons/Settings';
+
 import Notifications from "./Notifications";
 import Messages from "./Messages";
-import Tasks from "./Tasks";
+import Tasks from "./task/Tasks";
 import Calls from "./Calls";
 import Teams from "./Teams";
-import {  } from "module";
+import AccountSettings from './accountSettings/AccountSettings.jsx';
+import {} from "module";
 import "../style/Home.css";
 
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {getUserDetails} from "../actions/getUserDetails";
-import {Button} from "@material-ui/core";
 import {signout} from "../actions/auth";
 
 
 function detectMob() {
-    return ( ( window.innerWidth <= 800 ) && ( window.innerHeight <= 600 ) );
+    return ((window.innerWidth <= 800) && (window.innerHeight <= 600));
 }
 
 const Home = () => {
 
     const auth = useSelector(state => state.auth)
+    const userData = useSelector(state => state.auth.userData)
     const history = useHistory()
     const dispatch = useDispatch();
     if (!auth.login)
@@ -62,18 +61,17 @@ const Home = () => {
     }
 
     useEffect(() => {
-        getUserDetails().then(response=>{
-            // setUserDetails(response.data.userDetails);
-            setUserDetails(response.data);
+        getUserDetails().then(res=>{
+            dispatch({type: 'USERDATA', payload: res.data})
         })
     }, []);
 
     let menu = {};
-    let  menuWidth = 2;
-    let  content = {};
-    let  contentWidth = 10;
-    if (detectMob()){
-        menu ={
+    let menuWidth = 2;
+    let content = {};
+    let contentWidth = 10;
+    if (detectMob()) {
+        menu = {
             display: 'flex',
             flexDirection: 'row',
             padding: 0,
@@ -88,25 +86,20 @@ const Home = () => {
     }
     return (
         <section>
-            <AppBar position="relative">
-                <div class='right-navbar'>
-                    <div className="navList">
-                        <div className="navList2">
-                            <div class='photo1'>
-                                <Avatar alt="User1" src="/broken-image.jpg" />
-                            </div>
-                            <Typography variant="h6" >
-                                {userDetails.username} {userDetails.surname}
-                            </Typography>
-                        </div>
-                    </div>
-                </div>
-            </AppBar>
-            
-            {/*<Grid container style={content}>*/}
+
             <Grid container className={"new-container"}>
                 <Grid item xs={2}>
-                    {/*<Divider orientation='horizontal'></Divider>*/}
+
+                    <div className="navList">
+                        <div className='photo1'>
+                            <Avatar alt={userData ? userData.username : null}
+                                    src={userData ? userData.image : "/broken-image.jpg"}/>
+
+                        </div>
+                        <Typography variant="h6">
+                            {userData ? userData.username : null} {userData ? userData.surname : null}
+                        </Typography>
+                    </div>
 
                     <div class='navbar-left'>
                         <List style={menu}>
@@ -131,18 +124,20 @@ const Home = () => {
                                 <NavLink to='/tasks'>Zadania</NavLink>
                             </ListItem>
 
-                            <ListItem button key="calls">
-                                <ListItemIcon>
-                                    <PhoneSharpIcon/>
-                                </ListItemIcon>
-                                <NavLink to='/calls'>Rozmowy</NavLink>
-                            </ListItem>
+
 
                             <ListItem button key="teams">
                                 <ListItemIcon>
                                     <GroupAddIcon/>
                                 </ListItemIcon>
                                 <NavLink to='/teams'>Zespoły</NavLink>
+                            </ListItem>
+
+                            <ListItem button key="account">
+                                <ListItemIcon>
+                                    <SettingsIcon/>
+                                </ListItemIcon>
+                                <NavLink to='/account'>Ustawienia</NavLink>
                             </ListItem>
 
                             <ListItem button key="log_out" onClick={handleLogout}>
@@ -161,10 +156,12 @@ const Home = () => {
                     <Route path="/tasks" component={Tasks}/>
                     <Route path="/calls" component={Calls}/>
                     <Route path="/teams" component={Teams}/>
+                    <Route path="/account" component={AccountSettings}/>
                 </Grid>
             </Grid>
         </section>
     );
+
 };
 
 export default Home;

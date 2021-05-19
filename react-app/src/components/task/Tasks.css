@@ -2,7 +2,7 @@
     background-color: white;
     padding: 1em;
     color: black;
-    height: 86vh;
+    height: 100%;
     overflow: auto;
 }
 
@@ -26,7 +26,7 @@
     justify-content: space-between;
 }
 
-.task{
+.task1{
     display: flex;
     flex-direction: column;
     border: 1px solid #707070;
@@ -34,6 +34,16 @@
     box-shadow: 4px 4px 19px -3px rgba(0,0,0,0.65);
     background-color: #F8F7F5;
 }
+
+.task2{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #707070;
+    border-left: 3px solid #103B84;
+    box-shadow: 4px 4px 19px -3px rgba(0,0,0,0.65);
+    background-color: #F8F7F5;
+}
+
 
 .col1{
     display: flex;
@@ -56,7 +66,8 @@
     border-bottom: 1px solid #292828;
     padding: 0.5em;
     align-items: center;
-    
+    overflow: auto;
+    height: 5vh;
 }
 
 .task-button-panel>li{
@@ -115,14 +126,12 @@
 .add-task-form{
     display: flex;
     flex-direction: column;
+    align-items: center;
+    padding: 1em;
 }
 
 .aktywny{
     background-color: teal;
-}
-
-.add-task-form{
-    align-items: center;
 }
 
 .add-task-form>input{
@@ -144,13 +153,54 @@
 
 .activebutton{
     background-color: rgb(112,140,167,0.36);
-    border: 1px solid black;
-    padding-bottom: 0;
-    padding-left: 0;
 }
 
 .overlap{
     padding-bottom: 0;
     padding-left: 0;
     margin-right: 10px;
+}
+
+.addTask-label{
+    font-size: 17px;
+    font-weight: 100;
+    letter-spacing: 5px;
+    padding: 0.5em
+}
+
+.addTask-label2{
+    font-size: 20px;
+    font-weight: 100;
+    letter-spacing: 5px;
+    padding: 0.5em;
+    border-bottom: 1px solid rgba(2, 92, 211, 0.815);
+    margin-bottom: 2em;
+    width: 45%;
+    text-align: center;
+}
+
+.input-task{
+    padding: 10px;
+    letter-spacing: 3px;
+    border: 1px solid rgba(18, 74, 128, 0.267);
+}
+
+.task-btn{
+    margin-top: 20px;
+    cursor: pointer;
+    padding: 0.5em;
+
+    border-radius: 8px;
+    letter-spacing: 3px;
+    background-color:rgba(2, 92, 211, 0.815);
+    color: rgb(255, 255, 255);
+}
+
+.loading-task{
+    text-align: center;
+    margin-top: 2em;
+}
+
+.task-button-panel>li:hover{
+    background-color: rgb(112,140,167,0.36);
 }

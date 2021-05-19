@@ -56,7 +56,7 @@ public class LoginController {
                     BCrypt.hashpw(password, salt.get())
             );
 
-            if(loggedUser==null)
+            if(loggedUser == null)
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
             loggedUser.setLogged(true);

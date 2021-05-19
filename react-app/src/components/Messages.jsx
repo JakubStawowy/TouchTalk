@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -10,14 +10,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import SendIcon from '@material-ui/icons/Send';
-import MoodIcon from '@material-ui/icons/Mood';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import TextFieldsIcon from '@material-ui/icons/TextFields';
 import WallpaperIcon from '@material-ui/icons/Wallpaper';
-import SearchIcon from '@material-ui/icons/Search';
 import AppBar from '@material-ui/core/AppBar';
-import EmailIcon from '@material-ui/icons/Email';
-import GifIcon from '@material-ui/icons/Gif';
+
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import IconButton from '@material-ui/core/IconButton';
 import "../style/Messages.css"
 
 
@@ -38,12 +35,10 @@ import {useHistory} from "react-router-dom";
  * @Since 2021-04-30
  * */
 const useStyles = makeStyles({
-    table: {
-        minWidth: 650,
-    },
+
     chatSection: {
         width: '100%',
-        height: '100%'
+        height: '100vh'
     },
     headBG: {
         backgroundColor: '#e0e0e0'
@@ -52,13 +47,18 @@ const useStyles = makeStyles({
         borderRight: '1px solid #e0e0e0'
     },
     messageArea: {
-        height: '76vh',
+        height: '73vh',
         overflowY: 'auto'
     },
 
     listScroll: {
-        // height: '71vh',
         overflow: "auto"
+    },
+
+    picture: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
     }
 });
 
@@ -79,20 +79,28 @@ const Messages = () => {
     const classes = useStyles();
 
     let idActualUser = parseInt(localStorage.getItem("id"));
-    console.log("ID UZYTKOWNIKA "+idActualUser);
     const [conversation, setConversation] = useState({'is': false});
 
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState({
         content: "",
         sender: 0,
-        receiver: 0
+        receiver: 0,
+        imageURL: ""
     })
 
     const [actualMessage, setActualMessage] = useState([]);
 
+    const [image, setImage] = useState("");
+    const [inputHolder] = useState();
+
     useEffect(() => {
-        api.get('/api/users').then(response => response.data)
+        const config = {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        };
+        api.get('/api/users', config).then(response => response.data)
             .then(data => setUsers(data))
 
     }, []);
@@ -100,27 +108,33 @@ const Messages = () => {
     const connect = () => {
         const socket = new SockJS('http://localhost:8080/ws');
         stompClient = Stomp.over(socket);
-        stompClient.connect({}, onConnected, onError);
-
+        stompClient.connect({
+            "Authorization": "Bearer " + localStorage.getItem('token')
+        }, onConnected, onError);
     }
 
     const onConnected = () => {
-
         stompClient.subscribe('/user/' + idActualUser + "/reply", onMessageReceived);
 
     }
     const onMessageReceived = (payload) => {
+
         getMessage(receiverId);
         console.log(actualMessage)
     }
 
+
     const sendMessage = () => {
 
         if (stompClient) {
-            stompClient.send("/app/send", {}, JSON.stringify(message));
+            stompClient.send("/app/send", {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }, JSON.stringify(message));
             // localMessage.push(message);
             // console.log(localMessage)
-            setMessage({...message, content: ""});
+            setMessage({...message, content: "", imageURL: ""});
+            setImage("")
+
 
             setTimeout(() => {
                 getMessage(receiverId);
@@ -144,23 +158,69 @@ const Messages = () => {
     };
 
     const onError = (error) => {
-        console.log("error");
+        console.log(error);
     }
 
     const getMessage = receiverId => {
-        api.get('/messages?sender=' + idActualUser + "&receiver=" + receiverId).then(response => response.data)
-            .then(data => {
-                    setActualMessage(data)
-                }
-            )
 
-        console.log("receiver " + receiverId);
+        const config = {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        };
+
+        api.get('/messages?sender=' + idActualUser + "&receiver=" + receiverId, config)
+            .then(response => {
+                    console.log(response);
+                    Promise.all(response.data.map(mess =>
+                        api.get("/imageMess/" + mess.id, config)
+                            .then(resp => resp.data)
+                            .then(data => {
+
+                                return {mess, data};
+                            })
+                    )).then(res => {
+                        res.map(m => m.mess.imageURL = m.data);
+                        setActualMessage(response.data)
+                })
+            })
     }
+
 
     const [userDetails, setUserDetails] = useState({
         username: "",
         surname: ""
     })
+
+    const [searchText, setSearchText] = useState("");
+
+    function search (users){
+        const userKey =["username"];
+
+        let filtr =users.filter((user) =>
+            userKey.some((key)=> user[key].toString().toLowerCase().indexOf(searchText.toString()) > -1));
+        return filtr;
+    }
+
+    let file ="";
+    const addNewPhoto = async (event) =>{
+
+        file = event.target.files[0];
+
+
+        const resp = (file) =>new Promise((resolve, reject) =>{
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        })
+
+        const dataURL = await resp(file);
+        setImage(dataURL);
+        setMessage({...message, imageURL: dataURL});
+
+
+    }
 
     return (
         <div className={"new-messages"}>
@@ -168,22 +228,27 @@ const Messages = () => {
 
                 <Grid item xs={3} className={classes.borderRight500}>
                     <AppBar position="static">
-                        <div className="navList3">
-                            <div className="navList2">
+                        <div className="navList">
                                 <Typography variant="h6">
                                     Czat
                                 </Typography>
-                            </div>
+                            <input id="search"
+                                   className="searchInput"
+                                   placeholder="Search"
+                                   onChange={(e) => setSearchText(e.target.value)}
+                                   autoComplete="off" />
                         </div>
                     </AppBar>
+
                     <List className={classes.listScroll}>
-                        {users.map(user => (
-                            <ListItem button onClick={() => handleClick(user)} key={user.id}>
-                                <ListItemIcon>
+                        {search(users).map(user => (
+                            <ListItem button onClick={() => handleClick(user)} key={user.id} className="userList">
                                     <Avatar alt={user.username}
-                                            src="https://material-ui.com/static/images/avatar/1.jpg"/>
-                                </ListItemIcon>
-                                <ListItemText primary={`${user.username} ${user.surname}`}/>
+                                            src="/broken-image.jpg"/>
+                                <a   className="UserDescription">
+                                    {user.username + " " +user.surname}
+                                </a>
+
                             </ListItem>
                         ))}
                     </List>
@@ -193,25 +258,44 @@ const Messages = () => {
                 {conversation.is ? (
                     <Grid item xs={9}>
                         <AppBar position="static">
-                            <div className="navList3">
-                                <div className="navList2">
+                            <div className="navList">
                                     <Typography variant="h6">
                                         {userDetails.username + " " + userDetails.surname}
                                     </Typography>
-                                </div>
                             </div>
                         </AppBar>
 
                         <List className={classes.messageArea}>
                             {actualMessage.map((messR) => (
+
                                 (messR.sender !== idActualUser) ? (
                                     <ListItem key={messR.id}>
-                                        <div class="photo">
+
+
+
+                                        <div className="photo">
                                             <Avatar alt="User"
-                                                    src="https://material-ui.com/static/images/avatar/3.jpg"/>
+                                                    src="/broken-image.jpg"/>
                                         </div>
                                         <Grid container>
                                             <Grid item xs={12}>
+
+                                                {(messR.imageURL!=="Empty")?(
+                                                    <ListItem>
+                                                        <Grid container>
+                                                            <Grid item xs={12} className={classes.picture}>
+                                                                <div class="pictureContainer">
+                                                                    <img className="picture" src={messR.imageURL} alt="/broken-image.jpg"/>
+                                                                </div>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </ListItem>
+                                                ):null}
+
+
+
+
+
                                                 <ListItemText align="left" primary={messR.content}/>
                                             </Grid>
                                             <Grid item xs={12}>
@@ -223,6 +307,22 @@ const Messages = () => {
                                     <ListItem key={messR.id}>
                                         <Grid container>
                                             <Grid item xs={12}>
+
+
+                                                {(messR.imageURL!=="Empty")?(
+                                                    <ListItem>
+                                                        <Grid container>
+                                                            <Grid item xs={12} className={classes.picture}>
+                                                                <div class="pictureContainer">
+                                                                    <img className="picture" src={messR.imageURL} alt="/broken-image.jpg"/>
+                                                                </div>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </ListItem>
+                                                ):null}
+
+
+
                                                 <ListItemText align="right" primary={messR.content}/>
                                             </Grid>
                                             <Grid item xs={12}>
@@ -232,12 +332,19 @@ const Messages = () => {
                                     </ListItem>
                                 )
                             ))}
-                        </List>
 
-                        <div class='bottom-bar'>
-                            <Grid container style={{padding: '20px'}}>
+                            
+                        </List>
+                            {image ?
+                            (<div class="pictureContainerMini">
+                                <img class="pictureMini" src={image}/>
+                            </div>) : null}
+
+                        <div className='bottom-bar'>
+                            <Grid container>
+
                                 <Grid item xs={11}>
-                                    <TextField id="outlined-basic-email"
+                                    <TextField id="outlined-basic messageInput"
                                                label="Napisz nową wiadomość..."
                                                onChange={e => setMessage({
                                                    ...message,
@@ -250,13 +357,21 @@ const Messages = () => {
                                                    }
                                                }}
                                                required
+                                               autoComplete="off"
                                                fullWidth/>
-                                    <button><TextFieldsIcon/></button>
-                                    <button><WallpaperIcon/></button>
-                                    <button><MoodIcon/></button>
-                                    <button><GifIcon/></button>
+
+                                        <input accept="image/*"
+                                               id="icon-button-file"
+                                               onChange={(e) => addNewPhoto(e)}
+                                               type="file"
+                                               style={{ display: 'none' }} />
+                                        <label htmlFor="icon-button-file">
+                                                <WallpaperIcon />
+                                        </label>
+
+
                                 </Grid>
-                                <Grid xs={1} align="right">
+                                <Grid xs={1} align="right" className="sendButtonIcon">
                                     <button onClick={sendMessage} ><SendIcon/></button>
                                 </Grid>
                             </Grid>

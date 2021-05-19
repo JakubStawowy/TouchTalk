@@ -42,7 +42,6 @@
     width: 96%;
     margin-left: auto;
     margin-right: auto;
-    height: 2em;
     border: 1px solid #707070;
     border-radius: 5px;
     outline: 0;
@@ -54,7 +53,6 @@
     width: 96%;
     margin-left: auto;
     margin-right: auto;
-    height: 2em;
     border: 1px solid #707070;
     border-radius: 5px;
     outline: 0;
@@ -62,14 +60,12 @@
 }
 
 .register-button-signup{
-    background: rgba( 255, 255, 255, 18%);
+    background: rgba( 255, 255, 255, 0.18);
     color: white;
     border-radius: 10px;
     width: 10vw;
     height: 7vh;
-    margin: 1em;
-    margin-left: auto;
-    margin-right: 0;
+    margin: 1em 0 1em auto;
     font-weight: bold;
     outline: 0;
     border: 1px solid #707070;
@@ -111,7 +107,6 @@
     text-align: center;
     align-items: center;
     margin-top: 50vh;
-    margin-top: 0;
     margin-left: 0;
     border-left: 0;
     padding-left: 0;
@@ -127,7 +122,7 @@
 }
 
 .register-aside>button{
-    background: rgba( 255, 255, 255, 55%);
+    background: rgba( 255, 255, 255, 0.55);
     color: #664F4F;
     border: 1px solid #707070;
     margin-left: auto;
@@ -196,7 +191,7 @@
 
     .logo{
         width: 90vw;
-        height: 35wh;
+        height: 35vh;
     }
 
     #name{

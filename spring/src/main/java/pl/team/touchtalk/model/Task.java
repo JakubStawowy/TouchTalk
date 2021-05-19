@@ -7,8 +7,15 @@ import javax.validation.constraints.NotNull;
 import javax.xml.crypto.Data;
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Set;
-
+/*
+ * User POJO
+ *
+ * @Author Sebastian Pokrywka
+ * @Version 1.0
+ * @Since 2021-04-06
+ * */
 @Entity
 @Table(name = "task")
 public class Task implements Serializable {
@@ -20,11 +27,16 @@ public class Task implements Serializable {
     @NotNull
     private String name;
 
+
+
+    @Column(name = "data_task")
+    private String data_task;
+
     @Column(name = "start")
-    private Date start;
+    private String start;
 
     @Column(name = "finish")
-    private Date finish;
+    private String finish;
 
     @NotNull
     private Boolean done;
@@ -33,12 +45,35 @@ public class Task implements Serializable {
     @Column(name = "created_at")
     private Date createdAt;
 
+    @NotNull
+    @Column(name = "id_user")
+    private Long id_user;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "tasks")
     private Set<Calendar> cal;
 
+
+    public Task(Long id, @NotNull String name, String data_task, String start, String finish, @NotNull Boolean done,Long  id_user) {
+        this.id = id;
+        this.name = name;
+        this.data_task = data_task;
+        this.start = start;
+        this.finish = finish;
+        this.done = done;
+        this.id_user=id_user;
+    }
+
     public Task() {
 
+    }
+
+    public Long getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(Long id_user) {
+        this.id_user = id_user;
     }
 
     @PrePersist
@@ -47,12 +82,13 @@ public class Task implements Serializable {
 
     }
 
-    public Task(@NotEmpty String name, @NotEmpty Data start, @NotEmpty Data finish) {
-        this.name = name;
-        this.start = (Date) start;
-        this.finish = (Date) finish;
-    }
-
+    /* public Task(@NotEmpty String name, @NotEmpty String date_task, @NotEmpty Boolean done, String start, String finish) {
+         this.name = name;
+         this.date_task=date_task;
+         this.done=done;
+         this.start = start;
+         this.finish = finish;
+     }*/
     public Long getId() {
         return id;
     }
@@ -69,21 +105,28 @@ public class Task implements Serializable {
         this.name = name;
     }
 
-    public @NotEmpty Data getStart() {
-        return (Data) start;
+    public @NotEmpty String getStart() {
+        return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(String start) {
         this.start = start;
     }
 
-
-
-    public Date getFinish() {
-        return (Date) finish;
+    public String getData_task() {
+        return data_task;
     }
 
-    public void setFinish(Date finish) {
+    public void setData_task(String data_task) {
+        this.data_task = data_task;
+    }
+
+
+    public String getFinish() {
+        return finish;
+    }
+
+    public void setFinish(String finish) {
         this.finish = finish;
     }
 
@@ -107,9 +150,3 @@ public class Task implements Serializable {
 
 
 }
-
-
-
-
-
-

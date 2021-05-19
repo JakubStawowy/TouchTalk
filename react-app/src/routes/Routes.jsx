@@ -17,6 +17,7 @@ const Routes = () => {
         <Route path="/calls" component={Home}/>
         <Route path="/teams" component={Home}/>
         <Route path='/home' component={Home} />
+        <Route path='/account' component={Home} />
 
     </Switch>
   );

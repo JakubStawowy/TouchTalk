@@ -1,16 +1,6 @@
 package pl.team.touchtalk.controllers;
 
 
-/*
- * @Author Bartosz Szlęzak
- * @Author Grzegorz Szydło
- * @Author Paweł Szydło
- * @Author Łukasz Stolarz
- * @Version 2.0
- * @Since 2021-05-01
- * */
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -28,6 +18,14 @@ import pl.team.touchtalk.dao.GroupMessageRepository;
 
 import java.util.*;
 
+/*
+ * @Author Bartosz Szlęzak
+ * @Author Grzegorz Szydło
+ * @Author Paweł Szydło
+ * @Author Łukasz Stolarz
+ * @Version 2.0
+ * @Since 2021-05-01
+ * */
 @CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/api")
@@ -59,7 +57,7 @@ public class GroupChatController {
                     group.get()
             );
             groupMessageRepository.save(groupMessage);
-            simpMessagingTemplate.convertAndSendToUser(messageTransferObject.getReceiver().toString(), "/reply", messageTransferObject);
+            simpMessagingTemplate.convertAndSend(messageTransferObject.getReceiver().toString(), messageTransferObject);
         }
     }
 
@@ -73,24 +71,15 @@ public class GroupChatController {
         List<MessageTransferObject> messagesResponse = new ArrayList<>();
         for(GroupMessage groupMessage: groupMessageRepository.findAllByGroupId(group)) {
             Set<UserTransferObject> users = new LinkedHashSet<>();
-            groupMessage.getGroup().getUsers().forEach(user->users.add(new UserTransferObject(
-                    user.getId(),
-                    user.getUserDetails().getName(),
-                    user.getUserDetails().getSurname(),
-                    user.getUserDetails().getPhone(),
-                    user.getUserDetails().getImage()
-            )));
+            groupMessage.getGroup().getUsers().forEach(user->users.add(new UserTransferObject(user)));
             messagesResponse.add(new MessageTransferObject(
+                    groupMessage.getId(),
                     groupMessage.getContent(),
                     groupMessage.getSender().getId(),
                     groupMessage.getGroup().getId(),
                     groupMessage.getSentAt(),
-                    new GroupTransferObject(
-                            groupMessage.getId(),
-                            groupMessage.getGroup().getName(),
-                            groupMessage.getGroup().getCode(),
-                            users
-                    )
+                    new GroupTransferObject(groupMessage.getGroup(), users),
+                    null
             ));
         }
         return messagesResponse;
