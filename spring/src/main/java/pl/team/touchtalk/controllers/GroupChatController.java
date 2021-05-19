@@ -1,16 +1,6 @@
 package pl.team.touchtalk.controllers;
 
 
-/*
- * @Author Bartosz Szlęzak
- * @Author Grzegorz Szydło
- * @Author Paweł Szydło
- * @Author Łukasz Stolarz
- * @Version 2.0
- * @Since 2021-05-01
- * */
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -28,6 +18,14 @@ import pl.team.touchtalk.dao.GroupMessageRepository;
 
 import java.util.*;
 
+/*
+ * @Author Bartosz Szlęzak
+ * @Author Grzegorz Szydło
+ * @Author Paweł Szydło
+ * @Author Łukasz Stolarz
+ * @Version 2.0
+ * @Since 2021-05-01
+ * */
 @CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/api")

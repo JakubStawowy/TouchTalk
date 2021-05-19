@@ -18,7 +18,9 @@ import java.util.*;
  * GroupController class
  *
  * @Author Jakub Stawowy
- * @Version 1.0
+ * @Author Bartosz Szlęzak
+ * @Author Lukasz Stolarz
+ * @Version 1.1
  * @Since 2021-05-02
  * */
 @CrossOrigin(origins = "http://localhost:3000")

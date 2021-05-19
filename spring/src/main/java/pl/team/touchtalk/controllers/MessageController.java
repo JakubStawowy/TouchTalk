@@ -55,11 +55,7 @@ public class MessageController {
 			{
 				File file = new File(messagePayload.getImageURL(), message);
 				fileRepository.save(file);
-
-
 			}
-
-
 			simpMessagingTemplate.convertAndSendToUser(messagePayload.getReceiver().toString(), "/reply", messagePayload);
 		}
 	}
@@ -68,8 +64,6 @@ public class MessageController {
 	public Iterable<Message> index(){
 		return messageRepository.findAll();
 	}
-
-
 
 	@GetMapping("/messages")
 	public List<MessageTransferObject> getAllChatMessageBySenderAndReceiver(@RequestParam("sender") Long sender, @RequestParam("receiver") Long receiver){
@@ -91,7 +85,6 @@ public class MessageController {
 		return messagesResponse;
 	}
 
-
 	@GetMapping("/imageMess/{id}")
 	public String show(@PathVariable("id") Long id){
 		File file = fileRepository.findFileUrlByMessageId(id);
@@ -101,6 +94,5 @@ public class MessageController {
 		else {
 			return file.getFileUrl();
 		}
-
 	}
 }

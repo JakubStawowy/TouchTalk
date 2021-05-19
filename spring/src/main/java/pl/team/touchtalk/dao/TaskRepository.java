@@ -19,5 +19,4 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
     @Query(value = "SELECT * FROM task t WHERE t.id in (SELECT ct.id_task FROM calendar_task ct WHERE ct.calendar_id = ?1)", nativeQuery = true)
     List<Task> getTaskByCalendarId(Long id);
 */
-
 }
