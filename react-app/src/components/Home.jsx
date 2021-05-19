@@ -13,11 +13,14 @@ import MessageIcon from '@material-ui/icons/Message';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+import SettingsIcon from '@material-ui/icons/Settings';
+
 import Notifications from "./Notifications";
 import Messages from "./Messages";
 import Tasks from "./task/Tasks";
 import Calls from "./Calls";
 import Teams from "./Teams";
+import AccountSettings from './accountSettings/AccountSettings.jsx';
 import {} from "module";
 import "../style/Home.css";
 
@@ -34,6 +37,7 @@ function detectMob() {
 const Home = () => {
 
     const auth = useSelector(state => state.auth)
+    const userData = useSelector(state => state.auth.userData)
     const history = useHistory()
     const dispatch = useDispatch();
     if (!auth.login)
@@ -57,9 +61,8 @@ const Home = () => {
     }
 
     useEffect(() => {
-        getUserDetails().then(response => {
-            // setUserDetails(response.data.userDetails);
-            setUserDetails(response.data);
+        getUserDetails().then(res=>{
+            dispatch({type: 'USERDATA', payload: res.data})
         })
     }, []);
 
@@ -88,12 +91,14 @@ const Home = () => {
                 <Grid item xs={2}>
 
                     <div className="navList">
-                            <div class='photo1'>
-                                <Avatar alt="User1" src="/broken-image.jpg"/>
-                            </div>
-                            <Typography variant="h6">
-                                {userDetails.username} {userDetails.surname}
-                            </Typography>
+                        <div className='photo1'>
+                            <Avatar alt={userData ? userData.username : null}
+                                    src={userData ? userData.image : "/broken-image.jpg"}/>
+
+                        </div>
+                        <Typography variant="h6">
+                            {userData ? userData.username : null} {userData ? userData.surname : null}
+                        </Typography>
                     </div>
 
                     <div class='navbar-left'>
@@ -119,18 +124,20 @@ const Home = () => {
                                 <NavLink to='/tasks'>Zadania</NavLink>
                             </ListItem>
 
-                            <ListItem button key="calls">
-                                <ListItemIcon>
-                                    <PhoneSharpIcon/>
-                                </ListItemIcon>
-                                <NavLink to='/calls'>Rozmowy</NavLink>
-                            </ListItem>
+
 
                             <ListItem button key="teams">
                                 <ListItemIcon>
                                     <GroupAddIcon/>
                                 </ListItemIcon>
                                 <NavLink to='/teams'>Zespoły</NavLink>
+                            </ListItem>
+
+                            <ListItem button key="account">
+                                <ListItemIcon>
+                                    <SettingsIcon/>
+                                </ListItemIcon>
+                                <NavLink to='/account'>Ustawienia</NavLink>
                             </ListItem>
 
                             <ListItem button key="log_out" onClick={handleLogout}>
@@ -149,6 +156,7 @@ const Home = () => {
                     <Route path="/tasks" component={Tasks}/>
                     <Route path="/calls" component={Calls}/>
                     <Route path="/teams" component={Teams}/>
+                    <Route path="/account" component={AccountSettings}/>
                 </Grid>
             </Grid>
         </section>

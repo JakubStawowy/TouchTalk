@@ -3,6 +3,7 @@ package pl.team.touchtalk.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import pl.team.touchtalk.dto.UserTransferObject;
 import pl.team.touchtalk.model.User;
@@ -61,6 +62,7 @@ public class UserController {
     * @PathVariable id Long
     * @Returns user User
     * */
+
     @GetMapping("/{id}")
     public ResponseEntity<UserTransferObject> getUser(@PathVariable("id") Long id){
         return userRepository.findById(id).map(

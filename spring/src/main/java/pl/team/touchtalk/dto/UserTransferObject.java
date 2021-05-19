@@ -2,6 +2,7 @@ package pl.team.touchtalk.dto;
 
 import pl.team.touchtalk.model.User;
 
+import javax.persistence.Lob;
 import java.io.Serializable;
 
 public class UserTransferObject implements Serializable, Receiver {
@@ -10,6 +11,7 @@ public class UserTransferObject implements Serializable, Receiver {
     private final String username;
     private final String surname;
     private final String phone;
+    @Lob
     private final String image;
 
     public UserTransferObject(User user) {

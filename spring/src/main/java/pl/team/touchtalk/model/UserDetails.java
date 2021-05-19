@@ -27,6 +27,7 @@ public class UserDetails {
 
     private String phone;
 
+
     @Lob
     private String image;
 
