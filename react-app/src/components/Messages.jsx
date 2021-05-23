@@ -222,6 +222,19 @@ const Messages = () => {
 
     }
 
+    const [isPop, setIsPop] = useState(false);
+    const [poped, setPoped] = useState("");
+
+    const pop = (e) => {
+        setIsPop(!isPop);
+        setPoped(e.target.src);
+    }
+
+    const closePop = () => {
+        setIsPop(!isPop);
+        setPoped("");
+    }
+
     return (
         <div className={"new-messages"}>
             <Grid container component={Paper} className={classes.chatSection}>
@@ -254,6 +267,12 @@ const Messages = () => {
                     </List>
                 </Grid>
 
+                {isPop ? 
+                (<dialog className="dialog" style={{ position: "absolute" }} open onClick={closePop}>
+                    <div className="maxPicturecontainer">
+                        <img className="maxPicture" src={poped} onClick={closePop} alt="no image" />
+                    </div>
+                </dialog>) : null}
 
                 {conversation.is ? (
                     <Grid item xs={9}>
@@ -285,7 +304,7 @@ const Messages = () => {
                                                         <Grid container>
                                                             <Grid item xs={12} className={classes.picture}>
                                                                 <div class="pictureContainer">
-                                                                    <img className="picture" src={messR.imageURL} alt="/broken-image.jpg"/>
+                                                                    <img className="picture" src={messR.imageURL} onClick={pop} alt="/broken-image.jpg"/>
                                                                 </div>
                                                             </Grid>
                                                         </Grid>
@@ -314,7 +333,7 @@ const Messages = () => {
                                                         <Grid container>
                                                             <Grid item xs={12} className={classes.picture}>
                                                                 <div class="pictureContainer">
-                                                                    <img className="picture" src={messR.imageURL} alt="/broken-image.jpg"/>
+                                                                    <img className="picture" src={messR.imageURL} onClick={pop} alt="/broken-image.jpg"/>
                                                                 </div>
                                                             </Grid>
                                                         </Grid>
@@ -335,6 +354,7 @@ const Messages = () => {
 
                             
                         </List>
+
                             {image ?
                             (<div class="pictureContainerMini">
                                 <img class="pictureMini" src={image}/>

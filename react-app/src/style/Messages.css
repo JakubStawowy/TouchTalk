@@ -55,3 +55,19 @@
     max-width:100%;
     border-radius: 2px;
 }
+
+.dialog{
+    z-index: 2000;
+    border-radius: 7px;
+    border-color: blue;
+}
+
+.maxPicture{
+    max-width: 90vw;
+    max-height: 90vh;
+}
+
+/*.maxPictureContainer{
+    max-height: 90vh;
+    width: 60vw;
+} */
