@@ -43,12 +43,6 @@ const Home = () => {
     if (!auth.login)
         history.push('/');
 
-    const [userDetails, setUserDetails] = useState(
-        {
-            username: "",
-            surname: ""
-        }
-    );
 
     const handleLogout = () => {
         dispatch(signout()).then(() => {
