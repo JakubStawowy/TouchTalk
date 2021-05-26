@@ -11,7 +11,7 @@ public class UserTransferObject implements Serializable, Receiver {
     private final String username;
     private final String surname;
     private final String phone;
-    @Lob
+
     private final String image;
 
     public UserTransferObject(User user) {

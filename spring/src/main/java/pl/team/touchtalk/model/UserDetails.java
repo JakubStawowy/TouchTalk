@@ -3,6 +3,7 @@ package pl.team.touchtalk.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotEmpty;
 
 /*
@@ -27,7 +28,7 @@ public class UserDetails {
 
     private String phone;
 
-
+    @JsonIgnore
     @Lob
     private String image;
 
