@@ -1,6 +1,7 @@
 package pl.team.touchtalk.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -28,6 +29,7 @@ public class UserDetails {
     private String phone;
 
 
+    @JsonIgnore
     @Lob
     private String image;
 
@@ -43,7 +45,7 @@ public class UserDetails {
     * @Param phone
     * @Param image
     * */
-    public UserDetails(@NotEmpty String username, @NotEmpty String surname, String phone, String image) {
+    public UserDetails(@NotEmpty String username, @NotEmpty String surname, String phone,  String image) {
         this.username = username;
         this.surname = surname;
         this.phone = phone;
@@ -69,11 +71,10 @@ public class UserDetails {
         return id;
     }
 
-    public String getName() {
-        return username;
+    public String getUsername() {        return username;
     }
 
-    public void setName(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -93,11 +94,24 @@ public class UserDetails {
         this.phone = phone;
     }
 
+
     public String getImage() {
         return image;
     }
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDetails{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", surname='" + surname + '\'' +
+                ", phone='" + phone + '\'' +
+                ", image='" + image + '\'' +
+                ", user=" + user +
+                '}';
     }
 }

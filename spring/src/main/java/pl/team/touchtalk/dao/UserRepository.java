@@ -5,10 +5,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import pl.team.touchtalk.model.User;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
+
+    @Transactional
     User getUserByEmailAndPassword(String email, String password);
 
     /*

@@ -100,8 +100,20 @@ const Messages = () => {
                 "Authorization": "Bearer " + localStorage.getItem('token')
             }
         };
-        api.get('/api/users', config).then(response => response.data)
-            .then(data => setUsers(data))
+        api.get('/api/users', config).then(response => {
+
+                Promise.all(response.data.map(user =>
+                    api.get("/api/users/imageUser/" + user.id, config)
+                        .then(resp => resp.data)
+                        .then(data => {
+                            return {user, data};
+                        })
+                )).then(res => {
+                    res.map(u => u.user.imageURL = u.data);
+                    setUsers(response.data)
+                })
+            }
+        )
 
     }, []);
 
@@ -171,17 +183,16 @@ const Messages = () => {
 
         api.get('/messages?sender=' + idActualUser + "&receiver=" + receiverId, config)
             .then(response => {
-                    console.log(response);
-                    Promise.all(response.data.map(mess =>
-                        api.get("/imageMess/" + mess.id, config)
-                            .then(resp => resp.data)
-                            .then(data => {
+                Promise.all(response.data.map(mess =>
+                    api.get("/imageMess/" + mess.id, config)
+                        .then(resp => resp.data)
+                        .then(data => {
 
-                                return {mess, data};
-                            })
-                    )).then(res => {
-                        res.map(m => m.mess.imageURL = m.data);
-                        setActualMessage(response.data)
+                            return {mess, data};
+                        })
+                )).then(res => {
+                    res.map(m => m.mess.imageURL = m.data);
+                    setActualMessage(response.data)
                 })
             })
     }
@@ -194,21 +205,21 @@ const Messages = () => {
 
     const [searchText, setSearchText] = useState("");
 
-    function search (users){
-        const userKey =["username"];
+    function search(users) {
+        const userKey = ["username"];
 
-        let filtr =users.filter((user) =>
-            userKey.some((key)=> user[key].toString().toLowerCase().indexOf(searchText.toString()) > -1));
+        let filtr = users.filter((user) =>
+            userKey.some((key) => user[key].toString().toLowerCase().indexOf(searchText.toString()) > -1));
         return filtr;
     }
 
-    let file ="";
-    const addNewPhoto = async (event) =>{
+    let file = "";
+    const addNewPhoto = async (event) => {
 
         file = event.target.files[0];
 
 
-        const resp = (file) =>new Promise((resolve, reject) =>{
+        const resp = (file) => new Promise((resolve, reject) => {
             let reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = () => resolve(reader.result);
@@ -229,24 +240,24 @@ const Messages = () => {
                 <Grid item xs={3} className={classes.borderRight500}>
                     <AppBar position="static">
                         <div className="navList">
-                                <Typography variant="h6">
-                                    Czat
-                                </Typography>
+                            <Typography variant="h6">
+                                Czat
+                            </Typography>
                             <input id="search"
                                    className="searchInput"
                                    placeholder="Search"
                                    onChange={(e) => setSearchText(e.target.value)}
-                                   autoComplete="off" />
+                                   autoComplete="off"/>
                         </div>
                     </AppBar>
 
                     <List className={classes.listScroll}>
                         {search(users).map(user => (
                             <ListItem button onClick={() => handleClick(user)} key={user.id} className="userList">
-                                    <Avatar alt={user.username}
-                                            src="/broken-image.jpg"/>
-                                <a   className="UserDescription">
-                                    {user.username + " " +user.surname}
+                                <Avatar alt={user.username}
+                                        src= {user.imageURL? user.imageURL :"/broken-image.jpg"}/>
+                                <a className="UserDescription">
+                                    {user.username + " " + user.surname}
                                 </a>
 
                             </ListItem>
@@ -259,9 +270,9 @@ const Messages = () => {
                     <Grid item xs={9}>
                         <AppBar position="static">
                             <div className="navList">
-                                    <Typography variant="h6">
-                                        {userDetails.username + " " + userDetails.surname}
-                                    </Typography>
+                                <Typography variant="h6">
+                                    {userDetails.username + " " + userDetails.surname}
+                                </Typography>
                             </div>
                         </AppBar>
 
@@ -272,7 +283,6 @@ const Messages = () => {
                                     <ListItem key={messR.id}>
 
 
-
                                         <div className="photo">
                                             <Avatar alt="User"
                                                     src="/broken-image.jpg"/>
@@ -280,26 +290,25 @@ const Messages = () => {
                                         <Grid container>
                                             <Grid item xs={12}>
 
-                                                {(messR.imageURL!=="Empty")?(
+                                                {(messR.imageURL !== "Empty") ? (
                                                     <ListItem>
                                                         <Grid container>
                                                             <Grid item xs={12} className={classes.picture}>
                                                                 <div class="pictureContainer">
-                                                                    <img className="picture" src={messR.imageURL} alt="/broken-image.jpg"/>
+                                                                    <img className="picture" src={messR.imageURL}
+                                                                         alt="/broken-image.jpg"/>
                                                                 </div>
                                                             </Grid>
                                                         </Grid>
                                                     </ListItem>
-                                                ):null}
-
-
-
+                                                ) : null}
 
 
                                                 <ListItemText align="left" primary={messR.content}/>
                                             </Grid>
                                             <Grid item xs={12}>
-                                                <ListItemText align="left" secondary={messR.date.split("T")[0] + " " + messR.date.split("T")[1].split(".")[0]}/>
+                                                <ListItemText align="left"
+                                                              secondary={messR.date.split("T")[0] + " " + messR.date.split("T")[1].split(".")[0]}/>
                                             </Grid>
                                         </Grid>
                                     </ListItem>
@@ -309,33 +318,34 @@ const Messages = () => {
                                             <Grid item xs={12}>
 
 
-                                                {(messR.imageURL!=="Empty")?(
+                                                {(messR.imageURL !== "Empty") ? (
                                                     <ListItem>
                                                         <Grid container>
                                                             <Grid item xs={12} className={classes.picture}>
                                                                 <div class="pictureContainer">
-                                                                    <img className="picture" src={messR.imageURL} alt="/broken-image.jpg"/>
+                                                                    <img className="picture" src={messR.imageURL}
+                                                                         alt="/broken-image.jpg"/>
                                                                 </div>
                                                             </Grid>
                                                         </Grid>
                                                     </ListItem>
-                                                ):null}
-
+                                                ) : null}
 
 
                                                 <ListItemText align="right" primary={messR.content}/>
                                             </Grid>
                                             <Grid item xs={12}>
-                                                <ListItemText align="right" secondary={messR.date.split("T")[0] + " " + messR.date.split("T")[1].split(".")[0]}/>
+                                                <ListItemText align="right"
+                                                              secondary={messR.date.split("T")[0] + " " + messR.date.split("T")[1].split(".")[0]}/>
                                             </Grid>
                                         </Grid>
                                     </ListItem>
                                 )
                             ))}
 
-                            
+
                         </List>
-                            {image ?
+                        {image ?
                             (<div class="pictureContainerMini">
                                 <img class="pictureMini" src={image}/>
                             </div>) : null}
@@ -360,19 +370,19 @@ const Messages = () => {
                                                autoComplete="off"
                                                fullWidth/>
 
-                                        <input accept="image/*"
-                                               id="icon-button-file"
-                                               onChange={(e) => addNewPhoto(e)}
-                                               type="file"
-                                               style={{ display: 'none' }} />
-                                        <label htmlFor="icon-button-file">
-                                                <WallpaperIcon />
-                                        </label>
+                                    <input accept="image/*"
+                                           id="icon-button-file"
+                                           onChange={(e) => addNewPhoto(e)}
+                                           type="file"
+                                           style={{display: 'none'}}/>
+                                    <label htmlFor="icon-button-file">
+                                        <WallpaperIcon/>
+                                    </label>
 
 
                                 </Grid>
                                 <Grid xs={1} align="right" className="sendButtonIcon">
-                                    <button onClick={sendMessage} ><SendIcon/></button>
+                                    <button onClick={sendMessage}><SendIcon/></button>
                                 </Grid>
                             </Grid>
                         </div>

@@ -11,15 +11,13 @@ public class UserTransferObject implements Serializable, Receiver {
     private final String username;
     private final String surname;
     private final String phone;
-    @Lob
-    private final String image;
+
 
     public UserTransferObject(User user) {
         this.id = user.getId();
-        this.username = user.getUserDetails().getName();
+        this.username = user.getUserDetails().getUsername();
         this.surname = user.getUserDetails().getSurname();
         this.phone = user.getUserDetails().getPhone();
-        this.image = user.getUserDetails().getImage();
     }
 
     public Long getId() {
@@ -38,7 +36,4 @@ public class UserTransferObject implements Serializable, Receiver {
         return phone;
     }
 
-    public String getImage() {
-        return image;
-    }
 }
