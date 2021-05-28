@@ -70,7 +70,7 @@ let stompClient = null;
 let receiverId = 0;
 
 const Messages = () => {
-
+    const userData = useSelector(state => state.auth.userData)
     const auth = useSelector(state => state.auth)
     const history = useHistory()
     if (!auth.login)
@@ -254,6 +254,7 @@ const Messages = () => {
                     <List className={classes.listScroll}>
                         {search(users).map(user => (
                             <ListItem button onClick={() => handleClick(user)} key={user.id} className="userList">
+
                                 <Avatar alt={user.username}
                                         src= {user.imageURL? user.imageURL :"/broken-image.jpg"}/>
                                 <a className="UserDescription">
@@ -280,17 +281,16 @@ const Messages = () => {
                             {actualMessage.map((messR) => (
 
                                 (messR.sender !== idActualUser) ? (
-                                    <ListItem key={messR.id}>
+                                    <ListItem key={messR.id} xs={12}>
+                                        <Grid className="messageAreaLeft" container xs={12}>
 
-
-                                        <div className="photo">
+                                            <Grid xs={1} className="photo">
                                             <Avatar alt="User"
                                                     src="/broken-image.jpg"/>
-                                        </div>
-                                        <Grid container>
-                                            <Grid item xs={12}>
+                                             </Grid>
+                                            <Grid item className="messageContent">
+                                                {(messR.imageURL!=="Empty")?(
 
-                                                {(messR.imageURL !== "Empty") ? (
                                                     <ListItem>
                                                         <Grid container>
                                                             <Grid item xs={12} className={classes.picture}>
@@ -301,22 +301,19 @@ const Messages = () => {
                                                             </Grid>
                                                         </Grid>
                                                     </ListItem>
-                                                ) : null}
+                                                ):null}
 
 
                                                 <ListItemText align="left" primary={messR.content}/>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <ListItemText align="left"
-                                                              secondary={messR.date.split("T")[0] + " " + messR.date.split("T")[1].split(".")[0]}/>
+                                                <ListItemText className="data-message" align="left" secondary={messR.date.split("T")[0] + " " + messR.date.split("T")[1].split(".")[0]}/>
                                             </Grid>
                                         </Grid>
                                     </ListItem>
                                 ) : (
-                                    <ListItem key={messR.id}>
-                                        <Grid container>
-                                            <Grid item xs={12}>
 
+                                    <ListItem  key={messR.id} xs={12} >
+                                        <Grid className="messageAreaRight" container>
+                                            <Grid item className="messageContent">
 
                                                 {(messR.imageURL !== "Empty") ? (
                                                     <ListItem>
@@ -331,12 +328,9 @@ const Messages = () => {
                                                     </ListItem>
                                                 ) : null}
 
+                                                <ListItemText align="end" primary={messR.content}/>
+                                                <ListItemText className="data-message" align="right" secondary={messR.date.split("T")[0] + " " + messR.date.split("T")[1].split(".")[0]}/>
 
-                                                <ListItemText align="right" primary={messR.content}/>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <ListItemText align="right"
-                                                              secondary={messR.date.split("T")[0] + " " + messR.date.split("T")[1].split(".")[0]}/>
                                             </Grid>
                                         </Grid>
                                     </ListItem>

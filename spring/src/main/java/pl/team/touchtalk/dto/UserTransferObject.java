@@ -13,6 +13,7 @@ public class UserTransferObject implements Serializable, Receiver {
     private final String phone;
 
 
+
     public UserTransferObject(User user) {
         this.id = user.getId();
         this.username = user.getUserDetails().getUsername();

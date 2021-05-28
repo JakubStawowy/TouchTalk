@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotEmpty;
 
 /*
@@ -27,7 +28,6 @@ public class UserDetails {
     private String surname;
 
     private String phone;
-
 
     @JsonIgnore
     @Lob

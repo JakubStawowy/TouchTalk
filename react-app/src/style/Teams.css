@@ -1,7 +1,11 @@
-.messageArea{
-    display: flex;
+.messageAreaLeft{
+    justify-content: flex-start;
 
 }
+.messageAreaRight{
+ justify-content: flex-end;
+}
+
 .data-message{
     display: none;
 }
@@ -11,11 +15,9 @@
     padding: 0.25em 0.75em;
 
 }
-
 .messageContent :hover ~.data-message{
         display: block;
 }
-
 .searchInput{
     border-radius: 3em;
     border:2px solid black;
@@ -39,8 +41,6 @@
     font-family: 'Cormorant', serif;
 }
 
-.messageSpace{
 
 
-}
 

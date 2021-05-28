@@ -246,7 +246,7 @@ const Teams = () => {
 
 
                 {conversation.is ? (
-                    <Grid item xs={9} className="messageSpace">
+                    <Grid item xs={9} >
 
                         <AppBar position="static">
                             <div className="navList">
@@ -262,8 +262,9 @@ const Teams = () => {
                         <List className={classes.messageArea}>
                             {actualMessage.map((groupMess) => (
                                 (groupMess.sender !== idActualUser) ? (
+
                                     <ListItem key={groupMess.id} xs={12}>
-                                        <Grid className="messageArea" container xs={12}>
+                                        <Grid className="messageAreaLeft" container xs={12}>
                                             <Grid xs={1} className="photo">
                                                 <Avatar alt="User"
                                                         src="/broken-image.jpg"/>
@@ -293,8 +294,8 @@ const Teams = () => {
                                     </ListItem>
                                 ) : (
                                     <ListItem key={groupMess.id}>
-                                        <Grid container>
-                                            <Grid item xs={12}>
+                                        <Grid className="messageAreaRight" container>
+                                            <Grid item className="messageContent">
                                                 {/*{(groupMess.imageURL!=="Empty")?(*/}
 
                                                 {/*    <ListItem>*/}
@@ -309,9 +310,8 @@ const Teams = () => {
                                                 {/*):null}*/}
 
                                                 <ListItemText align="right" primary={groupMess.content}/>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <ListItemText align="right"
+
+                                                <ListItemText className="data-message" align="right"
                                                               secondary={groupMess.date.split("T")[0] + " " + groupMess.date.split("T")[1].split(".")[0]}/>
                                             </Grid>
                                         </Grid>
