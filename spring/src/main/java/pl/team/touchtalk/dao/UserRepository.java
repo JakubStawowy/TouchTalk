@@ -10,6 +10,8 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
+
+    @Transactional
     User getUserByEmailAndPassword(String email, String password);
 
     /*

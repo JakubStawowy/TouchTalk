@@ -4,7 +4,13 @@ import { getUserDetails } from "../../actions/getUserDetails.js";
 import axios from "axios";
 import "./accountSettings.css";
 const AccountSettings = () => {
-    const [userInput, setUserInput] = useState("");
+    const [userInput, setUserInput] = useState({
+        username: "",
+        surname: "",
+        phone: "",
+        image: ""
+    });
+
     const [avatar, setAvatar] = useState("");
     const dispatch = useDispatch();
 
@@ -12,38 +18,35 @@ const AccountSettings = () => {
 
     const uploadAvatar = async (e) => {
         const file = e.target.files[0];
-        const base64 = await convertBase64(file);
-        setAvatar(base64);
+        console.log(file);
+        const resp = (file) => new Promise((resolve, reject) => {
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        })
+
+        const dataURL = await resp(file);
+
+
+        setAvatar(dataURL);
         setUserInput({
-            username: `${userInput.username}`,
-            surname: `${userInput.surname}`,
-            phone: `${userInput.phone}`,
-            image: base64
+            ...userInput, image: dataURL
         })
 
     };
-    const convertBase64 = (file) => {
-        return new Promise((resolve, reject) => {
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(file);
 
-            fileReader.onload = () => {
-                resolve(fileReader.result);
-            };
-            fileReader.onerror = (error) => {
-                reject(error);
-            };
-        });
-    };
 
     useEffect(() => {
-        getUserDetails().then((res) =>
-            setUserInput({
-                username: res.data.username,
-                surname: res.data.surname,
-                phone: res.data.phone,
-                image: res.data.image,
-            })
+        getUserDetails().then((res) => {
+                setUserInput({
+                    username: res.username,
+                    surname: res.surname,
+                    phone: res.phone,
+                    image: res.image
+
+                })
+            }
         );
     }, []);
 
@@ -59,19 +62,15 @@ const AccountSettings = () => {
             }
         };
 
-        const userDetails = {
-            name: `${userInput.username}`,
-            surname: `${userInput.surname}`,
-            phone: `${userInput.phone}`,
-            image: avatar,
-        };
         const url = `http://localhost:8080/api/users/${localStorage.getItem(
             "id"
         )}/edit`;
 
-        await axios.put(url, userDetails,config);
+        console.log(userInput);
+
+        await axios.put(url, userInput,config);
         getUserDetails().then((res) =>
-            dispatch({ type: "USERDATA_UPDATE", payload: res.data })
+            dispatch({ type: "USERDATA_UPDATE", payload: res })
         );
     };
 

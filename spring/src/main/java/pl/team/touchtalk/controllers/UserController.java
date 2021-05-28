@@ -1,11 +1,13 @@
 package pl.team.touchtalk.controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import pl.team.touchtalk.dto.UserTransferObject;
+import pl.team.touchtalk.model.File;
 import pl.team.touchtalk.model.User;
 import pl.team.touchtalk.model.UserDetails;
 import pl.team.touchtalk.dao.UserRepository;
@@ -85,15 +87,38 @@ public class UserController {
     *
     * @Returns user?null if no user found
     * */
-    @PutMapping(path = "/{id}/edit", consumes = "application/json")
-    public ResponseEntity<Boolean> editUser(@RequestBody UserDetails details, @PathVariable("id") Long id) {
+    @PutMapping(path = "/{id}/edit")
+    public ResponseEntity<Boolean> editUser(@RequestBody JsonNode details, @PathVariable("id") Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
+
+
+
         if(optionalUser.isPresent()) {
+            UserDetails userDetails = new UserDetails(
+                    details.get("username").asText(),
+                    details.get("surname").asText(),
+                    details.get("phone").asText(),
+                    details.get("image").asText()
+
+            );
+            System.out.println(userDetails);
             User user = optionalUser.get();
-            user.setUserDetails(details);
+            user.setUserDetails(userDetails);
             userRepository.save(user);
             return new ResponseEntity<>(true, HttpStatus.OK);
         }
         return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
     }
+
+    @GetMapping("/imageUser/{id}")
+    public String getImageByUserId(@PathVariable("id") Long id){
+        User user = userRepository.findById(id).orElse(null);
+        if(user == null) {
+            return "Empty";
+        }
+        else {
+            return user.getUserDetails().getImage();
+        }
+    }
+
 }
