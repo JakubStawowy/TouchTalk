@@ -24,6 +24,7 @@ import {useHistory} from "react-router-dom";
 import {Add} from "@material-ui/icons";
 import AddGroup from "./AddGroup";
 import JoinGroup from "./JoinGroup";
+import {handleNetworkError} from "../actions/handleNetworkError";
 
 
 /*
@@ -149,7 +150,9 @@ const Teams = () => {
             .then(data => {
                     setActualMessage(data)
                 }
-            )
+            ).catch((error) => {
+            handleNetworkError(error, () => history.push("/"));
+        });
 
         console.log("receiver " + groupId);
     }
@@ -177,7 +180,9 @@ const Teams = () => {
         };
 
         api.get(`/api/groups?id=${idActualUser}`, config).then(response => response.data)
-            .then(data => setGroups(data))
+            .then(data => setGroups(data)).catch((error) => {
+            handleNetworkError(error, () => history.push("/"));
+        });
     }, []);
 
     const [groups, setGroups] = useState([]);

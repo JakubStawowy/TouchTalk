@@ -1,6 +1,8 @@
 import {Paper, TextField} from "@material-ui/core";
 import React, {useState} from "react";
 import axios from "axios";
+import {handleNetworkError} from "../actions/handleNetworkError";
+import {useHistory} from "react-router";
 
 /*
  * @Functionalities
@@ -17,7 +19,7 @@ const api = axios.create({
 })
 
 const AddGroup = ({status}) => {
-
+    const history = useHistory();
     let idActualUser = parseInt(localStorage.getItem("id"));
     const [group, setGroup] = useState({
         groupName: "",
@@ -47,9 +49,7 @@ const AddGroup = ({status}) => {
         }
         api.post('/add', group, config).then(data => {
             alert("Grupa dodana");
-        }).catch((error) => {
-            alert(error);
-        })
+        }).catch((error) => handleNetworkError(error, () => history.replace("/")));
     }
 
     return(

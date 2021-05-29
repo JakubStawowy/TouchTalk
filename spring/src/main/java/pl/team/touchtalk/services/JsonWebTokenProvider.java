@@ -31,6 +31,7 @@ public class JsonWebTokenProvider  {
                 .claim("name", name)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+360000000))
+//                .setExpiration(new Date(System.currentTimeMillis()+5000))
                 .signWith(SignatureAlgorithm.HS512, signingKey)
                 .compact();
     }

@@ -28,6 +28,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {getUserDetails} from "../actions/getUserDetails";
 import {signout} from "../actions/auth";
+import {handleNetworkError} from "../actions/handleNetworkError";
 
 
 function detectMob() {
@@ -47,7 +48,7 @@ const Home = () => {
     const handleLogout = () => {
         dispatch(signout()).then(() => {
             history.replace("/");
-        });
+        }).catch((error) => handleNetworkError(error, () => history.replace("/")));;
     }
 
     const handleMessage = () => {
@@ -57,7 +58,9 @@ const Home = () => {
     useEffect(() => {
         getUserDetails().then(res=>{
             dispatch({type: 'USERDATA', payload: res})
-        })
+        }).catch((error) => {
+            handleNetworkError(error, () => history.push("/"));
+        });
     }, []);
 
     let menu = {};

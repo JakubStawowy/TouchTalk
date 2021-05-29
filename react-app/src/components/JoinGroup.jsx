@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import {Paper, TextField} from "@material-ui/core";
 import axios from "axios";
+import {handleNetworkError} from "../actions/handleNetworkError";
+import {useHistory} from "react-router";
 
 /*
  * @Functionalities
@@ -17,10 +19,9 @@ const api = axios.create({
 })
 
 const JoinGroup = () => {
-
+    const history = useHistory();
     const [code, setCode] = useState("");
     let idActualUser = parseInt(localStorage.getItem("id"));
-
     const joinGroup = async () => {
 
         const config = {
@@ -29,7 +30,7 @@ const JoinGroup = () => {
             }
         }
 
-        await api.post(`/join?id=${idActualUser}&code=${code}`, null, config);
+        await api.post(`/join?id=${idActualUser}&code=${code}`, null, config).catch((error) => handleNetworkError(error, () => history.replace("/")));
     }
 
     return (

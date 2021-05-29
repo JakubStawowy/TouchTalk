@@ -23,6 +23,7 @@ import SockJS from "sockjs-client"
 import Stomp from "stompjs"
 import {useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
+import {handleNetworkError} from "../actions/handleNetworkError";
 
 
 /*
@@ -77,7 +78,6 @@ const Messages = () => {
         history.push('/');
 
     const classes = useStyles();
-
     let idActualUser = parseInt(localStorage.getItem("id"));
     const [conversation, setConversation] = useState({'is': false});
 
@@ -113,7 +113,9 @@ const Messages = () => {
                     setUsers(response.data)
                 })
             }
-        )
+        ).catch((error) => {
+            handleNetworkError(error, () => history.push("/"));
+        });
 
     }, []);
 
