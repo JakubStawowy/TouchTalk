@@ -32,6 +32,10 @@ public class TaskServices {
         return taskRepository.getTaskByUserId(id);
     };
 
+    public void putDoneById(Long id){
+        taskRepository.putDoneById(id);
+
+    }
     public Task save(Task task) {
         return taskRepository.save(task);
     }

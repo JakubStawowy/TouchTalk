@@ -52,17 +52,29 @@ public class TaskController {
 
 
     @PostMapping
-    public Task addVideo(@RequestBody Task taskServicesS) {
+    public Task addTask(@RequestBody Task taskServicesS) {
         return taskServices.save(taskServicesS);
     }
 
     @PutMapping
-    public Task updateVideo(@RequestBody Task taskServicesS) {
+    public Task updateTask(@RequestBody Task taskServicesS) {
         return taskServices.save(taskServicesS);
     }
 
+    @PutMapping("/task/done/{id_task}")
+    public void updateTaskDone(@PathVariable("id_task") Long id_task){
+         taskServices.putDoneById(id_task);
+    }
+    @PatchMapping
+    public Task UpdateTask(@RequestBody Task taskServicesS) {
+        return taskServices.save(taskServicesS);
+    }
+
+
+
+
     @DeleteMapping
-    public void deleteVideo(@RequestParam Long id) {
+    public void deleteTask(@RequestParam Long id) {
         taskServices.deleteById(id);
     }
     }

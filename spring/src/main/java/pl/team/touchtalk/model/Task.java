@@ -24,7 +24,7 @@ public class Task implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @Column(name = "name")
     private String name;
 
 
@@ -38,23 +38,20 @@ public class Task implements Serializable {
     @Column(name = "finish")
     private String finish;
 
-    @NotNull
+
     private Boolean done;
 
-    @NotNull
+
     @Column(name = "created_at")
     private Date createdAt;
 
-    @NotNull
+
     @Column(name = "id_user")
     private Long id_user;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "tasks")
-    private Set<Calendar> cal;
 
 
-    public Task(Long id, @NotNull String name, String data_task, String start, String finish, @NotNull Boolean done,Long  id_user) {
+    public Task(Long id,  String name, String data_task, String start, String finish,  Boolean done,Long  id_user) {
         this.id = id;
         this.name = name;
         this.data_task = data_task;
@@ -105,7 +102,7 @@ public class Task implements Serializable {
         this.name = name;
     }
 
-    public @NotEmpty String getStart() {
+    public  String getStart() {
         return start;
     }
 
