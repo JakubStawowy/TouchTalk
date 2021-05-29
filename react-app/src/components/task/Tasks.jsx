@@ -13,30 +13,25 @@ const Tasks = () => {
     const [taskActive, setTasksActive] = useState("");
 
     useEffect(() => {
-        fetch("http://localhost:9093/calendar/all") //TODO zmienic na konkretnego usera
-          .then((res) => res.json())
-          .then((data) => setTasks(data))
+        fetch("http://localhost:9093/calendar/all")
+        //fetch(`http://localhost:9093/calendar/user/${localStorage.getItem("id")}`)   
+        .then((res) => res.json())
+        .then((data) => setTasks(data))
       }, []);
-
       
     useEffect(() => {
         fetch("http://localhost:9093/calendar/all")
+        //fetch(`http://localhost:9093/calendar/user/${localStorage.getItem("id")}`)   
           .then((res) => res.json())
           .then((data) => setTasksDone(data.filter(task => task.done === true)))
       }, [])
 
     useEffect(() => {
     fetch("http://localhost:9093/calendar/all")
+    //fetch(`http://localhost:9093/calendar/user/${localStorage.getItem("id")}`)   
         .then((res) => res.json())
         .then((data) => setTasksActive(data.filter(task => task.done === false)))
     }, [])
-
-    console.log(tasks)
-    console.log(taskDone)
-   // let xd = tasks.filter(task => task.done=== 'true')
-     //console.log(xd,'dasdas')
-     // console.log(Array.isArray(tasks))
-    //console.log(tasks);
 
     return (
         <section className='task-section'>
