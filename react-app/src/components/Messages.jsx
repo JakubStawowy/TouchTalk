@@ -48,7 +48,7 @@ const useStyles = makeStyles({
         borderRight: '1px solid #e0e0e0'
     },
     messageArea: {
-        height: '73vh',
+        height: '81.5vh',
         overflowY: 'auto'
     },
 
