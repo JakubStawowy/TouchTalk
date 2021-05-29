@@ -50,5 +50,5 @@ public class TaskServices {
     public void deleteById(Long id) {
         taskRepository.deleteById(id);
     }
-   
+
 }
