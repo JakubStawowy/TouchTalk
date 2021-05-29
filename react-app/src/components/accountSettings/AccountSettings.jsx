@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "../../actions/getUserDetails.js";
 import axios from "axios";
 import "./accountSettings.css";
+import {handleNetworkError} from "../../actions/handleNetworkError";
+import {useHistory} from "react-router";
 const AccountSettings = () => {
     const [userInput, setUserInput] = useState({
         username: "",
@@ -13,7 +15,7 @@ const AccountSettings = () => {
 
     const [avatar, setAvatar] = useState("");
     const dispatch = useDispatch();
-
+    const history = useHistory();
     const auth = useSelector((state) => state.auth);
 
     const uploadAvatar = async (e) => {
@@ -68,10 +70,10 @@ const AccountSettings = () => {
 
         console.log(userInput);
 
-        await axios.put(url, userInput,config);
+        await axios.put(url, userInput,config).catch((error) => handleNetworkError(error, () => history.replace("/")));
         getUserDetails().then((res) =>
-            dispatch({ type: "USERDATA_UPDATE", payload: res })
-        );
+            dispatch({ type: "USERDATA_UPDATE", payload: res }).catch((error) => handleNetworkError(error, () => history.replace("/")))
+        ).catch((error) => handleNetworkError(error, () => history.replace("/")));
     };
 
     const defaultAvatar = avatar ? avatar : "https://www.irishrsa.ie/wp-content/uploads/2017/03/default-avatar.png";
