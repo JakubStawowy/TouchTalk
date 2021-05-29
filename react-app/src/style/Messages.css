@@ -1,14 +1,10 @@
-
 .size{
     display: flex;
 }
 
 .bottom-bar{
-    margin: 1em;
     border: 1px solid grey;
-
 }
-
 
 .navList1{
     display: flex;
@@ -22,6 +18,7 @@
     align-items: center;
     /*padding-right: 1em;*/
 }
+
 .sendButtonIcon{
     display: flex;
     align-content: center;
@@ -35,9 +32,9 @@
 
 .picture{
     width:100%;
-
     border-radius: 7px;
 }
+
 .picture:hover{
     transform: scale(2.2);
 }
