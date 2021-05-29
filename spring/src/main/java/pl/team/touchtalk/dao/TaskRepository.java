@@ -10,6 +10,13 @@ import pl.team.touchtalk.model.Task;
 
 import javax.transaction.Transactional;
 import java.util.List;
+/*
+ * Task Repo
+ *
+ * @Author Sebastian Pokrywka
+ * @Version 1.0
+ * @Since 2021-05-28
+ * */
 
 @Repository
 public interface TaskRepository extends CrudRepository<Task, Long> {

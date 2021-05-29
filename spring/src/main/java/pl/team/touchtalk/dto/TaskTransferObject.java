@@ -1,9 +1,9 @@
 package pl.team.touchtalk.dto;
 
 /*
- * Message
+ * Task Transfer Object
  *
- * @Author Sebastian Pokrywka,
+ * @Author Sebastian Pokrywka
 
  * @Version 1.0
  * @Since 2021-05-08

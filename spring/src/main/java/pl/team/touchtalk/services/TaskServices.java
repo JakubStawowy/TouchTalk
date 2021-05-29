@@ -9,6 +9,13 @@ import pl.team.touchtalk.model.Task;
 
 import java.util.List;
 import java.util.Optional;
+/*
+ * Task Services
+ *
+ * @Author Sebastian Pokrywka
+ * @Version 1.0
+ * @Since 2021-05-28
+ * */
 
 @Service
 public class TaskServices {
@@ -43,12 +50,5 @@ public class TaskServices {
     public void deleteById(Long id) {
         taskRepository.deleteById(id);
     }
-    /*
-    @EventListener(ApplicationReadyEvent.class)
-    public void fillDB() {
-        Task zad1= save(new Task(10L,"Umów sie do lekarza","Zadzwon 99999","2021-02-02","2021-02-05",true,1L));
-
-    }
-
-     */
+   
 }
