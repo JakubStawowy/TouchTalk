@@ -179,11 +179,11 @@ const Teams = () => {
                 "Authorization": "Bearer " + localStorage.getItem('token')
             }
         };
-
+        console.log(idActualUser);
         api.get(`/api/groups?id=${idActualUser}`, config).then(response => response.data)
-            .then(data => setGroups(data)).catch((error) => {
-            handleNetworkError(error, () => history.push("/"));
-        });
+            .then(data => setGroups(data))
+            .catch((error) => {
+            handleNetworkError(error, () => history.push("/"));  });
     }, []);
 
     const [groups, setGroups] = useState([]);
@@ -193,11 +193,7 @@ const Teams = () => {
         code: ""
     })
 
-    const [addGroupStatus, setAddGroupStatus] = useState("false");
 
-    const addGroup = () => {
-        setAddGroupStatus("true");
-    }
     const getUserDetails = group => {
         let userDetails = {
             username: "",
@@ -292,10 +288,6 @@ const Teams = () => {
 
                                     <ListItem key={groupMess.id} xs={12}>
                                         <Grid className="messageAreaLeft" container xs={12}>
-                                            <Grid xs={1} className="photo">
-                                                <Avatar alt="User"
-                                                        src="/broken-image.jpg"/>
-                                            </Grid>
                                             <Grid item className="messageContent">
                                                 {/*{(groupMess.imageURL!=="Empty")?(*/}
                                                 {/*    <ListItem>*/}

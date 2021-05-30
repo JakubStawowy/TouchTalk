@@ -208,12 +208,32 @@ const Messages = () => {
     const [searchText, setSearchText] = useState("");
 
     function search(users) {
-        const userKey = ["username"];
 
-        let filtr = users.filter((user) =>
-            userKey.some((key) => user[key].toString().toLowerCase().indexOf(searchText.toString()) > -1));
-        return filtr;
+        const userKey = ["username", "surname"];
+
+        if(searchText.length === 0)
+            return users;
+        else{
+            let filtr;
+            let filtr2;
+            let result = searchText.split(" ");
+            if(result.length === 1){
+                filtr = users.filter((user) =>
+                    userKey.some((key) => user[key].toString().toLowerCase().indexOf(result[0].toString().toLowerCase()) > -1));
+                return filtr
+            }
+            else if(result.length === 2 && result[2] !== ""){
+                filtr = users.filter((user) =>
+                    userKey.some((key) => user[key].toString().toLowerCase().indexOf(result[0].toString().toLowerCase()) > -1));
+                filtr2 = filtr.filter((user) =>
+                    userKey.some((key) => user[key].toString().toLowerCase().indexOf(result[1].toString().toLowerCase()) > -1));
+                return filtr2;
+            }
+
+        }
+
     }
+
 
     let file = "";
     const addNewPhoto = async (event) => {

@@ -3,6 +3,8 @@ import React, {useState} from "react";
 import axios from "axios";
 import Modal from '@material-ui/core/Modal';
 import SaveIcon from '@material-ui/icons/Save';
+import {handleNetworkError} from "../actions/handleNetworkError";
+import {useHistory} from "react-router";
 
 /*
  * @Functionalities
@@ -19,7 +21,7 @@ const api = axios.create({
 })
 
 const AddGroup = ({open, handleClose}) => {
-
+    const history = useHistory();
     let idActualUser = parseInt(localStorage.getItem("id"));
     const [group, setGroup] = useState({
         groupName: "",
@@ -47,12 +49,14 @@ const AddGroup = ({open, handleClose}) => {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         }
-        api.post('/add', group, config)
-        setGroup({
-            groupName: "",
-            password: "",
-            creatorId: 0
-        });
+        api.post('/add', group, config).then(data => {
+            setGroup({
+                groupName: "",
+                password: "",
+                creatorId: 0
+            }
+        )}).catch((error) => handleNetworkError(error, () => history.replace("/")));
+
 
     }
 

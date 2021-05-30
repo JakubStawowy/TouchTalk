@@ -22,9 +22,8 @@ public interface GroupRepository extends CrudRepository<Group, Long> {
     Group getById(Long id);
 
     @Transactional
-
     @Query(value = "SELECT * FROM groups gr WHERE gr.id in (SELECT gru.group_id FROM user_in_groups gru WHERE gru.user_id = ?1)", nativeQuery = true)
     List<Group> getGroupsByUserId(Long id);
-
+    @Transactional
     Group findByCode(String code);
 }

@@ -2,7 +2,8 @@ import React, {useState} from "react";
 import {Button, Paper, TextField} from "@material-ui/core";
 import axios from "axios";
 import Modal from "@material-ui/core/Modal";
-
+import {useHistory} from "react-router-dom";
+import {handleNetworkError} from "../actions/handleNetworkError";
 /*
  * @Functionalities
  * @Author Bartosz Szlęzak
@@ -18,7 +19,7 @@ const api = axios.create({
 })
 
 const JoinGroup = ({open, handleClose}) => {
-
+    const history = useHistory();
     const [code, setCode] = useState("");
     let idActualUser = parseInt(localStorage.getItem("id"));
 
@@ -30,7 +31,8 @@ const JoinGroup = ({open, handleClose}) => {
             }
         }
 
-        await api.post(`/join?id=${idActualUser}&code=${code}`, null, config);
+        await api.post(`/join?id=${idActualUser}&code=${code}`, null, config)
+            .catch((error) => handleNetworkError(error, () => history.replace("/")));
 
         setCode("");
     }
