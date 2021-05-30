@@ -26,7 +26,7 @@ const ListOfTask = (data) => {
 
     const isNotDone = (id) => {
         console.log(id,"to usun")
-        //axios.delete(`http://localhost:8080/calendar/task/delete/${id}` ,config);
+        axios.delete(`http://localhost:8080/calendar/task/delete/${id}` ,config);
     }
 
     function search(tasks) {
