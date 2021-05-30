@@ -24,6 +24,7 @@ import {useHistory} from "react-router-dom";
 import {Add} from "@material-ui/icons";
 import AddGroup from "./AddGroup";
 import JoinGroup from "./JoinGroup";
+import {Button} from "@material-ui/core";
 import {handleNetworkError} from "../actions/handleNetworkError";
 
 
@@ -212,6 +213,21 @@ const Teams = () => {
 
     }
 
+    const [openAdd, setOpenAdd] = React.useState(false);
+    const [openJoin, setOpenJoin] = React.useState(false);
+    const handleOpenAdd = () => {
+        setOpenAdd(true);
+    };
+    const handleOpenJoin = () => {
+        setOpenJoin(true);
+    };
+    const handleCloseAdd = () => {
+        setOpenAdd(false);
+    };
+    const handleCloseJoin = () => {
+        setOpenJoin(false);
+    };
+
     return (
         <div className={"new-messages"}>
             <Grid container component={Paper} className={classes.chatSection}>
@@ -229,12 +245,18 @@ const Teams = () => {
                                    onChange={(e) => setSearchText(e.target.value)}
                                    autoComplete="off" />
 
-                                <button onClick={addGroup}><Add/></button>
                         </div>
 
                     </AppBar>
-                    <JoinGroup/>
-                    {addGroupStatus === "true" ? <AddGroup status={setAddGroupStatus}/> : null}
+
+
+                    <div className="group_options">
+                        <Button variant="contained" color="primary" onClick={handleOpenJoin}>Dołącz do grupy</Button>
+                        <JoinGroup open={openJoin} handleClose={handleCloseJoin}/>
+                        <Button variant="contained" color="primary" onClick={handleOpenAdd}>Stwórz grupę</Button>
+                        <AddGroup open={openAdd} handleClose={handleCloseAdd}/>
+                    </div>
+
 
                     <List className={classes.listScroll}>
                         {search(groups).map(group => (
