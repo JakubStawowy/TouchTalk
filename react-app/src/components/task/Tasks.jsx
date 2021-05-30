@@ -12,25 +12,27 @@ const Tasks = () => {
     const [taskDone, setTasksDone] = useState("");
     const [taskActive, setTasksActive] = useState("");
 
+    const config = {
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem('token')
+        }
+    };
     useEffect(() => {
-        fetch("http://localhost:9093/calendar/all")
-        //fetch(`http://localhost:9093/calendar/user/${localStorage.getItem("id")}`)   
-        .then((res) => res.json())
-        .then((data) => setTasks(data))
-      }, []);
-      
-    useEffect(() => {
-        fetch("http://localhost:9093/calendar/all")
-        //fetch(`http://localhost:9093/calendar/user/${localStorage.getItem("id")}`)   
-          .then((res) => res.json())
-          .then((data) => setTasksDone(data.filter(task => task.done === true)))
-      }, [])
+            fetch(`http://localhost:8080/calendar/user/${localStorage.getItem("id")}`, config)
+            .then((res) => res.json())
+            .then((data) => setTasks(data))
+    }, []);
 
     useEffect(() => {
-    fetch("http://localhost:9093/calendar/all")
-    //fetch(`http://localhost:9093/calendar/user/${localStorage.getItem("id")}`)   
-        .then((res) => res.json())
-        .then((data) => setTasksActive(data.filter(task => task.done === false)))
+            fetch(`http://localhost:8080/calendar/user/${localStorage.getItem("id")}`, config)
+            .then((res) => res.json())
+            .then((data) => setTasksDone(data.filter(task => task.done === true)))
+    }, [])
+
+    useEffect(() => {
+            fetch(`http://localhost:8080/calendar/user/${localStorage.getItem("id")}`, config)
+            .then((res) => res.json())
+            .then((data) => setTasksActive(data.filter(task => task.done === false)))
     }, [])
 
     return (
@@ -40,9 +42,9 @@ const Tasks = () => {
                     <div >
                         Lista zadań
                     </div>
-                    <div className='actual-date'>
+                    {/* <div className='actual-date'>
                         {now.getDate()}.{now.getMonth()+1}.{now.getFullYear()}
-                    </div>
+                    </div> */}
                 </div>
                 <div className='button-input'>
                     <ul className= 'task-button-panel'>
@@ -52,7 +54,10 @@ const Tasks = () => {
                         <li ><NavLink activeClassName="activebutton" className='overlap' to='/tasks/add'>Dodaj zadanie</NavLink></li>
                     </ul>
                     <div>
-                        <input className='find-task' placeholder='Wyszukaj...'></input>
+                        {/* <input className='find-task' placeholder='Wyszukaj...'></input> */}
+                        <div className='actual-date'>
+                        {now.getDate()}.{now.getMonth()+1}.{now.getFullYear()}
+                    </div>
                     </div>
                 </div>
             </div>

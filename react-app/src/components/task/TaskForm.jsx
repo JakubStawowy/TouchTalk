@@ -25,25 +25,22 @@ const TaskForm = () => {
         id_user: "", 
       },
       onSubmit: (values, {resetForm}) =>  {
+            const form = {
+                name: values.name,
+                data_task: values.data_task,
+                start: values.start,
+                finish: values.finish,
+                done: false,
+                createdAt: createdAt,
+                id_user: localStorage.getItem("id"),
+            };
 
-        const form = {
-              name: values.name,
-              data_task: values.data_task,
-              start: values.start,
-              finish: values.finish,
-              done: false,
-              createdAt: createdAt,
-              // id_user: ${localStorage.getItem("id")},
-              id_user: 1, 
-        };
-        const xd = JSON.stringify(form)
-        console.log(xd)
-        const res = axios.post(`http://localhost:9093/calendar`, xd, {headers: {'Content-Type': 'application/json', 'Host' : 'http://localhost:3000'  
-          , 'Content-Length' : '1000' }})
-        console.log(res);
-        resetForm();
-        history.push('/tasks/active')
-      },
+            const res = axios.post(`http://localhost:8080/calendar`, JSON.stringify(form), {headers: {'Content-Type': 'application/json', "Authorization": "Bearer " + localStorage.getItem('token') }})
+            console.log(res);
+            resetForm();
+            history.push('/')
+            //window.location.reload();
+        },
     });
 
     return (

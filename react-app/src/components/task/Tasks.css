@@ -1,3 +1,7 @@
+.add-task-form{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .task-section{
     background-color: white;
     padding: 1em;
@@ -13,11 +17,8 @@
 }
 
 .tasks-list{
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    grid-gap: 1em;
-    padding: 1em;
-    overflow: auto;
+    display: flex;
+flex-direction: column;
 }
 
 .task-info{
@@ -79,6 +80,7 @@
     float: right;
     height: 4vh;
     width: 20vw;
+    margin: 5px;
 }
 
 .accept{
@@ -203,4 +205,12 @@
 
 .task-button-panel>li:hover{
     background-color: rgb(112,140,167,0.36);
+}
+ 
+.taski{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-gap: 1em;
+    padding: 1em;
+    overflow: auto;
 }

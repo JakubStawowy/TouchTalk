@@ -70,9 +70,6 @@ public class TaskController {
         return taskServices.save(taskServicesS);
     }
 
-
-
-
     @DeleteMapping
     public void deleteTask(@RequestParam Long id) {
         taskServices.deleteById(id);
