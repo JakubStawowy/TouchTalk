@@ -69,9 +69,9 @@ public class TaskController {
     public Task UpdateTask(@RequestBody Task taskServicesS) {
         return taskServices.save(taskServicesS);
     }
-
-    @DeleteMapping
-    public void deleteTask(@RequestParam Long id) {
+    
+    @DeleteMapping("/task/delete/{id_task}")
+    public void deleteTask(@PathVariable("id_task")  Long id) {
         taskServices.deleteById(id);
     }
     }
