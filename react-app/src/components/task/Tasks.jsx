@@ -3,37 +3,12 @@ import "./Tasks.css"
 import { Route, Switch, NavLink} from "react-router-dom";
 import TaskForm from "./TaskForm";
 import ListOfTask from "./ListOfTask";
-
+import ListOfTaskActive from "./ListOfTaskActive";
+import ListOfTaskDone from "./ListOfTaskDone";
 
 const Tasks = () => {
 
     const now = new Date();
-    const [tasks, setTasks] = useState("");
-    const [taskDone, setTasksDone] = useState("");
-    const [taskActive, setTasksActive] = useState("");
-
-    const config = {
-        headers: {
-            "Authorization": "Bearer " + localStorage.getItem('token')
-        }
-    };
-    useEffect(() => {
-            fetch(`http://localhost:8080/calendar/user/${localStorage.getItem("id")}`, config)
-            .then((res) => res.json())
-            .then((data) => setTasks(data))
-    }, []);
-
-    useEffect(() => {
-            fetch(`http://localhost:8080/calendar/user/${localStorage.getItem("id")}`, config)
-            .then((res) => res.json())
-            .then((data) => setTasksDone(data.filter(task => task.done === true)))
-    }, [])
-
-    useEffect(() => {
-            fetch(`http://localhost:8080/calendar/user/${localStorage.getItem("id")}`, config)
-            .then((res) => res.json())
-            .then((data) => setTasksActive(data.filter(task => task.done === false)))
-    }, [])
 
     return (
         <section className='task-section'>
@@ -42,9 +17,7 @@ const Tasks = () => {
                     <div >
                         Lista zadań
                     </div>
-                    {/* <div className='actual-date'>
-                        {now.getDate()}.{now.getMonth()+1}.{now.getFullYear()}
-                    </div> */}
+
                 </div>
                 <div className='button-input'>
                     <ul className= 'task-button-panel'>
@@ -54,7 +27,6 @@ const Tasks = () => {
                         <li ><NavLink activeClassName="activebutton" className='overlap' to='/tasks/add'>Dodaj zadanie</NavLink></li>
                     </ul>
                     <div>
-                        {/* <input className='find-task' placeholder='Wyszukaj...'></input> */}
                         <div className='actual-date'>
                         {now.getDate()}.{now.getMonth()+1}.{now.getFullYear()}
                     </div>
@@ -64,13 +36,13 @@ const Tasks = () => {
 
             <Switch>
                 <Route exec path='/tasks/all'>
-                    {tasks ? <ListOfTask data={tasks}/> : <p className='loading-task'>Ładowanie...</p>}
+                    <ListOfTask /> 
                 </Route>
                 <Route exec path='/tasks/active'>
-                    {tasks ? <ListOfTask data={taskActive}/> : <p className='loading-task'>Ładowanie...</p>}
+                    <ListOfTaskActive/>
                 </Route>
                 <Route exec path='/tasks/closed'>
-                    {tasks ? <ListOfTask data={taskDone}/> : <p className='loading-task'>Ładowanie...</p>}
+                    <ListOfTaskDone/>
                 </Route>
                 <Route path='/tasks/add' component={ TaskForm }/>
             </Switch>

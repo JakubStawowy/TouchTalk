@@ -1,4 +1,4 @@
-import React , {useState, useEffect} from "react";
+import React , {useState, useEffect, useHistory} from "react";
 import "./Tasks.css"
 import { FiClock } from "react-icons/fi";
 import { FaCheck } from "react-icons/fa";
@@ -6,9 +6,9 @@ import { GoX } from "react-icons/go";
 import axios from 'axios';
 
 
-const ListOfTask = () => {
+const ListOfTaskActive = () => {
 
-    const [tasks, setTasks] = useState(""); 
+    const [tasks, setTasks] = useState("");
     const [searchText, setSearchText] = useState("");
 
     const config = {
@@ -20,7 +20,7 @@ const ListOfTask = () => {
     useEffect(() => {
             fetch(`http://localhost:8080/calendar/user/${localStorage.getItem("id")}`, config)
             .then((res) => res.json())
-            .then((data) => setTasks(data))
+            .then((data) => setTasks(data.filter(task => (task.done === false))))
                 
     }, [])
 
@@ -79,4 +79,4 @@ const ListOfTask = () => {
     );
 };
 
-export default ListOfTask;
+export default ListOfTaskActive;

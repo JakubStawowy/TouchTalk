@@ -6,9 +6,9 @@ import { GoX } from "react-icons/go";
 import axios from 'axios';
 
 
-const ListOfTask = () => {
+const ListOfTaskDone = () => {
 
-    const [tasks, setTasks] = useState(""); 
+    const [tasks, setTasks] = useState("");
     const [searchText, setSearchText] = useState("");
 
     const config = {
@@ -20,7 +20,7 @@ const ListOfTask = () => {
     useEffect(() => {
             fetch(`http://localhost:8080/calendar/user/${localStorage.getItem("id")}`, config)
             .then((res) => res.json())
-            .then((data) => setTasks(data))
+            .then((data) => setTasks(data.filter(task => (task.done === true))))
                 
     }, [])
 
@@ -62,7 +62,6 @@ const ListOfTask = () => {
                         <div className='col2'>
                             {task.data_task}
                         </div>
-
                         <div className='col3'>
                             <div className='time-to-left'>
                                 <FiClock />{task.finish}
@@ -79,4 +78,4 @@ const ListOfTask = () => {
     );
 };
 
-export default ListOfTask;
+export default ListOfTaskDone;
