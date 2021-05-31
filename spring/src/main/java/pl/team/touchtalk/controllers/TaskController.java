@@ -22,6 +22,7 @@ import java.util.Optional;
 public class TaskController {
 
 
+
     private TaskServices taskServices;
     private UserRepository userRepository;
 
@@ -41,6 +42,7 @@ public class TaskController {
         return taskServices.findAll();
 
     }
+
     @GetMapping
     public Optional<Task> getById(@RequestParam Long id) {
         return taskServices.findById(id);
@@ -49,7 +51,6 @@ public class TaskController {
     public List<Task> getTaskUser(@PathVariable("id_user") Long id_user) {
         return taskServices.getTaskByUserId(id_user);
     }
-
 
     @PostMapping
     public Task addTask(@RequestBody Task taskServicesS) {
@@ -75,4 +76,3 @@ public class TaskController {
         taskServices.deleteById(id);
     }
     }
-

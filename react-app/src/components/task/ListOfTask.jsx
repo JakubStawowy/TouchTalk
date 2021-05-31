@@ -1,10 +1,11 @@
+
 import React , {useState, useEffect} from "react";
+
 import "./Tasks.css"
 import { FiClock } from "react-icons/fi";
 import { FaCheck } from "react-icons/fa";
 import { GoX } from "react-icons/go";
 import axios from 'axios';
-
 
 const ListOfTask = () => {
 
@@ -42,6 +43,7 @@ const ListOfTask = () => {
 
     return (
         <div className='tasks-list'>
+
             <div >
                 <input className='find-task' id="search"
                             placeholder="Szukaj..."

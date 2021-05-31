@@ -205,6 +205,7 @@ flex-direction: column;
 
 .task-button-panel>li:hover{
     background-color: rgb(112,140,167,0.36);
+
 }
  
 .taski{
@@ -213,4 +214,5 @@ flex-direction: column;
     grid-gap: 1em;
     padding: 1em;
     overflow: auto;
+
 }

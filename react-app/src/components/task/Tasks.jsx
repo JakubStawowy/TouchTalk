@@ -6,6 +6,8 @@ import ListOfTask from "./ListOfTask";
 import ListOfTaskActive from "./ListOfTaskActive";
 import ListOfTaskDone from "./ListOfTaskDone";
 
+
+
 const Tasks = () => {
 
     const now = new Date();
@@ -17,7 +19,7 @@ const Tasks = () => {
                     <div >
                         Lista zadań
                     </div>
-
+      
                 </div>
                 <div className='button-input'>
                     <ul className= 'task-button-panel'>
@@ -46,7 +48,7 @@ const Tasks = () => {
                 </Route>
                 <Route path='/tasks/add' component={ TaskForm }/>
             </Switch>
-            
+           
         </section>
     );
 };

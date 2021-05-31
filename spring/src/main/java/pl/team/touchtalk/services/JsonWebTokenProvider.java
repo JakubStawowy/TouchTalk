@@ -23,14 +23,15 @@ public class JsonWebTokenProvider  {
     public String generateToken(User user) {
 
         Key signingKey = new SecretKeySpec(SigningKeyRepository.getSigningKey().getBytes(StandardCharsets.UTF_8), SignatureAlgorithm.HS512.getJcaName());
-        String name = user.getUserDetails().getName()+" "+user.getUserDetails().getSurname();
+        String name = user.getUserDetails().getUsername()+" "+user.getUserDetails().getSurname();
 
         return Jwts.builder()
                 .setSubject(user.getEmail())
                 .claim("role", "ROLE_ADMIN")
                 .claim("name", name)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+60000))
+                .setExpiration(new Date(System.currentTimeMillis()+360000000))
+//                .setExpiration(new Date(System.currentTimeMillis()+5000))
                 .signWith(SignatureAlgorithm.HS512, signingKey)
                 .compact();
     }

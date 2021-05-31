@@ -1,24 +1,19 @@
 package pl.team.touchtalk.filters;
 
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import pl.team.touchtalk.repo.JsonWebTokenPrefixesRepository;
-import pl.team.touchtalk.repo.SigningKeyRepository;
+import pl.team.touchtalk.services.AuthenticationTokenProvider;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Collections;
 
 
 /*
@@ -44,27 +39,13 @@ public class JsonWebTokenFilter extends BasicAuthenticationFilter {
         }
 
         try {
-            UsernamePasswordAuthenticationToken result = getAuthenticationByToken(header);
+            UsernamePasswordAuthenticationToken result = AuthenticationTokenProvider.getAuthenticationToken(header);
             SecurityContextHolder.getContext().setAuthentication(result);
-        } catch (ExpiredJwtException e) {
+        } catch (ExpiredJwtException | MalformedJwtException e) {
             SecurityContextHolder.clearContext();
         } finally {
             chain.doFilter(request, response);
         }
     }
 
-    private UsernamePasswordAuthenticationToken getAuthenticationByToken(String header) throws ExpiredJwtException {
-        Jws<Claims> claimsJws = Jwts.parser().setSigningKey(SigningKeyRepository.getSigningKey().getBytes(StandardCharsets.UTF_8))
-                .parseClaimsJws(header.replace(JsonWebTokenPrefixesRepository.getHeaderPrefix(), ""));
-
-        String username = claimsJws.getBody().get("name").toString();
-        String role = claimsJws.getBody().get("role").toString();
-
-        return new UsernamePasswordAuthenticationToken(
-                username,
-                null,
-                Collections.singletonList(new SimpleGrantedAuthority(role))
-        );
-
-    }
 }

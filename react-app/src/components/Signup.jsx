@@ -19,7 +19,7 @@ const Signup = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: "",
+      username: "",
       surname: "",
       email: "",
       password: "",
@@ -30,11 +30,11 @@ const Signup = () => {
         email: values.email,
         password: values.password,
         userDetails:{
-          name: values.name,
+          username: values.username,
           surname: values.surname
         }
       };
-      console.log(form)
+      console.log(form);
       dispatch(signup(form));
       resetForm();
     },
@@ -58,13 +58,13 @@ const Signup = () => {
                 <label className='login-label' htmlFor='firstname'>Imię</label>
                 <input
                     id='name'
-                    name='name'
+                    name='username'
                     type='text'
                     onChange={formik.handleChange}
-                    value={formik.values.name}
+                    value={formik.values.username}
                 />
-                {formik.touched.name && formik.errors.name ? (
-                    <div className='form-error'>{formik.errors.name}</div>
+                {formik.touched.username && formik.errors.username ? (
+                    <div className='form-error'>{formik.errors.username}</div>
                 ) : null}
               </div>
               <div className='surname'>

@@ -39,6 +39,7 @@ public class Task implements Serializable {
     private String finish;
 
 
+
     private Boolean done;
 
 
@@ -52,6 +53,17 @@ public class Task implements Serializable {
 
 
     public Task(Long id,  String name, String data_task, String start, String finish,  Boolean done,Long  id_user) {
+        this.id = id;
+        this.name = name;
+        this.data_task = data_task;
+        this.start = start;
+        this.finish = finish;
+        this.done = done;
+        this.id_user=id_user;
+    }
+
+
+    public Task(Long id, @NotNull String name, String data_task, String start, String finish, @NotNull Boolean done,Long  id_user) {
         this.id = id;
         this.name = name;
         this.data_task = data_task;
@@ -79,6 +91,7 @@ public class Task implements Serializable {
 
     }
 
+
    /* public Task(@NotEmpty String name, @NotEmpty String date_task, @NotEmpty Boolean done, String start, String finish) {
         this.name = name;
         this.date_task=date_task;
@@ -86,6 +99,7 @@ public class Task implements Serializable {
         this.start = start;
         this.finish = finish;
     }*/
+
     public Long getId() {
         return id;
     }
@@ -103,6 +117,7 @@ public class Task implements Serializable {
     }
 
     public  String getStart() {
+
         return start;
     }
 
@@ -113,6 +128,11 @@ public class Task implements Serializable {
     public String getData_task() {
         return data_task;
     }
+
+    public void setData_task(String data_task) {
+        this.data_task = data_task;
+    }
+
 
     public void setData_task(String data_task) {
         this.data_task = data_task;
@@ -147,9 +167,3 @@ public class Task implements Serializable {
 
 
 }
-
-
-
-
-
-

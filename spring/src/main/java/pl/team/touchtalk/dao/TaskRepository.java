@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import pl.team.touchtalk.model.Task;
 
+
 import javax.transaction.Transactional;
 import java.util.List;
 /*
@@ -17,6 +18,7 @@ import java.util.List;
  * @Version 1.0
  * @Since 2021-05-28
  * */
+
 
 @Repository
 public interface TaskRepository extends CrudRepository<Task, Long> {
@@ -33,5 +35,4 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
 
 
 }
-
 

@@ -25,6 +25,8 @@ public class TaskTransferObject implements Serializable {
 
 
 
+
+
     public TaskTransferObject(Long id, String name, String data_task, boolean done, String start, String finish,Long id_user) {
         this.id =id;
         this.name=name;
@@ -69,3 +71,4 @@ public class TaskTransferObject implements Serializable {
         return id_user;
     }
 }
+

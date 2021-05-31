@@ -9,6 +9,7 @@ import pl.team.touchtalk.model.Task;
 
 import java.util.List;
 import java.util.Optional;
+
 /*
  * Task Services
  *
@@ -21,6 +22,7 @@ import java.util.Optional;
 public class TaskServices {
 
     private  TaskRepository taskRepository;
+
 
     @Autowired
     public TaskServices(TaskRepository taskRepository){
@@ -43,6 +45,7 @@ public class TaskServices {
         taskRepository.putDoneById(id);
 
     }
+
     public Task save(Task task) {
         return taskRepository.save(task);
     }
@@ -52,3 +55,4 @@ public class TaskServices {
     }
 
 }
+

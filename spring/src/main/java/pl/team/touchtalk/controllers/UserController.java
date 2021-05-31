@@ -1,10 +1,14 @@
 package pl.team.touchtalk.controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import pl.team.touchtalk.dto.UserDetailsDownload;
 import pl.team.touchtalk.dto.UserTransferObject;
+import pl.team.touchtalk.model.File;
 import pl.team.touchtalk.model.User;
 import pl.team.touchtalk.model.UserDetails;
 import pl.team.touchtalk.dao.UserRepository;
@@ -48,13 +52,7 @@ public class UserController {
     public List<UserTransferObject> index(){
         List<UserTransferObject> users = new ArrayList<>();
         userRepository.findAll().forEach(user->
-            users.add(new UserTransferObject(
-                user.getId(),
-              user.getUserDetails().getName(),
-              user.getUserDetails().getSurname(),
-              user.getUserDetails().getPhone(),
-              user.getUserDetails().getImage()
-            ))
+            users.add(new UserTransferObject(user))
         );
         return users;
     }
@@ -67,16 +65,11 @@ public class UserController {
     * @PathVariable id Long
     * @Returns user User
     * */
+
     @GetMapping("/{id}")
     public ResponseEntity<UserTransferObject> getUser(@PathVariable("id") Long id){
         return userRepository.findById(id).map(
-                user -> new ResponseEntity<>(new UserTransferObject(
-                        user.getId(),
-                        user.getUserDetails().getName(),
-                        user.getUserDetails().getSurname(),
-                        user.getUserDetails().getPhone(),
-                        user.getUserDetails().getImage()
-                ), HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                user -> new ResponseEntity<>(new UserTransferObject(user), HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)
         );
     }
 
@@ -95,15 +88,39 @@ public class UserController {
     *
     * @Returns user?null if no user found
     * */
-    @PutMapping(path = "/{id}/edit", consumes = "application/json")
-    public ResponseEntity<Boolean> editUser(@RequestBody UserDetails details, @PathVariable("id") Long id) {
+    @PutMapping(path = "/{id}/edit")
+    public ResponseEntity<Boolean> editUser(@RequestBody UserDetailsDownload details, @PathVariable("id") Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
+        System.out.println("details");
+        System.out.println(details);
+
+
         if(optionalUser.isPresent()) {
+            UserDetails userDetails = new UserDetails(
+                    details.getUsername(),
+                    details.getSurname(),
+                    details.getPhone(),
+                    details.getImage()
+
+            );
+            System.out.println(userDetails);
             User user = optionalUser.get();
-            user.setUserDetails(details);
+            user.setUserDetails(userDetails);
             userRepository.save(user);
             return new ResponseEntity<>(true, HttpStatus.OK);
         }
         return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
     }
+
+    @GetMapping("/imageUser/{id}")
+    public String getImageByUserId(@PathVariable("id") Long id){
+        User user = userRepository.findById(id).orElse(null);
+        if(user == null) {
+            return "Empty";
+        }
+        else {
+            return user.getUserDetails().getImage();
+        }
+    }
+
 }

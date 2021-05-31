@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const TaskForm = () => {
 
+
   const history = useHistory()
   const lz = (i) => {
     return `${i}`.padStart(2, "0");
@@ -79,7 +80,7 @@ const TaskForm = () => {
             />
             <button className='task-btn' type='submit' >Dodaj zadanie</button>
         </form>
-        
+       
     );
 };
 
