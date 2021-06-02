@@ -45,7 +45,7 @@ public class User {
     @Column(name = "created_at")
     private Date createdAt;
 
-    @JsonIgnore
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_details_id", referencedColumnName = "id")
     private UserDetails userDetails;

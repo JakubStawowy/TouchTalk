@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "../../actions/getUserDetails.js";
 import axios from "axios";
 import "./accountSettings.css";
-import {handleNetworkError} from "../../actions/handleNetworkError";
+
 import {useHistory} from "react-router";
+
 const AccountSettings = () => {
     const [userInput, setUserInput] = useState({
         username: "",
@@ -13,32 +14,30 @@ const AccountSettings = () => {
         image: ""
     });
 
-    const [avatar, setAvatar] = useState("");
+    const [avatar, setAvatar] = useState("EMPTY");
     const dispatch = useDispatch();
     const history = useHistory();
     const auth = useSelector((state) => state.auth);
+    const url ="https://api.cloudinary.com/v1_1/dstba8obh/image/upload";
+    const [avatarImage,setAvatarImage]=useState("")
 
-    const uploadAvatar = async (e) => {
-        const file = e.target.files[0];
-        
+    const changeImage = async (file) =>{
 
-        const resp = (file) => new Promise((resolve, reject) => {
-            let reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
-        })
+        setAvatarImage(file.target.files[0]);
+        const formData = new FormData();
+            formData.append("file", file.target.files[0]);
+            formData.append("upload_preset","idwiunwv")
 
-        const dataURL = await resp(file);
+                await axios.post(url, formData).then(response => {
+                    console.log(response);
+                    setAvatar(response.data.secure_url);
+                    setUserInput({
+                        ...userInput, image: response.data.secure_url
+                    })
+                });
 
-
-        setAvatar(dataURL);
-        setUserInput({
-            ...userInput, image: "Zmiana"
-        })
-
-    };
-
+    }
+   
 
     useEffect(() => {
         getUserDetails().then((res) => {
@@ -51,30 +50,29 @@ const AccountSettings = () => {
                 })
             }
         );
+
+        console.log(userInput);
     }, []);
 
     const handleInput = (e) => {
         setUserInput({ ...userInput, [e.target.name]: e.target.value });
     };
-
+    const config = {
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem('token')
+        }
+    };
+    const urlServer = `http://localhost:8080/api/users/${localStorage.getItem(
+        "id"
+    )}/edit`;
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const config = {
-            headers: {
-                "Authorization": "Bearer " + localStorage.getItem('token')
-            }
-        };
+        //await uploadAvatar();
 
-        const url = `http://localhost:8080/api/users/${localStorage.getItem(
-            "id"
-        )}/edit`;
-
-        console.log(userInput);
-
-        await axios.put(url, userInput,config);
-        getUserDetails().then((res) =>
-            dispatch({ type: "USERDATA_UPDATE", payload: res })
-        );
+        await axios.put(urlServer, userInput, config);
+        getUserDetails().then((res) => {
+            dispatch({type: "USERDATA_UPDATE", payload: res});
+        });
     };
 
     //     await axios.put(url, userInput,config).catch((error) => handleNetworkError(error, () => history.replace("/")));
@@ -83,7 +81,7 @@ const AccountSettings = () => {
     //     ).catch((error) => handleNetworkError(error, () => history.replace("/")));
     // };
 
-    const defaultAvatar = avatar ? avatar : "https://www.irishrsa.ie/wp-content/uploads/2017/03/default-avatar.png";
+    const defaultAvatar = "https://www.irishrsa.ie/wp-content/uploads/2017/03/default-avatar.png";
     return (
         <div className='settings'>
             <div>
@@ -92,12 +90,22 @@ const AccountSettings = () => {
 
             <div className='accountSettings-wrapper'>
                 <div className='accountSettings-avatar'>
-                    <img
+                    {userInput.image!==""?(
+                        console.log(userInput.image),
+
+                            <img
+                                className='accountSettings-img'
+                                src={userInput.image}
+                                alt='ZdjecieProfilowe'
+                            />
+                    ):
+                        <img
                         className='accountSettings-img'
-                        src={userInput.image ? userInput.image : defaultAvatar}
-                        alt='xd'
-                    />
-                    <input type='file' id='file' onChange={uploadAvatar} />
+                        src={defaultAvatar}
+                         alt='ZdjecieProfilowe'
+                         />
+                         }
+                    <input type='file' id='file' onChange={changeImage} />
                     <label className='inputimg-label' htmlFor='file'>
                         Wybierz
                     </label>
