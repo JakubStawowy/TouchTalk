@@ -78,3 +78,14 @@
    background: rgb(199, 198, 198); 
    border-radius: 10px;
  }
+
+.dialog{
+    z-index: 2000;
+    border-radius: 7px;
+    border-color: blue;
+}
+
+.maxPicture{
+    max-width: 50vw;
+    max-height: 50vh;
+}

@@ -24,6 +24,7 @@ import Stomp from "stompjs"
 import {useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {handleNetworkError} from "../actions/handleNetworkError";
+import Modal from "@material-ui/core/Modal";
 
 
 /*
@@ -254,7 +255,18 @@ const Messages = () => {
 
 
     }
+    const [isPop, setIsPop] = useState(false);
+    const [poped, setPoped] = useState("");
 
+    const pop = (e) => {
+        setIsPop(!isPop);
+        setPoped(e.target.src);
+    }
+
+    const closePop = () => {
+        setIsPop(!isPop);
+        setPoped("");
+    }
     return (
         <div className={"new-messages"}>
             <Grid container component={Paper} className={classes.chatSection}>
@@ -287,7 +299,20 @@ const Messages = () => {
                         ))}
                     </List>
                 </Grid>
+                <Modal
+                    open={isPop }
+                    onClose={closePop}
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
 
+                >
+                    <dialog className="dialog" style={{ position: "absolute", top:"20%" }} open onClick={closePop}>
+                        <div className="maxPicturecontainer">
+                            <img className="maxPicture" src={poped} onClick={closePop} alt="no image" />
+                        </div>
+                    </dialog>
+
+                </Modal>
 
                 {conversation.is ? (
                     <Grid item xs={9}>
@@ -317,7 +342,7 @@ const Messages = () => {
                                                         <Grid container>
                                                             <Grid item xs={12} className={classes.picture}>
                                                                 <div class="pictureContainer">
-                                                                    <img className="picture" src={messR.imageURL}
+                                                                    <img className="picture" onClick={pop} src={messR.imageURL}
                                                                          alt="/broken-image.jpg"/>
                                                                 </div>
                                                             </Grid>
@@ -342,7 +367,7 @@ const Messages = () => {
                                                         <Grid container>
                                                             <Grid item xs={12} className={classes.picture}>
                                                                 <div class="pictureContainer">
-                                                                    <img className="picture" src={messR.imageURL}
+                                                                    <img className="picture" onClick={pop} src={messR.imageURL}
                                                                          alt="/broken-image.jpg"/>
                                                                 </div>
                                                             </Grid>

@@ -20,7 +20,8 @@ const AccountSettings = () => {
 
     const uploadAvatar = async (e) => {
         const file = e.target.files[0];
-        console.log(file);
+        
+
         const resp = (file) => new Promise((resolve, reject) => {
             let reader = new FileReader();
             reader.readAsDataURL(file);
