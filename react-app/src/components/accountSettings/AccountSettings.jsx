@@ -33,7 +33,7 @@ const AccountSettings = () => {
 
         setAvatar(dataURL);
         setUserInput({
-            ...userInput, image: dataURL
+            ...userInput, image: "Zmiana"
         })
 
     };
@@ -70,11 +70,17 @@ const AccountSettings = () => {
 
         console.log(userInput);
 
-        await axios.put(url, userInput,config).catch((error) => handleNetworkError(error, () => history.replace("/")));
+        await axios.put(url, userInput,config);
         getUserDetails().then((res) =>
-            dispatch({ type: "USERDATA_UPDATE", payload: res }).catch((error) => handleNetworkError(error, () => history.replace("/")))
-        ).catch((error) => handleNetworkError(error, () => history.replace("/")));
+            dispatch({ type: "USERDATA_UPDATE", payload: res })
+        );
     };
+
+    //     await axios.put(url, userInput,config).catch((error) => handleNetworkError(error, () => history.replace("/")));
+    //     getUserDetails().then((res) =>
+    //         dispatch({ type: "USERDATA_UPDATE", payload: res }).catch((error) => handleNetworkError(error, () => history.replace("/")))
+    //     ).catch((error) => handleNetworkError(error, () => history.replace("/")));
+    // };
 
     const defaultAvatar = avatar ? avatar : "https://www.irishrsa.ie/wp-content/uploads/2017/03/default-avatar.png";
     return (

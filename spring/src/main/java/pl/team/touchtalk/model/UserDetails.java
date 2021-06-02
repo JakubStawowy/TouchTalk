@@ -30,7 +30,6 @@ public class UserDetails {
     private String phone;
 
     @JsonIgnore
-    @Lob
     private String image;
 
     @JsonIgnore

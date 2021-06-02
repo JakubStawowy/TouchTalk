@@ -49,16 +49,9 @@ public class GroupController {
      }
 
     @GetMapping({"", "/"})
-    public Set<GroupTransferObject> index(@RequestParam("id") Long id) {
+    public List<Group> index(@RequestParam("id") Long id) {
 
-        Set<GroupTransferObject> groups = new LinkedHashSet<>();
-
-        groupRepository.getGroupsByUserId(id).forEach(group -> {
-            Set<UserTransferObject> users = new LinkedHashSet<>();
-            group.getUsers().forEach(user -> users.add(new UserTransferObject(user)));
-
-            groups.add(new GroupTransferObject(group, users));
-        });
+        List<Group> groups = groupRepository.getGroupsByUserId(id);
 
         return groups;
     }
@@ -81,7 +74,12 @@ public class GroupController {
      public String joinGroup(@RequestParam ("id") Long id, @RequestParam ("code") String code) {
 
          Group group = groupRepository.findByCode(code);
-         group.addNewUser(userRepository.findById(id).orElse(null));
+        System.out.println(group.getId());
+        User user= userRepository.findById(id).orElse(null);
+        System.out.println(user);
+
+
+         group.addNewUser(user);
          groupRepository.save(group);
 
          return "Zostałeś dodany do grupy";

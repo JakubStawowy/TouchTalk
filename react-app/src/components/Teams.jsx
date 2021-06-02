@@ -24,6 +24,7 @@ import {useHistory} from "react-router-dom";
 import {Add} from "@material-ui/icons";
 import AddGroup from "./AddGroup";
 import JoinGroup from "./JoinGroup";
+import {Button} from "@material-ui/core";
 import {handleNetworkError} from "../actions/handleNetworkError";
 
 
@@ -178,11 +179,11 @@ const Teams = () => {
                 "Authorization": "Bearer " + localStorage.getItem('token')
             }
         };
-
+        console.log(idActualUser);
         api.get(`/api/groups?id=${idActualUser}`, config).then(response => response.data)
-            .then(data => setGroups(data)).catch((error) => {
-            handleNetworkError(error, () => history.push("/"));
-        });
+            .then(data => setGroups(data))
+            .catch((error) => {
+            handleNetworkError(error, () => history.push("/"));  });
     }, []);
 
     const [groups, setGroups] = useState([]);
@@ -192,11 +193,7 @@ const Teams = () => {
         code: ""
     })
 
-    const [addGroupStatus, setAddGroupStatus] = useState("false");
 
-    const addGroup = () => {
-        setAddGroupStatus("true");
-    }
     const getUserDetails = group => {
         let userDetails = {
             username: "",
@@ -211,6 +208,21 @@ const Teams = () => {
         return userDetails.username + " " + userDetails.surname;
 
     }
+
+    const [openAdd, setOpenAdd] = React.useState(false);
+    const [openJoin, setOpenJoin] = React.useState(false);
+    const handleOpenAdd = () => {
+        setOpenAdd(true);
+    };
+    const handleOpenJoin = () => {
+        setOpenJoin(true);
+    };
+    const handleCloseAdd = () => {
+        setOpenAdd(false);
+    };
+    const handleCloseJoin = () => {
+        setOpenJoin(false);
+    };
 
     return (
         <div className={"new-messages"}>
@@ -229,12 +241,18 @@ const Teams = () => {
                                    onChange={(e) => setSearchText(e.target.value)}
                                    autoComplete="off" />
 
-                                <button onClick={addGroup}><Add/></button>
                         </div>
 
                     </AppBar>
-                    <JoinGroup/>
-                    {addGroupStatus === "true" ? <AddGroup status={setAddGroupStatus}/> : null}
+
+
+                    <div className="group_options">
+                        <Button variant="contained" color="primary" onClick={handleOpenJoin}>Dołącz do grupy</Button>
+                        <JoinGroup open={openJoin} handleClose={handleCloseJoin}/>
+                        <Button variant="contained" color="primary" onClick={handleOpenAdd}>Stwórz grupę</Button>
+                        <AddGroup open={openAdd} handleClose={handleCloseAdd}/>
+                    </div>
+
 
                     <List className={classes.listScroll}>
                         {search(groups).map(group => (
@@ -270,10 +288,6 @@ const Teams = () => {
 
                                     <ListItem key={groupMess.id} xs={12}>
                                         <Grid className="messageAreaLeft" container xs={12}>
-                                            <Grid xs={1} className="photo">
-                                                <Avatar alt="User"
-                                                        src="/broken-image.jpg"/>
-                                            </Grid>
                                             <Grid item className="messageContent">
                                                 {/*{(groupMess.imageURL!=="Empty")?(*/}
                                                 {/*    <ListItem>*/}

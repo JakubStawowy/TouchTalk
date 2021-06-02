@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import pl.team.touchtalk.dto.UserDetailsDownload;
 import pl.team.touchtalk.dto.UserTransferObject;
 import pl.team.touchtalk.model.File;
 import pl.team.touchtalk.model.User;
@@ -88,17 +89,18 @@ public class UserController {
     * @Returns user?null if no user found
     * */
     @PutMapping(path = "/{id}/edit")
-    public ResponseEntity<Boolean> editUser(@RequestBody JsonNode details, @PathVariable("id") Long id) {
+    public ResponseEntity<Boolean> editUser(@RequestBody UserDetailsDownload details, @PathVariable("id") Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
-
+        System.out.println("details");
+        System.out.println(details);
 
 
         if(optionalUser.isPresent()) {
             UserDetails userDetails = new UserDetails(
-                    details.get("username").asText(),
-                    details.get("surname").asText(),
-                    details.get("phone").asText(),
-                    details.get("image").asText()
+                    details.getUsername(),
+                    details.getSurname(),
+                    details.getPhone(),
+                    details.getImage()
 
             );
             System.out.println(userDetails);

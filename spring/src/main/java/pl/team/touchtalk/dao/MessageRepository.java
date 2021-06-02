@@ -9,6 +9,15 @@ import pl.team.touchtalk.model.User;
 
 import java.util.List;
 
+
+/*
+ * @Author Bartosz Szlęzak
+ * @Author Grzegorz Szydło
+ * @Author Paweł Szydło
+ * @Author Łukasz Stolarz
+ * @Version 2.0
+ * @Since 2021-05-01
+ * */
 @Repository
 public interface MessageRepository extends CrudRepository<Message, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM messages WHERE sender_id=?1 AND receiver_id=?2")

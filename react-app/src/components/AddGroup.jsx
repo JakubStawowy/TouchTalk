@@ -1,6 +1,8 @@
-import {Paper, TextField} from "@material-ui/core";
+import {Button, Paper, TextField} from "@material-ui/core";
 import React, {useState} from "react";
 import axios from "axios";
+import Modal from '@material-ui/core/Modal';
+import SaveIcon from '@material-ui/icons/Save';
 import {handleNetworkError} from "../actions/handleNetworkError";
 import {useHistory} from "react-router";
 
@@ -18,7 +20,7 @@ const api = axios.create({
     baseURL: `http://localhost:8080/api/groups`
 })
 
-const AddGroup = ({status}) => {
+const AddGroup = ({open, handleClose}) => {
     const history = useHistory();
     let idActualUser = parseInt(localStorage.getItem("id"));
     const [group, setGroup] = useState({
@@ -48,33 +50,48 @@ const AddGroup = ({status}) => {
             }
         }
         api.post('/add', group, config).then(data => {
-            alert("Grupa dodana");
-        }).catch((error) => handleNetworkError(error, () => history.replace("/")));
+            setGroup({
+                groupName: "",
+                password: "",
+                creatorId: 0
+            }
+        )}).catch((error) => handleNetworkError(error, () => history.replace("/")));
+
+
     }
 
     return(
-        <Paper>
-            <p>Stwórz nową grupę</p>
-            <TextField
-                label="Podaj nazwę grupy"
-                onChange={e => setGroup({
-                    ...group,
-                    groupName: e.target.value,
-                })}
-                value={group.groupName}
-                onKeyPress={event => {
-                    if (event.key === 'Enter') {
-                        createGroup();
-                        status("false");
-                        setGroup({
-                            groupName: "",
-                            password: "",
-                            creatorId: 0
-                        });
-                    }
-                }}
-                required/>
-        </Paper>
+
+        <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+
+        >
+            {/*ciało modala*/}
+            <div className="modal_style">
+                <h2 id="simple-modal-title">Podaj nazwę grupy</h2>
+                <TextField className="modal_textField"
+                    label="Podaj nazwę grupy"
+                    onChange={e => setGroup({
+                        ...group,
+                        groupName: e.target.value,
+                    })}
+                    value={group.groupName}
+                    onKeyPress={event => {
+                        if (event.key === 'Enter') {
+                            createGroup();
+                        }
+                    }}
+                    required/>
+                    <div className="button_exit_container">
+                        <Button variant="contained" color="secondary" onClick={handleClose}>Zamknij</Button>
+                        <Button variant="contained" color="primary" onClick={createGroup}>Stwórz</Button>
+                    </div>
+
+            </div>
+        </Modal>
     );
 }
 
