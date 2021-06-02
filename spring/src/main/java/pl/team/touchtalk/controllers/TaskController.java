@@ -1,6 +1,5 @@
 package pl.team.touchtalk.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.team.touchtalk.model.Task;
 import  pl.team.touchtalk.services.TaskServices;
@@ -22,16 +21,26 @@ import java.util.Optional;
 @RequestMapping("/calendar")
 public class TaskController {
 
-    private final TaskServices taskServices;
 
-    @Autowired
-    public  TaskController(TaskServices taskServices){
+
+    private TaskServices taskServices;
+    private UserRepository userRepository;
+
+
+    public  TaskController(TaskServices taskServices,UserRepository userRepository){
+
         this.taskServices=taskServices;
+        this.userRepository=userRepository;
     }
+
+
+
 
     @GetMapping("/all")
     public Iterable<Task> getAll() {
+
         return taskServices.findAll();
+
     }
 
     @GetMapping
@@ -44,17 +53,26 @@ public class TaskController {
     }
 
     @PostMapping
-    public Task addTask(@RequestBody Task task) {
-        return taskServices.save(task);
+    public Task addTask(@RequestBody Task taskServicesS) {
+        return taskServices.save(taskServicesS);
     }
 
     @PutMapping
-    public Task updateTask(@RequestBody Task task) {
-        return taskServices.save(task);
+    public Task updateTask(@RequestBody Task taskServicesS) {
+        return taskServices.save(taskServicesS);
     }
 
-    @DeleteMapping
-    public void deleteTask(@RequestParam Long id) {
+    @GetMapping("/task/done/{id_task}")
+    public void updateTaskDone(@PathVariable("id_task") Long id_task){
+        taskServices.putDoneById(id_task);
+    }
+    @PatchMapping
+    public Task UpdateTask(@RequestBody Task taskServicesS) {
+        return taskServices.save(taskServicesS);
+    }
+
+    @DeleteMapping("/task/delete/{id_task}")
+    public void deleteTask(@PathVariable("id_task")  Long id) {
         taskServices.deleteById(id);
     }
 }

@@ -1,15 +1,14 @@
-
 import React , {useState, useEffect} from "react";
-
 import "./Tasks.css"
 import { FiClock } from "react-icons/fi";
 import { FaCheck } from "react-icons/fa";
 import { GoX } from "react-icons/go";
 import axios from 'axios';
 
-const ListOfTask = () => {
 
-    const [tasks, setTasks] = useState(""); 
+const ListOfTaskDone = () => {
+
+    const [tasks, setTasks] = useState("");
     const [searchText, setSearchText] = useState("");
 
     const config = {
@@ -21,12 +20,13 @@ const ListOfTask = () => {
     useEffect(() => {
             fetch(`http://localhost:8080/calendar/user/${localStorage.getItem("id")}`, config)
             .then((res) => res.json())
-            .then((data) => setTasks(data))
+            .then((data) => setTasks(data.filter(task => (task.done === true))))
                 
     }, )
 
 
     const isDone = (id) => {
+        console.log('put')
         axios.get(`http://localhost:8080/calendar/task/done/${id}` ,config);
     }
 
@@ -43,7 +43,6 @@ const ListOfTask = () => {
 
     return (
         <div className='tasks-list'>
-
             <div >
                 <input className='find-task' id="search"
                             placeholder="Szukaj..."
@@ -64,7 +63,6 @@ const ListOfTask = () => {
                         <div className='col2'>
                             {task.data_task}
                         </div>
-
                         <div className='col3'>
                             <div className='time-to-left'>
                                 <FiClock />{task.finish}
@@ -81,4 +79,4 @@ const ListOfTask = () => {
     );
 };
 
-export default ListOfTask;
+export default ListOfTaskDone;
