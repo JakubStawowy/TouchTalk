@@ -1,17 +1,15 @@
-import React, {useEffect} from "react";
+import React , {useState, useEffect, useHistory} from "react";
 import "./Tasks.css"
 import { FiClock } from "react-icons/fi";
 import { FaCheck } from "react-icons/fa";
 import { GoX } from "react-icons/go";
 import axios from 'axios';
-import {useState} from 'react'
 
-const ListOfTask = () => {
+
+const ListOfTaskActive = () => {
 
     const [tasks, setTasks] = useState("");
     const [searchText, setSearchText] = useState("");
-
-
 
     const config = {
         headers: {
@@ -22,9 +20,10 @@ const ListOfTask = () => {
     useEffect(() => {
         fetch(`http://localhost:8080/calendar/user/${localStorage.getItem("id")}`, config)
             .then((res) => res.json())
-            .then((data) => setTasks(data))
+            .then((data) => setTasks(data.filter(task => (task.done === false))))
 
     }, )
+
 
     const isDone = (id) => {
         axios.get(`http://localhost:8080/calendar/task/done/${id}` ,config);
@@ -36,7 +35,6 @@ const ListOfTask = () => {
 
     function search(tasks) {
         const taskKey = ["name"];
-
         let filtr = tasks.filter((task) =>
             taskKey.some((key) => task[key].toString().toLowerCase().indexOf(searchText.toString()) > -1));
         return filtr;
@@ -44,17 +42,14 @@ const ListOfTask = () => {
 
     return (
         <div className='tasks-list'>
-
             <div >
                 <input className='find-task' id="search"
-                            placeholder="Szukaj..."
-                            onChange={(e) => setSearchText(e.target.value)}
-                            autoComplete="off"/>
+                       placeholder="Szukaj..."
+                       onChange={(e) => setSearchText(e.target.value)}
+                       autoComplete="off"/>
             </div>
-
             <div className='taski'>
-
-                {tasks ? search(tasks).map( task =>
+                {(tasks.length>0) ? search(tasks).map( task =>
                     <div className={task.done ? "task1" : "task2"} key={task.id}>
                         <div className='col1'>
                             <div>
@@ -84,4 +79,4 @@ const ListOfTask = () => {
     );
 };
 
-export default ListOfTask;
+export default ListOfTaskActive;

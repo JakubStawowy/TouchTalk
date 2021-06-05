@@ -4,7 +4,7 @@ import axios from "axios";
 import Modal from '@material-ui/core/Modal';
 import SaveIcon from '@material-ui/icons/Save';
 import {handleNetworkError} from "../actions/handleNetworkError";
-import {useHistory} from "react-router";
+import {useHistory, location} from "react-router";
 
 /*
  * @Functionalities
@@ -56,8 +56,7 @@ const AddGroup = ({open, handleClose}) => {
                 creatorId: 0
             }
         )}).catch((error) => handleNetworkError(error, () => history.replace("/")));
-
-
+        window.location.reload();
     }
 
     return(

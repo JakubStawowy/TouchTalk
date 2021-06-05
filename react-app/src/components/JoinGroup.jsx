@@ -35,6 +35,7 @@ const JoinGroup = ({open, handleClose}) => {
             .catch((error) => handleNetworkError(error, () => history.replace("/")));
 
         setCode("");
+        window.location.reload();
     }
 
     return (

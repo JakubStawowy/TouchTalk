@@ -112,7 +112,7 @@ const Home = () => {
                                 <ListItemIcon>
                                     <FormatListBulletedIcon/>
                                 </ListItemIcon>
-                                <NavLink to='/tasks'>Zadania</NavLink>
+                                <NavLink to='/tasks/all'>Zadania</NavLink>
                             </ListItem>
 
 

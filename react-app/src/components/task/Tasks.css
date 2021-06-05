@@ -11,7 +11,7 @@
     align-items: center;
     /* background-color: #002963; */
     background-color: var(--mainBlue);
-    height: 80px;
+    height: 4.2em;
   }
   .button-input {
     display: flex;
