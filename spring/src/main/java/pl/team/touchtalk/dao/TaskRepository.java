@@ -19,7 +19,6 @@ import java.util.List;
  * @Since 2021-05-28
  * */
 
-
 @Repository
 public interface TaskRepository extends CrudRepository<Task, Long> {
 
@@ -30,8 +29,4 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
     @Transactional
     @Query(value = "Update public.task set done=true where id=?1", nativeQuery = true)
     void putDoneById(Long id);
-
-
-
-
 }

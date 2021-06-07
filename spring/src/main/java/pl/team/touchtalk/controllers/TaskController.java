@@ -18,20 +18,14 @@ import java.util.Optional;
 @RequestMapping("/calendar")
 public class TaskController {
 
-
-
     private final TaskServices taskServices;
     private UserRepository userRepository;
-
 
     public  TaskController(TaskServices taskServices,UserRepository userRepository){
 
         this.taskServices=taskServices;
         this.userRepository=userRepository;
     }
-
-
-
 
     @GetMapping("/all")
     public Iterable<Task> getAll() {

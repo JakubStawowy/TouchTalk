@@ -6,12 +6,14 @@ import { GoX } from "react-icons/go";
 import axios from 'axios';
 import {useState} from 'react'
 
+/*
+ * @Author Grzegorz Pryjma
+ * */
+
 const ListOfTask = () => {
 
     const [tasks, setTasks] = useState("");
     const [searchText, setSearchText] = useState("");
-
-
 
     const config = {
         headers: {

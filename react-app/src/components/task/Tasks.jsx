@@ -6,7 +6,12 @@ import ListOfTask from "./ListOfTask";
 import ListOfTaskActive from "./ListOfTaskActive";
 import ListOfTaskDone from "./ListOfTaskDone";
 
+/*
+ * @Author Grzegorz Pryjma
+ * */
+
 const Tasks = () => {
+
   const now = new Date();
 
   return (
@@ -42,7 +47,6 @@ const Tasks = () => {
           </Route>
           <Route path='/tasks/add' component={TaskForm}/>
         </Switch>
-
       </section>
   );
 };
