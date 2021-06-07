@@ -9,7 +9,6 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    /* background-color: #002963; */
     background-color: var(--mainBlue);
     height: 4.2em;
   }
@@ -229,3 +228,5 @@
     padding: 1em;
     overflow: auto;
   }
+
+  

@@ -4,6 +4,7 @@ import axios from "axios";
 import Modal from "@material-ui/core/Modal";
 import {useHistory} from "react-router-dom";
 import {handleNetworkError} from "../actions/handleNetworkError";
+
 /*
  * @Functionalities
  * @Author Bartosz Szlęzak

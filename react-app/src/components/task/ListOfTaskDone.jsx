@@ -5,6 +5,9 @@ import { FaCheck } from "react-icons/fa";
 import { GoX } from "react-icons/go";
 import axios from 'axios';
 
+/*
+ * @Author Grzegorz Pryjma
+ * */
 
 const ListOfTaskDone = () => {
 
@@ -23,7 +26,6 @@ const ListOfTaskDone = () => {
             .then((data) => setTasks(data.filter(task => (task.done === true))))
 
     }, )
-
 
     const isDone = (id) => {
         console.log('put')

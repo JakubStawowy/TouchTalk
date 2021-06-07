@@ -21,7 +21,6 @@ public class TaskServices {
 
     private  TaskRepository taskRepository;
 
-
     @Autowired
     public TaskServices(TaskRepository taskRepository){
         this.taskRepository=taskRepository;

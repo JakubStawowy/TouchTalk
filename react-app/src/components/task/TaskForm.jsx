@@ -4,6 +4,10 @@ import { useFormik } from "formik";
 import {useHistory} from "react-router-dom";
 import axios from 'axios';
 
+/*
+ * @Author Grzegorz Pryjma
+ * */
+
 const TaskForm = () => {
 
     const history = useHistory()
@@ -80,7 +84,6 @@ const TaskForm = () => {
             />
             <button className='task-btn' type='submit' >Dodaj zadanie</button>
         </form>
-
     );
 };
 

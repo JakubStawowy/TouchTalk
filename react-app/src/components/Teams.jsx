@@ -15,7 +15,6 @@ import AppBar from '@material-ui/core/AppBar';
 import "../style/Messages.css"
 import "../style/Teams.css"
 
-
 import axios from "axios";
 import SockJS from "sockjs-client"
 import Stomp from "stompjs"
@@ -26,7 +25,6 @@ import AddGroup from "./AddGroup";
 import JoinGroup from "./JoinGroup";
 import {Button} from "@material-ui/core";
 import {handleNetworkError} from "../actions/handleNetworkError";
-
 
 /*
  * @Functionalities

@@ -40,7 +40,6 @@ const AddGroup = ({open, handleClose}) => {
         return result.join('');
     }
 
-
     const createGroup = () => {
 
         console.log(group);
@@ -66,7 +65,6 @@ const AddGroup = ({open, handleClose}) => {
             onClose={handleClose}
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
-
         >
             {/*ciało modala*/}
             <div className="modal_style">

@@ -100,7 +100,6 @@ const Home = () => {
 
                     <div class='navbar-left'>
                         <List style={menu}>
-
                             <ListItem button key="messages">
                                 <ListItemIcon>
                                     <MessageIcon/>
