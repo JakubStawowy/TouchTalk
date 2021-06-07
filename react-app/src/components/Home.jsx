@@ -23,11 +23,12 @@ import Teams from "./Teams";
 import AccountSettings from './accountSettings/AccountSettings.jsx';
 import {} from "module";
 import "../style/Home.css";
-
+import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {getUserDetails} from "../actions/getUserDetails";
 import {signout} from "../actions/auth";
+import {handleNetworkError} from "../actions/handleNetworkError";
 
 
 function detectMob() {
@@ -43,17 +44,11 @@ const Home = () => {
     if (!auth.login)
         history.push('/');
 
-    const [userDetails, setUserDetails] = useState(
-        {
-            username: "",
-            surname: ""
-        }
-    );
 
     const handleLogout = () => {
         dispatch(signout()).then(() => {
             history.replace("/");
-        });
+        }).catch((error) => handleNetworkError(error, () => history.replace("/")));;
     }
 
     const handleMessage = () => {
@@ -62,8 +57,10 @@ const Home = () => {
 
     useEffect(() => {
         getUserDetails().then(res=>{
-            dispatch({type: 'USERDATA', payload: res.data})
-        })
+            dispatch({type: 'USERDATA', payload: res})
+        }).catch((error) => {
+            handleNetworkError(error, () => history.push("/"));
+        });
     }, []);
 
     let menu = {};
@@ -103,12 +100,6 @@ const Home = () => {
 
                     <div class='navbar-left'>
                         <List style={menu}>
-                            <ListItem button key="notifications">
-                                <ListItemIcon>
-                                    <NotificationsActiveIcon/>
-                                </ListItemIcon>
-                                <NavLink to='/notifications'>Aktualności</NavLink>
-                            </ListItem>
 
                             <ListItem button key="messages">
                                 <ListItemIcon>
@@ -121,7 +112,7 @@ const Home = () => {
                                 <ListItemIcon>
                                     <FormatListBulletedIcon/>
                                 </ListItemIcon>
-                                <NavLink to='/tasks'>Zadania</NavLink>
+                                <NavLink to='/tasks/all'>Zadania</NavLink>
                             </ListItem>
 
 

@@ -4,6 +4,7 @@ package pl.team.touchtalk.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import org.springframework.transaction.annotation.Transactional;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -35,7 +36,9 @@ public class Group implements Serializable {
     @NotNull
     private String code;
 
+
     @ManyToMany
+    @JsonIgnore
     @JoinTable(
         name = "user_in_groups",
         joinColumns = @JoinColumn(name = "group_id"),
@@ -93,20 +96,16 @@ public class Group implements Serializable {
         this.users = users;
     }
 
+    @Transactional
     public void addNewUser(User user){
-        Set<User> tmp = getUsers();
-        tmp.add(user);
-        setUsers(tmp);
+//        Set<User> tmp = getUsers();
+//        tmp.add(user);
+//        setUsers(tmp);
+
+        users.add(user);
+
+
     }
 
-    @Override
-    public String toString() {
-        return "Group{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", code='" + code + '\'' +
-                ", users=" + users +
-                ", groupMessagesSent=" + groupMessagesSent +
-                '}';
-    }
+
 }

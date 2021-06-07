@@ -33,14 +33,13 @@ const TaskForm = () => {
                 finish: values.finish,
                 done: false,
                 createdAt: createdAt,
-                // id_user: ${localStorage.getItem("id")},
-                id_user: 1,
+                id_user: localStorage.getItem("id"),
             };
 
             const res = axios.post(`http://localhost:8080/calendar`, JSON.stringify(form), {headers: {'Content-Type': 'application/json', "Authorization": "Bearer " + localStorage.getItem('token') }})
             console.log(res);
             resetForm();
-            history.push('/tasks/active')
+            history.push('/tasks/all')
         },
     });
 

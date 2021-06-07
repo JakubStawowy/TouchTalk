@@ -1,6 +1,7 @@
 package pl.team.touchtalk.filters;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,7 +41,7 @@ public class JsonWebTokenFilter extends BasicAuthenticationFilter {
         try {
             UsernamePasswordAuthenticationToken result = AuthenticationTokenProvider.getAuthenticationToken(header);
             SecurityContextHolder.getContext().setAuthentication(result);
-        } catch (ExpiredJwtException e) {
+        } catch (ExpiredJwtException | MalformedJwtException e) {
             SecurityContextHolder.clearContext();
         } finally {
             chain.doFilter(request, response);

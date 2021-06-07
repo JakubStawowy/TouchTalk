@@ -71,7 +71,10 @@ public class GroupChatController {
         List<MessageTransferObject> messagesResponse = new ArrayList<>();
         for(GroupMessage groupMessage: groupMessageRepository.findAllByGroupId(group)) {
             Set<UserTransferObject> users = new LinkedHashSet<>();
-            groupMessage.getGroup().getUsers().forEach(user->users.add(new UserTransferObject(user)));
+            User user = userRepository.findById(groupMessage.getSender().getId()).orElse(null);
+
+            assert user != null;
+            users.add(new UserTransferObject(user));
             messagesResponse.add(new MessageTransferObject(
                     groupMessage.getId(),
                     groupMessage.getContent(),

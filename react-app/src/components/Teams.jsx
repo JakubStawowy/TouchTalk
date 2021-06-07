@@ -24,6 +24,8 @@ import {useHistory} from "react-router-dom";
 import {Add} from "@material-ui/icons";
 import AddGroup from "./AddGroup";
 import JoinGroup from "./JoinGroup";
+import {Button} from "@material-ui/core";
+import {handleNetworkError} from "../actions/handleNetworkError";
 
 
 /*
@@ -51,8 +53,7 @@ const useStyles = makeStyles({
         borderRight: '1px solid #e0e0e0'
     },
     messageArea: {
-
-        height: '65vh',
+        height: '79.7vh',
         overflowY: 'auto'
     },
 
@@ -149,7 +150,9 @@ const Teams = () => {
             .then(data => {
                     setActualMessage(data)
                 }
-            )
+            ).catch((error) => {
+            handleNetworkError(error, () => history.push("/"));
+        });
 
         console.log("receiver " + groupId);
     }
@@ -175,9 +178,11 @@ const Teams = () => {
                 "Authorization": "Bearer " + localStorage.getItem('token')
             }
         };
-
+        console.log(idActualUser);
         api.get(`/api/groups?id=${idActualUser}`, config).then(response => response.data)
             .then(data => setGroups(data))
+            .catch((error) => {
+            handleNetworkError(error, () => history.push("/"));  });
     }, []);
 
     const [groups, setGroups] = useState([]);
@@ -187,11 +192,7 @@ const Teams = () => {
         code: ""
     })
 
-    const [addGroupStatus, setAddGroupStatus] = useState("false");
 
-    const addGroup = () => {
-        setAddGroupStatus("true");
-    }
     const getUserDetails = group => {
         let userDetails = {
             username: "",
@@ -206,6 +207,21 @@ const Teams = () => {
         return userDetails.username + " " + userDetails.surname;
 
     }
+
+    const [openAdd, setOpenAdd] = React.useState(false);
+    const [openJoin, setOpenJoin] = React.useState(false);
+    const handleOpenAdd = () => {
+        setOpenAdd(true);
+    };
+    const handleOpenJoin = () => {
+        setOpenJoin(true);
+    };
+    const handleCloseAdd = () => {
+        setOpenAdd(false);
+    };
+    const handleCloseJoin = () => {
+        setOpenJoin(false);
+    };
 
     return (
         <div className={"new-messages"}>
@@ -224,12 +240,18 @@ const Teams = () => {
                                    onChange={(e) => setSearchText(e.target.value)}
                                    autoComplete="off" />
 
-                                <button onClick={addGroup}><Add/></button>
                         </div>
 
                     </AppBar>
-                    <JoinGroup/>
-                    {addGroupStatus === "true" ? <AddGroup status={setAddGroupStatus}/> : null}
+
+
+                    <div className="group_options">
+                        <Button variant="contained" color="primary" onClick={handleOpenJoin}>Dołącz do grupy</Button>
+                        <JoinGroup open={openJoin} handleClose={handleCloseJoin}/>
+                        <Button variant="contained" color="primary" onClick={handleOpenAdd}>Stwórz grupę</Button>
+                        <AddGroup open={openAdd} handleClose={handleCloseAdd} />
+                    </div>
+
 
                     <List className={classes.listScroll}>
                         {search(groups).map(group => (
@@ -246,7 +268,7 @@ const Teams = () => {
 
 
                 {conversation.is ? (
-                    <Grid item xs={9} className="messageSpace">
+                    <Grid item xs={9} >
 
                         <AppBar position="static">
                             <div className="navList">
@@ -262,27 +284,10 @@ const Teams = () => {
                         <List className={classes.messageArea}>
                             {actualMessage.map((groupMess) => (
                                 (groupMess.sender !== idActualUser) ? (
+
                                     <ListItem key={groupMess.id} xs={12}>
-                                        <Grid className="messageArea" container xs={12}>
-                                            <Grid xs={1} className="photo">
-                                                <Avatar alt="User"
-                                                        src="/broken-image.jpg"/>
-                                            </Grid>
+                                        <Grid className="messageAreaLeft" container xs={12}>
                                             <Grid item className="messageContent">
-                                                {/*{(groupMess.imageURL!=="Empty")?(*/}
-                                                {/*    <ListItem>*/}
-                                                {/*        <Grid container>*/}
-                                                {/*            <Grid item xs={12} className={classes.picture}>*/}
-                                                {/*                <div class="pictureContainer">*/}
-                                                {/*                    <img className="picture" src={groupMess.imageURL} alt="/broken-image.jpg"/>*/}
-                                                {/*                </div>*/}
-                                                {/*            </Grid>*/}
-                                                {/*        </Grid>*/}
-                                                {/*    </ListItem>*/}
-                                                {/*):null}*/}
-
-
-
                                                 <ListItemText align="left" secondary={getUserDetails(groupMess)}/>
                                                 <ListItemText  align="left" primary={groupMess.content}  />
                                                 <ListItemText className="data-message" align="left"
@@ -293,25 +298,11 @@ const Teams = () => {
                                     </ListItem>
                                 ) : (
                                     <ListItem key={groupMess.id}>
-                                        <Grid container>
-                                            <Grid item xs={12}>
-                                                {/*{(groupMess.imageURL!=="Empty")?(*/}
-
-                                                {/*    <ListItem>*/}
-                                                {/*        <Grid container>*/}
-                                                {/*            <Grid item xs={12} className={classes.picture}>*/}
-                                                {/*                <div class="pictureContainer">*/}
-                                                {/*                    <img className="picture" src={groupMess.imageURL} alt="/broken-image.jpg"/>*/}
-                                                {/*                </div>*/}
-                                                {/*            </Grid>*/}
-                                                {/*        </Grid>*/}
-                                                {/*    </ListItem>*/}
-                                                {/*):null}*/}
-
+                                        <Grid className="messageAreaRight" container>
+                                            <Grid item className="messageContent">
                                                 <ListItemText align="right" primary={groupMess.content}/>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <ListItemText align="right"
+
+                                                <ListItemText className="data-message" align="right"
                                                               secondary={groupMess.date.split("T")[0] + " " + groupMess.date.split("T")[1].split(".")[0]}/>
                                             </Grid>
                                         </Grid>
@@ -337,7 +328,6 @@ const Teams = () => {
                                                }}
                                                required
                                                fullWidth/>
-                                    <button><WallpaperIcon/></button>
                                 </Grid>
                                 <Grid xs={1} align="right">
                                     <button onClick={sendMessage}><SendIcon/></button>
