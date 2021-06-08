@@ -106,7 +106,8 @@
     width: auto;
     text-align: center;
     align-items: center;
-    margin-top: 50vh;
+    margin-top: 5em;
+    margin-bottom: 10em;
     margin-left: 0;
     border-left: 0;
     padding-left: 0;
@@ -141,7 +142,7 @@
 
 .logo{
     width: 40vw;
-    height: 30vh;
+    height: 50vh;
 }
 
 .container button:hover {
